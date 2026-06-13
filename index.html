@@ -1,1 +1,1937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Maria Lucia Morya — Chamas Gêmeas, Jornada da Alma e Governo Divino. Um espaço de verdade, amor e discernimento.">
+<title>Maria Lucia Morya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════
+   TOKENS
+══════════════════════════════════════ */
+:root {
+  --azul-profundo:  #0D1B2A;
+  --azul-alma:      #152236;
+  --azul-veu:       #1E3050;
+  --violeta:        #5B3F8A;
+  --violeta-suave:  #7B5AAE;
+  --rosa-divino:    #B87498;
+  --dourado:        #C4933A;
+  --dourado-claro:  #DEB96A;
+  --dourado-fino:   #F2D98C;
+  --branco:         #F5F2ED;
+  --cinza-veu:      #B8B2AE;
+  --cinza-escuro:   #6A6460;
+  --vermelho:       #c04040;
+  --trans: 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--azul-profundo);
+  color: var(--branco);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+.container--narrow { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+
+.label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--dourado);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(196,147,58,0.4), transparent);
+}
+
+h1,h2,h3,h4 { line-height: 1.2; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ── NAVBAR ── */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  transition: background var(--trans), border-color var(--trans);
+  border-bottom: 1px solid transparent;
+}
+#navbar.scrolled {
+  background: rgba(13,27,42,0.96);
+  backdrop-filter: blur(18px);
+  border-color: rgba(196,147,58,0.14);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px; padding: 0 1.5rem;
+  max-width: 1080px; margin: 0 auto;
+}
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--dourado);
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cinza-veu);
+  transition: color var(--trans);
+}
+.nav-links a:hover { color: var(--dourado-claro); }
+
+.nav-right-group { display: flex; align-items: center; gap: 1rem; }
+.nav-auth-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--dourado-claro);
+  border: 1px solid rgba(196,147,58,0.35);
+  padding: 0.45rem 1rem;
+  transition: var(--trans); cursor: pointer;
+  background: none;
+}
+.nav-auth-btn:hover { background: rgba(196,147,58,0.08); border-color: var(--dourado); }
+.nav-user-name {
+  font-family: 'Inter', sans-serif; font-size: 0.65rem;
+  color: var(--cinza-veu); letter-spacing: 0.06em;
+}
+
+.nav-burger {
+  display: none; flex-direction: column; gap: 5px;
+  width: 28px; padding: 4px 0;
+}
+.nav-burger span { display: block; height: 1px; background: var(--cinza-veu); transition: var(--trans); }
+
+/* ── MOBILE NAV ── */
+#mobile-nav {
+  display: none; position: fixed; inset: 0; z-index: 890;
+  background: rgba(13,27,42,0.98);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2.4rem;
+}
+#mobile-nav.open { display: flex; }
+#mobile-nav a {
+  font-family: 'Cinzel', serif; font-size: 1.2rem;
+  letter-spacing: 0.15em; color: var(--branco); text-transform: uppercase;
+}
+#mobile-nav a:hover { color: var(--dourado); }
+#mobile-close { position: absolute; top: 1.2rem; right: 1.5rem; font-size: 1.8rem; color: var(--cinza-veu); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 8rem 1.5rem 5rem;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 35%, rgba(91,63,138,0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 35% at 30% 75%, rgba(196,147,58,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 35% at 70% 75%, rgba(184,116,152,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-portrait-placeholder {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 2px solid rgba(196,147,58,0.35);
+  box-shadow: 0 0 40px rgba(91,63,138,0.3);
+  background: linear-gradient(135deg, var(--azul-veu), var(--violeta));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+  position: relative; z-index: 1;
+}
+
+.hero-sigil {
+  display: flex; align-items: flex-start;
+  gap: 1.8rem; margin-bottom: 2rem; position: relative;
+}
+.hero-sigil-line {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--dourado), transparent);
+  align-self: stretch; min-height: 120px; flex-shrink: 0;
+}
+.hero-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.3em; color: var(--dourado);
+  text-transform: uppercase; margin-bottom: 1rem; text-align: left;
+}
+.hero-h1 {
+  font-family: 'Cinzel', serif; font-weight: 500;
+  font-size: clamp(2.6rem, 6.5vw, 5.4rem);
+  letter-spacing: 0.03em; color: var(--branco);
+  text-align: left; line-height: 1.08;
+}
+.hero-h1 em { font-style: normal; color: var(--dourado); }
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+  color: var(--cinza-veu); max-width: 540px;
+  margin: 2rem auto 0; line-height: 1.6; text-align: center;
+}
+
+.hero-icons {
+  margin: 2.8rem auto 0;
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.4rem; opacity: 0.6;
+}
+
+.hero-cta {
+  margin-top: 3rem;
+  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+}
+.btn {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.9rem 2.2rem; transition: var(--trans);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.btn--primary { background: var(--dourado); color: var(--azul-profundo); }
+.btn--primary:hover { background: var(--dourado-fino); }
+.btn--ghost { border: 1px solid rgba(196,147,58,0.4); color: var(--dourado-claro); }
+.btn--ghost:hover { border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+
+/* ── SOBRE ── */
+#sobre { padding: 7rem 0; }
+.sobre-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start;
+}
+.sobre-texto h2 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--branco); margin-bottom: 1.6rem; line-height: 1.18;
+}
+.sobre-texto p { font-size: 1.05rem; color: rgba(245,242,237,0.78); margin-bottom: 1.2rem; }
+.sobre-texto em { font-style: italic; color: var(--dourado-claro); }
+.sobre-blockquote {
+  border-left: 2px solid var(--violeta-suave);
+  padding: 1.4rem 1.6rem; margin: 2rem 0;
+  background: rgba(91,63,138,0.1);
+}
+.sobre-blockquote p {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1.2rem; line-height: 1.55; color: var(--branco); margin: 0;
+}
+.sobre-blockquote cite {
+  display: block; font-style: normal;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  letter-spacing: 0.08em; color: var(--dourado); margin-top: 0.8rem;
+}
+
+.sobre-talentos { display: flex; flex-direction: column; gap: 1.2rem; }
+.talento {
+  padding: 1.4rem 1.2rem;
+  border: 1px solid rgba(196,147,58,0.14);
+  background: rgba(30,48,80,0.3);
+  transition: border-color var(--trans), background var(--trans);
+  display: flex; align-items: flex-start; gap: 1rem;
+}
+.talento:hover { border-color: rgba(196,147,58,0.38); background: rgba(30,48,80,0.55); }
+.talento-icon-img {
+  width: 32px; height: 32px; object-fit: contain; flex-shrink: 0;
+  opacity: 0.85;
+}
+.talento-body h4 {
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 0.14em; color: var(--dourado);
+  text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.talento-body p { font-size: 0.9rem; color: var(--cinza-veu); margin: 0; }
+
+/* ── MISSÃO ── */
+#missao {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, transparent, rgba(91,63,138,0.07), transparent);
+}
+.missao-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 2.4rem;
+}
+.missao-card {
+  padding: 2rem 1.6rem;
+  border: 1px solid rgba(196,147,58,0.12);
+  background: rgba(21,34,54,0.5); transition: var(--trans);
+}
+.missao-card:hover { border-color: rgba(196,147,58,0.35); transform: translateY(-3px); }
+.missao-card h3 {
+  font-family: 'Cinzel', serif; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dourado-claro); margin-bottom: 0.7rem;
+}
+.missao-card p { font-size: 0.92rem; color: rgba(245,242,237,0.75); line-height: 1.65; }
+
+.manifesto-box {
+  margin-top: 3.5rem; padding: 3rem 2.5rem;
+  background: linear-gradient(135deg, rgba(91,63,138,0.18), rgba(196,147,58,0.06));
+  border: 1px solid rgba(196,147,58,0.22); text-align: center;
+}
+.manifesto-box p {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.7;
+  color: var(--branco); max-width: 52ch; margin: 0 auto 1rem;
+}
+.manifesto-box p:last-child { margin: 0; }
+
+/* ── PRODUTO / AUTOBIOGRAFIA ── */
+#produto {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, transparent, rgba(196,147,58,0.04), transparent);
+}
+.produto-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.produto-capa {
+  aspect-ratio: 3/4; max-width: 300px;
+  background: linear-gradient(145deg, var(--azul-veu), var(--violeta), #2a1040);
+  border: 1px solid rgba(196,147,58,0.3);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(91,63,138,0.2);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.produto-capa::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(196,147,58,0.15), transparent 60%);
+}
+.produto-capa-titulo {
+  text-align: center; padding: 2rem; position: relative; z-index: 1;
+}
+.produto-capa-titulo h3 {
+  font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--dourado-fino);
+  line-height: 1.3; margin-bottom: 1rem;
+}
+.produto-capa-titulo p {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.9rem; color: rgba(245,242,237,0.6);
+}
+.produto-linha { width: 40px; height: 1px; background: var(--dourado); margin: 1rem auto; }
+
+.produto-texto h2 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--branco); margin-bottom: 1.4rem;
+}
+.produto-texto p { font-size: 1.05rem; color: rgba(245,242,237,0.78); margin-bottom: 1.2rem; }
+.produto-texto em { font-style: italic; color: var(--dourado-claro); }
+
+.produto-preco {
+  margin: 2rem 0;
+  padding: 1.4rem 1.6rem;
+  border: 1px solid rgba(196,147,58,0.25);
+  background: rgba(196,147,58,0.05);
+}
+.produto-preco-label {
+  font-family: 'Inter', sans-serif; font-size: 0.65rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--cinza-veu); margin-bottom: 0.3rem;
+}
+.produto-preco-valor {
+  font-family: 'Cinzel', serif; font-size: 1.8rem;
+  color: var(--dourado-fino); font-weight: 500;
+}
+.produto-preco-obs {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.85rem; color: var(--cinza-escuro); margin-top: 0.3rem;
+}
+
+.btn--produto {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1.1rem 2.4rem;
+  background: linear-gradient(135deg, var(--dourado), var(--dourado-claro));
+  color: var(--azul-profundo); font-weight: 600;
+  transition: var(--trans); box-shadow: 0 8px 30px rgba(196,147,58,0.25);
+}
+.btn--produto:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(196,147,58,0.35);
+}
+.produto-aviso {
+  margin-top: 1rem;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: var(--cinza-escuro); font-style: italic;
+}
+
+/* ── BLOG ── */
+#blog { padding: 7rem 0; }
+.blog-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+}
+.blog-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem;
+}
+
+.post-card {
+  background: rgba(21,34,54,0.55);
+  border: 1px solid rgba(196,147,58,0.1);
+  overflow: hidden; transition: var(--trans);
+  display: flex; flex-direction: column; cursor: pointer;
+}
+.post-card:hover { border-color: rgba(196,147,58,0.32); transform: translateY(-4px); }
+.post-card-thumb {
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--azul-veu), var(--violeta));
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.post-card-thumb img {
+  width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+  transition: transform 0.4s ease;
+}
+.post-card:hover .post-card-thumb img { transform: scale(1.04); }
+.yt-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.2);
+}
+.yt-play-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(200,0,0,0.88);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s;
+}
+.post-card:hover .yt-play-btn { transform: scale(1.1); }
+.yt-play-btn svg { width: 18px; height: 18px; fill: #fff; margin-left: 2px; }
+
+.post-card-body { padding: 1.4rem 1.2rem; flex: 1; display: flex; flex-direction: column; }
+.post-card-tag {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.5rem;
+}
+.post-card-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 600;
+  font-size: 1.15rem; line-height: 1.3;
+  color: var(--branco); margin-bottom: 0.7rem;
+}
+.post-card-excerpt { font-size: 0.88rem; color: var(--cinza-veu); line-height: 1.6; flex: 1; }
+.post-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 1.2rem; padding-top: 0.9rem;
+  border-top: 1px solid rgba(196,147,58,0.1);
+}
+.post-card-date { font-family: 'Inter', sans-serif; font-size: 0.68rem; color: var(--cinza-escuro); }
+.post-card-link {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--dourado); transition: color var(--trans);
+}
+.post-card-link:hover { color: var(--dourado-fino); }
+
+.blog-empty {
+  grid-column: 1/-1; text-align: center; padding: 5rem 2rem;
+  border: 1px dashed rgba(196,147,58,0.2); color: var(--cinza-escuro);
+}
+.blog-empty p { font-style: italic; margin-top: 0.5rem; }
+
+/* ── JORNADA ── */
+#jornada {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, transparent, rgba(30,48,80,0.25), transparent);
+}
+.timeline { position: relative; padding-left: 2.4rem; margin-top: 2.8rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--dourado), rgba(196,147,58,0.08));
+}
+.tl-item { position: relative; margin-bottom: 2.8rem; padding-left: 1.6rem; }
+.tl-item::before {
+  content: ''; position: absolute; left: -2.75rem; top: 0.45rem;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--dourado); box-shadow: 0 0 12px rgba(196,147,58,0.55);
+}
+.tl-era {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.3rem;
+}
+.tl-item h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-weight: 600; color: var(--branco); margin-bottom: 0.4rem;
+}
+.tl-item p { font-size: 0.92rem; color: var(--cinza-veu); line-height: 1.65; }
+
+/* ── LIÇÕES ── */
+#licoes { padding: 7rem 0; }
+.licoes-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 2.4rem;
+}
+.licao {
+  padding: 2rem 1.6rem;
+  border-top: 2px solid var(--dourado);
+  background: rgba(21,34,54,0.4);
+}
+.licao-num {
+  font-family: 'Cinzel', serif; font-size: 2.4rem; font-weight: 600;
+  color: rgba(196,147,58,0.2); margin-bottom: 0.6rem; line-height: 1;
+}
+.licao h3 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem;
+  font-weight: 600; color: var(--branco); margin-bottom: 0.6rem;
+}
+.licao p { font-size: 0.9rem; color: var(--cinza-veu); line-height: 1.65; }
+
+/* ── CONTATO ── */
+#contato { padding: 7rem 0; text-align: center; }
+.contato-inner h2 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 1rem;
+}
+.contato-inner p {
+  font-style: italic; color: var(--cinza-veu);
+  max-width: 50ch; margin: 0 auto 2.4rem; font-size: 1.05rem;
+}
+.social-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.social-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.7rem 1.6rem;
+  border: 1px solid rgba(196,147,58,0.3);
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--dourado-claro); transition: var(--trans);
+}
+.social-link:hover { background: rgba(196,147,58,0.08); border-color: var(--dourado); }
+.social-link svg { width: 18px; height: 18px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(196,147,58,0.1);
+  padding: 3rem 1.5rem; text-align: center;
+}
+.footer-logo {
+  font-family: 'Cinzel', serif; font-size: 0.78rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.8rem;
+}
+footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--cinza-escuro); }
+
+/* ══════════════════════════════════════
+   MODAL LEITURA / YOUTUBE
+══════════════════════════════════════ */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 980;
+  background: rgba(13,27,42,0.94); backdrop-filter: blur(10px);
+  overflow-y: auto; padding: 2rem 1rem;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.modal-box {
+  background: var(--azul-alma);
+  border: 1px solid rgba(196,147,58,0.2);
+  max-width: 740px; width: 100%;
+  margin: auto; padding: 2.8rem 2.4rem; position: relative;
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  font-size: 1.5rem; color: var(--cinza-veu);
+  transition: color var(--trans);
+}
+.modal-close:hover { color: var(--dourado); }
+.modal-tag {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.8rem;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 400; color: var(--branco);
+  margin-bottom: 1.4rem; line-height: 1.25;
+}
+.modal-yt-wrap {
+  position: relative; width: 100%; padding-top: 56.25%;
+  margin-bottom: 1.6rem; background: #000;
+}
+.modal-yt-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+.modal-content {
+  font-size: 1.05rem; color: rgba(245,242,237,0.82); line-height: 1.8;
+}
+.modal-content p { margin-bottom: 1.2rem; }
+.modal-content a { color: var(--dourado-claro); text-decoration: underline; word-break: break-all; }
+.modal-meta {
+  margin-top: 2rem; padding-top: 1.2rem;
+  border-top: 1px solid rgba(196,147,58,0.1);
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--cinza-escuro);
+}
+
+/* ── COMENTÁRIOS ── */
+.comments-section {
+  margin-top: 2rem; padding-top: 1.6rem;
+  border-top: 1px solid rgba(196,147,58,0.12);
+}
+.comments-title {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 1.2rem;
+}
+.comment-form { margin-bottom: 1.6rem; }
+.comment-input {
+  width: 100%; background: rgba(13,27,42,0.7);
+  border: 1px solid rgba(196,147,58,0.2); color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  padding: 0.7rem 0.9rem; outline: none; resize: vertical;
+  min-height: 80px; transition: border-color var(--trans);
+}
+.comment-input:focus { border-color: var(--dourado); }
+.comment-submit {
+  margin-top: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0.6rem 1.4rem; background: var(--dourado);
+  color: var(--azul-profundo); border: none; cursor: pointer;
+  transition: var(--trans);
+}
+.comment-submit:hover { background: var(--dourado-fino); }
+.comment-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+.comments-login-note {
+  font-family: 'Inter', sans-serif; font-size: 0.75rem;
+  color: var(--cinza-escuro); font-style: italic; margin-bottom: 1rem;
+}
+.comments-login-note button {
+  color: var(--dourado); text-decoration: underline; font-size: 0.75rem;
+  font-family: 'Inter', sans-serif; cursor: pointer; background: none; border: none;
+}
+
+.comment-list { display: flex; flex-direction: column; gap: 1rem; }
+.comment-item {
+  padding: 1rem 1.2rem;
+  background: rgba(13,27,42,0.5);
+  border-left: 2px solid rgba(196,147,58,0.2);
+}
+.comment-item-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.4rem;
+}
+.comment-author {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: var(--dourado-claro); letter-spacing: 0.06em;
+}
+.comment-date { font-family: 'Inter', sans-serif; font-size: 0.65rem; color: var(--cinza-escuro); }
+.comment-text { font-size: 0.92rem; color: rgba(245,242,237,0.78); line-height: 1.65; }
+.comment-delete {
+  font-size: 0.58rem; color: var(--vermelho);
+  font-family: 'Inter', sans-serif; letter-spacing: 0.08em;
+  border: 1px solid rgba(192,64,64,0.3); padding: 2px 8px;
+  cursor: pointer; background: none; transition: var(--trans);
+}
+.comment-delete:hover { background: rgba(192,64,64,0.1); }
+.comments-empty {
+  font-family: 'Inter', sans-serif; font-size: 0.78rem;
+  color: var(--cinza-escuro); font-style: italic; text-align: center;
+  padding: 1.2rem 0;
+}
+
+/* ══════════════════════════════════════
+   AUTH MODAL
+══════════════════════════════════════ */
+#auth-overlay {
+  display: none; position: fixed; inset: 0; z-index: 995;
+  background: rgba(10,20,32,0.97); backdrop-filter: blur(14px);
+  align-items: center; justify-content: center;
+}
+#auth-overlay.open { display: flex; }
+.auth-box {
+  background: var(--azul-alma); border: 1px solid rgba(196,147,58,0.22);
+  padding: 2.8rem 2.4rem; width: 100%; max-width: 420px; position: relative;
+}
+.auth-box h2 {
+  font-family: 'Cinzel', serif; font-size: 0.9rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.5rem; text-align: center;
+}
+.auth-subtitle {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: var(--cinza-escuro); text-align: center; margin-bottom: 1.8rem;
+}
+.auth-tabs {
+  display: flex; margin-bottom: 1.6rem;
+  border-bottom: 1px solid rgba(196,147,58,0.15);
+}
+.auth-tab {
+  flex: 1; padding: 0.6rem; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cinza-escuro); cursor: pointer; border: none;
+  background: none; transition: color var(--trans);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.auth-tab.active { color: var(--dourado); border-bottom-color: var(--dourado); }
+.auth-field {
+  width: 100%; background: rgba(13,27,42,0.8);
+  border: 1px solid rgba(196,147,58,0.2); color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  padding: 0.7rem 0.9rem; outline: none; margin-bottom: 0.8rem;
+  transition: border-color var(--trans);
+}
+.auth-field:focus { border-color: var(--dourado); }
+.auth-field::placeholder { color: rgba(184,178,174,0.4); font-style: italic; }
+.auth-btn {
+  width: 100%; font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.85rem; background: var(--dourado); color: var(--azul-profundo);
+  border: none; cursor: pointer; transition: var(--trans); margin-top: 0.4rem;
+}
+.auth-btn:hover { background: var(--dourado-fino); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Google Button */
+.btn-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.7rem;
+  padding: 0.8rem; margin-top: 0.8rem;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+  color: var(--branco); font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.06em; cursor: pointer;
+  transition: var(--trans);
+}
+.btn-google:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+.btn-google svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.auth-divider {
+  text-align: center; font-family: 'Inter', sans-serif;
+  font-size: 0.68rem; color: var(--cinza-escuro); margin: 1rem 0;
+  position: relative;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; position: absolute; top: 50%; width: 40%;
+  height: 1px; background: rgba(196,147,58,0.15);
+}
+.auth-divider::before { left: 0; }
+.auth-divider::after { right: 0; }
+
+.auth-error {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: #c06060; text-align: center; margin-top: 0.8rem; min-height: 1.1rem;
+}
+.auth-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  font-size: 1.5rem; color: var(--cinza-veu); cursor: pointer;
+}
+
+/* ══════════════════════════════════════
+   ADMIN OVERLAY
+══════════════════════════════════════ */
+#admin-overlay {
+  display: none; position: fixed; inset: 0; z-index: 990;
+  background: rgba(10,20,32,0.97); overflow-y: auto;
+}
+#admin-overlay.open { display: block; }
+.admin-panel { max-width: 860px; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+.admin-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.4rem;
+}
+.admin-header h2 {
+  font-family: 'Cinzel', serif; font-size: 1rem;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--dourado);
+}
+.admin-close-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cinza-veu);
+  border: 1px solid rgba(196,147,58,0.2); padding: 0.5rem 1rem; cursor: pointer; transition: var(--trans);
+}
+.admin-close-btn:hover { color: var(--dourado); border-color: var(--dourado); }
+
+.admin-form {
+  background: rgba(21,34,54,0.6); border: 1px solid rgba(196,147,58,0.16);
+  padding: 2rem; margin-bottom: 2.4rem;
+}
+.admin-form h3 {
+  font-family: 'Cinzel', serif; font-size: 0.72rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dourado-claro); margin-bottom: 1.4rem;
+}
+.form-row { margin-bottom: 1.1rem; }
+.form-row label {
+  display: block; font-family: 'Inter', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cinza-veu); margin-bottom: 0.4rem;
+}
+.form-row input,
+.form-row textarea,
+.form-row select {
+  width: 100%; background: rgba(13,27,42,0.8);
+  border: 1px solid rgba(196,147,58,0.2); color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  padding: 0.7rem 0.9rem; outline: none; transition: border-color var(--trans); resize: vertical;
+}
+.form-row input:focus,
+.form-row textarea:focus,
+.form-row select:focus { border-color: var(--dourado); }
+.form-row textarea { min-height: 130px; }
+.form-row select option { background: var(--azul-profundo); }
+.form-hint { font-family: 'Inter', sans-serif; font-size: 0.68rem; color: var(--cinza-escuro); margin-top: 0.3rem; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.btn-admin {
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.85rem 2rem; background: var(--dourado);
+  color: var(--azul-profundo); border: none; cursor: pointer;
+  transition: var(--trans); margin-top: 0.6rem;
+}
+.btn-admin:hover { background: var(--dourado-fino); }
+.btn-admin-ghost {
+  background: transparent; border: 1px solid rgba(196,147,58,0.3); color: var(--dourado-claro);
+}
+.btn-admin-ghost:hover { border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+.btn-admin-danger { background: rgba(160,60,60,0.85); color: var(--branco); font-size: 0.6rem; padding: 0.5rem 0.8rem; }
+.btn-admin-danger:hover { background: #c04040; }
+
+.admin-posts-list { display: flex; flex-direction: column; gap: 1rem; }
+.admin-post-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1.1rem 1.2rem; background: rgba(21,34,54,0.4);
+  border: 1px solid rgba(196,147,58,0.1); gap: 1rem;
+}
+.admin-post-info h4 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  font-weight: 600; color: var(--branco); margin-bottom: 0.2rem;
+}
+.admin-post-info span { font-family: 'Inter', sans-serif; font-size: 0.65rem; color: var(--cinza-escuro); }
+.admin-post-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+/* Toast */
+#toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  background: var(--dourado); color: var(--azul-profundo);
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 0.12em; padding: 0.8rem 1.4rem;
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s; pointer-events: none;
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVO ── */
+@media (max-width: 820px) {
+  .sobre-grid { grid-template-columns: 1fr; gap: 2.8rem; }
+  .missao-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .licoes-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .hero-sigil { flex-direction: column; gap: 0.8rem; }
+  .hero-sigil-line { min-height: 3px; width: 48px; height: 1px; align-self: auto; background: linear-gradient(to right, transparent, var(--dourado), transparent); }
+  .hero-h1 { text-align: center; }
+  .hero-eyebrow { text-align: center; }
+  .form-row-2 { grid-template-columns: 1fr; }
+  .produto-inner { grid-template-columns: 1fr; }
+  .produto-capa { max-width: 220px; margin: 0 auto; }
+}
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar" aria-label="Navegação principal">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Maria Lucia Morya</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Quem Sou</a></li>
+      <li><a href="#missao">Missão</a></li>
+      <li><a href="#produto">Autobiografia</a></li>
+      <li><a href="#blog">Escritos</a></li>
+      <li><a href="#jornada">Jornada</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <div class="nav-right-group">
+      <span class="nav-user-name" id="nav-user-name" style="display:none;"></span>
+      <button class="nav-auth-btn" id="nav-auth-btn">Entrar</button>
+      <button class="nav-burger" id="burger-btn" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ MOBILE NAV ══ -->
+<div id="mobile-nav" role="dialog" aria-modal="true">
+  <button id="mobile-close" aria-label="Fechar menu">✕</button>
+  <a href="#sobre" class="mobile-link">Quem Sou</a>
+  <a href="#missao" class="mobile-link">Missão</a>
+  <a href="#produto" class="mobile-link">Autobiografia</a>
+  <a href="#blog" class="mobile-link">Escritos</a>
+  <a href="#jornada" class="mobile-link">Jornada</a>
+  <a href="#contato" class="mobile-link">Contato</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section id="hero" aria-label="Introdução">
+  <div class="hero-portrait-placeholder" aria-hidden="true">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.45;">
+      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1"/>
+      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(45 30 30)"/>
+      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(90 30 30)"/>
+      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(135 30 30)"/>
+      <circle cx="30" cy="30" r="4" fill="none" stroke="#DEB96A" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="hero-sigil">
+    <div class="hero-sigil-line" aria-hidden="true"></div>
+    <div>
+      <p class="hero-eyebrow">Chamas Gêmeas · Jornada da Alma · Governo Divino</p>
+      <h1 class="hero-h1">
+        <em>Maria Lucia</em><br>Morya
+      </h1>
+    </div>
+  </div>
+
+  <p class="hero-sub">
+    "O que você veio trazer ao mundo já está dentro de você."
+  </p>
+
+  <div class="hero-icons" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
+      <rect x="9" y="2" width="4" height="18" rx="1" fill="#DEB96A"/>
+      <rect x="2" y="7" width="18" height="4" rx="1" fill="#DEB96A"/>
+    </svg>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
+      <circle cx="11" cy="11" r="4" fill="#B87498"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(60 11 11)"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(120 11 11)"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(180 11 11)"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(240 11 11)"/>
+      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(300 11 11)"/>
+    </svg>
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
+      <path d="M11 20C7.5 20 5 17.5 5 14C5 10 9 8 9 5C9 7.5 10.5 9 11 9C11 7 12 5.5 13 4C13 8 17 10 17 14C17 17.5 14.5 20 11 20Z" fill="#C4933A"/>
+      <path d="M11 18C9 18 8 16.5 8 15C8 13 10 12 10 11C10 12 11.5 13 12 14C12 12.5 12.5 11.5 13 11C13 13.5 15 14.5 15 16C15 17.5 13 18 11 18Z" fill="#F2D98C"/>
+    </svg>
+    <svg width="28" height="16" viewBox="0 0 28 16" fill="none" style="opacity:0.55;">
+      <path d="M14 8C14 8 11 3 7 3C3 3 1 5.5 1 8C1 10.5 3 13 7 13C11 13 14 8 14 8ZM14 8C14 8 17 3 21 3C25 3 27 5.5 27 8C27 10.5 25 13 21 13C17 13 14 8 14 8Z" stroke="#DEB96A" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#sobre" class="btn btn--primary">Conhecer a Jornada</a>
+    <a href="#blog" class="btn btn--ghost">Ler os Escritos</a>
+  </div>
+</section>
+
+<!-- ══ QUEM SOU ══ -->
+<section id="sobre" aria-labelledby="sobre-titulo">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-texto reveal">
+        <p class="label">I · Quem Sou</p>
+        <h2 id="sobre-titulo">A Mulher que Viveu de Verdade</h2>
+        <p>Sou Maria Lucia. Nasci em <em>Teresina — PI</em>, cresci em <em>Taguatinga — DF</em>, vivo hoje em <em>Porto Alegre — RS</em>. Tenho 74 anos, sou mãe de dois filhos e avó de três netas.</p>
+        <p>Meu pai veio de pau-de-arara para construir Brasília — era pedreiro, mestre-de-obras, um candango que trouxe a família toda para o Distrito Federal em 1960. Éramos muito pobres. Entrei na UnB em 1972, me formei em Psicologia em 1979. Escolhi aquele curso porque queria compreender a mim mesma dentro da loucura da família.</p>
+        <p>Aprendi a ler com 5 anos de idade — antes de entrar na escola, sem que ninguém soubesse explicar como. Criei meus dois filhos sozinha, quase sempre com salário, sem jamais dobrar a verdade para tornar a vida mais fácil.</p>
+        <div class="sobre-blockquote">
+          <p>"Pode me matar, mas não era a Verdade."</p>
+          <cite>— Maria Lucia, 12 anos, ao resistir a uma surra por não retirar uma afirmação verdadeira</cite>
+        </div>
+        <p>O dom que corre nas minhas veias é <em>ser cada vez mais verdadeira</em>. Nunca me desviei desse critério — mesmo perdendo empregos, sendo expulsa de sindicatos, criando filhos no limite. A Liberdade de Ser e de Existir foi muito cara. <em>Confesso que vivi. Confesso que valeu a pena.</em></p>
+      </div>
+
+      <div class="sobre-talentos reveal">
+        <p class="label">Talentos Primordiais</p>
+        <div class="talento">
+          <svg class="talento-icon-img" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="5" width="20" height="24" rx="2" stroke="#DEB96A" stroke-width="1.5" fill="none"/>
+            <line x1="8" y1="11" x2="20" y2="11" stroke="#DEB96A" stroke-width="1"/>
+            <line x1="8" y1="15" x2="20" y2="15" stroke="#DEB96A" stroke-width="1"/>
+            <line x1="8" y1="19" x2="16" y2="19" stroke="#DEB96A" stroke-width="1"/>
+            <path d="M22 18L28 24M26 18H28V20" stroke="#DEB96A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="talento-body">
+            <h4>Leitura &amp; Escrita</h4>
+            <p>Sabia ler aos 5 anos. Leu a Bíblia inteira para a avó Sabina, noite após noite. Nunca parou de ler.</p>
+          </div>
+        </div>
+        <div class="talento">
+          <svg class="talento-icon-img" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="14" r="7" stroke="#DEB96A" stroke-width="1.5" fill="none"/>
+            <path d="M16 7V5M16 23V21M9 14H7M25 14H23" stroke="#DEB96A" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M13 25C13 23.5 14.3 22.5 16 22.5C17.7 22.5 19 23.5 19 25V28H13V25Z" stroke="#DEB96A" stroke-width="1.2" fill="none"/>
+            <circle cx="16" cy="14" r="2" fill="#DEB96A" opacity="0.5"/>
+          </svg>
+          <div class="talento-body">
+            <h4>Oração &amp; Conexão Divina</h4>
+            <p>Da frase "Deus todo-poderoso" repetida baixinho à ascensão a Darjeeling — uma linha ininterrupta de cinquenta anos.</p>
+          </div>
+        </div>
+        <div class="talento">
+          <svg class="talento-icon-img" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4C16 4 8 10 8 18C8 22.4 11.6 26 16 26C20.4 26 24 22.4 24 18C24 10 16 4 16 4Z" stroke="#DEB96A" stroke-width="1.5" fill="none"/>
+            <path d="M16 12C16 12 12 16 12 19C12 21.2 13.8 23 16 23C18.2 23 20 21.2 20 19C20 16 16 12 16 12Z" fill="#DEB96A" opacity="0.25"/>
+          </svg>
+          <div class="talento-body">
+            <h4>Solidão Criadora</h4>
+            <p>Aprendeu a estar sozinha sem se perder. Criou filhos, desenvolveu discernimento, preservou a integridade quando o mundo exigia concessões.</p>
+          </div>
+        </div>
+        <div class="talento">
+          <svg class="talento-icon-img" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4L19 13H28L21 18.5L23.5 27.5L16 22L8.5 27.5L11 18.5L4 13H13L16 4Z" stroke="#DEB96A" stroke-width="1.4" fill="none"/>
+          </svg>
+          <div class="talento-body">
+            <h4>Discernimento</h4>
+            <p>Lê um discurso, uma posição política ou uma intenção com uma clareza que poucos possuem. A Espada Flamejante da Verdade e da Justiça não é metáfora.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MISSÃO ══ -->
+<section id="missao" aria-labelledby="missao-titulo">
+  <div class="container">
+    <p class="label reveal">II · Missão &amp; Visão</p>
+    <h2 id="missao-titulo" class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,3.5vw,2.8rem);max-width:18ch;">O que Vim Fazer que Ainda Não Foi Feito</h2>
+    <div class="missao-grid">
+      <div class="missao-card reveal">
+        <h3>Missão</h3>
+        <p>Ancorar na consciência coletiva a realidade das Chamas Gêmeas, do Governo Divino e das Jornadas da Alma.</p>
+      </div>
+      <div class="missao-card reveal">
+        <h3>Visão</h3>
+        <p>A mulher adorando a Deusa-Mãe e Deus-Pai. O homem adorando o Deus-Pai e a Deusa-Mãe. O equilíbrio Feminino-Masculino instaurado — a Nova Consciência da 6ª Raça Raiz.</p>
+      </div>
+      <div class="missao-card reveal">
+        <h3>Propósito</h3>
+        <p>Restaurar a ponte entre o Céu-Estrelas e a Terra. Ancorar Chamas Gêmeas. Restabelecer o Governo Divino na Terra.</p>
+      </div>
+    </div>
+    <div class="manifesto-box reveal">
+      <p>Eu e o meu Pai Somos Um.<br>Eu e a minha Mãe Somos Um.<br>Eu e a minha Chama Gêmea Somos Um.</p>
+      <p>Nós Somos Um — Aqui-Agora no Coração de Alpha e Ômega.</p>
+    </div>
+    <div style="margin-top:3rem; max-width:640px;" class="reveal">
+      <p class="label">A Promessa</p>
+      <p style="font-size:1.05rem;color:rgba(245,242,237,0.78);">Se você é uma pessoa que não mente — que não altera nem um ponto e vírgula para se justificar — você encontrou um abrigo aqui. Este espaço é construído sobre a <em style="font-style:italic;color:var(--dourado-claro);">Espada Flamejante da Verdade e da Justiça</em>.</p>
+      <p style="font-size:1.15rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--branco);margin-top:1rem;">"Venha receber um abraço caloroso, sincero e limpo — para o início, o meio e o fim da sua primeira jornada."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUTO — AUTOBIOGRAFIA ══ -->
+<section id="produto" aria-labelledby="produto-titulo">
+  <div class="container">
+    <p class="label reveal">III · Obra</p>
+    <div class="produto-inner">
+      <div class="reveal" style="display:flex;justify-content:center;">
+        <div class="produto-capa">
+          <div class="produto-capa-titulo">
+            <div style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(196,147,58,0.6);text-transform:uppercase;margin-bottom:1.2rem;">Autobiografia</div>
+            <div class="produto-linha"></div>
+            <h3>Confesso que Vivi.<br>Confesso que Valeu a Pena.</h3>
+            <div class="produto-linha"></div>
+            <p>Maria Lucia Morya</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="produto-texto reveal">
+        <h2 id="produto-titulo">74 Anos de Verdade Escrita em Vida</h2>
+        <p>Uma autobiografia não é um relato de conquistas — é o mapa de uma alma que escolheu, repetidamente, a verdade sobre o conforto. Cada capítulo desta obra foi vivido antes de ser escrito.</p>
+        <p>De Teresina a Porto Alegre, da infância pobre ao encontro com o Mestre El Morya, da UnB ao Conselho do Carma — esta é a história de uma mulher que <em>nunca dobrou a verdade</em> para tornar a vida mais fácil.</p>
+        <p>Para quem já sentiu que a realidade é mais larga do que nos ensinaram. Para quem escolheu a integridade mesmo quando ela custou caro.</p>
+
+        <div class="produto-preco">
+          <div class="produto-preco-label">Acesso completo via Hotmart</div>
+          <div class="produto-preco-valor">Em breve</div>
+          <div class="produto-preco-obs">O link de pagamento e acesso será disponibilizado em breve</div>
+        </div>
+
+        <!-- 
+          ══════════════════════════════════════════
+          INSTRUÇÃO PARA VOCÊ, ATLAS:
+          Quando o link da Hotmart estiver pronto,
+          substitua o href="#" pelo link real e
+          altere o texto do botão e do preço acima.
+          ══════════════════════════════════════════
+        -->
+        <a href="#" id="btn-comprar" class="btn--produto" style="pointer-events:none;opacity:0.5;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Disponível em Breve
+        </a>
+        <p class="produto-aviso">* Quando disponível, você será redirecionada ao ambiente seguro da Hotmart</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOG ══ -->
+<section id="blog" aria-labelledby="blog-titulo">
+  <div class="container">
+    <div class="blog-header reveal">
+      <div>
+        <p class="label">IV · Escritos</p>
+        <h2 id="blog-titulo" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,3.5vw,2.6rem);">Palavras da Jornada</h2>
+      </div>
+    </div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+</section>
+
+<!-- ══ JORNADA ══ -->
+<section id="jornada" aria-labelledby="jornada-titulo">
+  <div class="container--narrow">
+    <p class="label reveal">V · Linha do Tempo</p>
+    <h2 id="jornada-titulo" class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:0;">A Jornada do Herói Invisível</h2>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <p class="tl-era">Teresina — PI · Infância</p>
+        <h3>Antes de Todos os Inícios</h3>
+        <p>Nasci numa família que travava uma guerra religiosa de quarenta anos. Minha mãe me rejeitou ao nascer e minha avó Sabina me acolheu. Aprendi a ler antes da escola. Já cantava para Nossa Senhora.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">6 anos</p>
+        <h3>A Carta para o Dodô</h3>
+        <p>Escrevi pedindo ao meu pai para entrar interna no Colégio das Freiras e depois ser freira. Ele não deixou. Primeira certeza de que a vocação espiritual era mais forte que qualquer proibição.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">12 anos</p>
+        <h3>O Pescoço e a Verdade</h3>
+        <p>Minha mãe pisou no meu pescoço exigindo que eu retirasse uma afirmação verdadeira. Respondi: "Pode me matar, mas não era a Verdade." Nunca mais me desviei desse critério.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">1972–1979</p>
+        <h3>UnB — Psicologia</h3>
+        <p>Entrei na Universidade de Brasília para compreender a mim mesma dentro da loucura da família. Estudei ao lado de filhas de ministros e empresários, sem jamais ter dinheiro. Permaneci íntegra.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">Vida adulta</p>
+        <h3>A Igreja Universal e Triunfante</h3>
+        <p>Encontrei a Summit Lighthouse — Igreja Gnóstica Cristã que ensinava sobre Chamas Gêmeas, Mestres Ascensos e os Registros Akáshicos. Recebi o 2º Sacramento: a realização do sonho de ser iniciada nos Mistérios Sagrados.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">66 anos</p>
+        <h3>A Carta ao Conselho do Carma</h3>
+        <p>Escrevi pedindo minha transição. Estava cansada de sofrer. Dois anos depois, o Mestre El Morya apareceu na minha porta às 8 da manhã e me acompanhou ao Grupo Paulo Veneziano por seis terças-feiras consecutivas.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">A 6ª Terça-Feira</p>
+        <h3>O Reencontro com a Chama Gêmea</h3>
+        <p>El Morya disse: "Eu Sou o Mestre El Morya. Sou a sua Chama Gêmea. Você quer se tornar a minha esposa?" E disse: "Eu quero." Três dias depois, nos casamos. Já se passaram sete anos.</p>
+      </div>
+      <div class="tl-item reveal">
+        <p class="tl-era">Darjeeling — Plano Espiritual</p>
+        <h3>A Ascensão e o Nome Recebido</h3>
+        <p>No Conselho do Carma, recebi a confirmação do início da minha Ascensão. Recebi o nome: <em style="font-style:italic;color:var(--dourado-claro);">Lúcia de El Morya</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LIÇÕES ══ -->
+<section id="licoes" aria-labelledby="licoes-titulo">
+  <div class="container">
+    <p class="label reveal">VI · Sabedoria</p>
+    <h2 id="licoes-titulo" class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,3.5vw,2.8rem);">As Três Lições de Ouro</h2>
+    <div class="licoes-grid">
+      <div class="licao reveal">
+        <div class="licao-num">I</div>
+        <h3>Purificar o Coração</h3>
+        <p>Purificar o próprio coração vai desenterrando camadas de medos, memórias e injustiças. Quando trabalhar com as Chamas, seja com o coração limpo. Mente quieta, espinha ereta, coração tranquilo.</p>
+      </div>
+      <div class="licao reveal">
+        <div class="licao-num">II</div>
+        <h3>Estudar Tudo</h3>
+        <p>Estudar, pesquisar, examinar todas as escrituras — sagradas ou profanas. Ler tudo, de notícias à bula de remédio. Com coração limpo, olhos claros e mente tranquila.</p>
+      </div>
+      <div class="licao reveal">
+        <div class="licao-num">III</div>
+        <h3>Servir à Vida</h3>
+        <p>Até um pequeno pensamento de amor serve à Vida. Começa em pequenos pensamentos e se transforma em grandes projetos. A guerra deixa de ser luta, passa a ser jogo — e depois, dança.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══ -->
+<section id="contato" aria-labelledby="contato-titulo">
+  <div class="container">
+    <div class="contato-inner reveal">
+      <p class="label" style="justify-content:center;">VII · Conexão</p>
+      <h2 id="contato-titulo">Encontre-me no Mundo</h2>
+      <p>"Se fizer sentido para você, seja bem-vindo ao meu canal."</p>
+      <div class="social-links">
+        <a href="https://instagram.com/marialuciahub" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+          @marialuciahub
+        </a>
+        <a href="#blog" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Escritos
+        </a>
+      </div>
+      <p style="font-size:0.82rem;color:var(--cinza-escuro);font-family:'Inter',sans-serif;">Mais canais em breve · YouTube · Podcast</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">Maria Lucia Morya</div>
+  <p>Chamas Gêmeas · Jornada da Alma · Governo Divino</p>
+  <p style="margin-top:0.5rem;">
+    <button id="admin-trigger" style="background:none;border:none;color:rgba(106,100,96,0.25);font-size:0.55rem;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:0.1em;display:none;" title="Área Administrativa">⚙ admin</button>
+  </p>
+</footer>
+
+<!-- ══ MODAL LEITURA / YOUTUBE ══ -->
+<div class="modal-overlay" id="read-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <button class="modal-close" id="read-close" aria-label="Fechar">✕</button>
+    <p class="modal-tag" id="modal-tag"></p>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-yt-wrap" id="modal-yt-wrap" style="display:none;">
+      <iframe id="modal-yt-iframe" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" src=""></iframe>
+    </div>
+    <div class="modal-content" id="modal-content"></div>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="comments-section" id="comments-section"></div>
+  </div>
+</div>
+
+<!-- ══ AUTH OVERLAY ══ -->
+<div id="auth-overlay" role="dialog" aria-modal="true">
+  <div class="auth-box">
+    <button class="auth-close" id="auth-close">✕</button>
+    <h2>Maria Lucia Morya</h2>
+    <p class="auth-subtitle">Entre para comentar nos escritos</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Entrar</button>
+      <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Criar conta</button>
+    </div>
+
+    <!-- Google -->
+    <button class="btn-google" id="btn-google">
+      <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continuar com Google
+    </button>
+
+    <div class="auth-divider">ou use seu e-mail</div>
+
+    <!-- Login -->
+    <div id="form-login">
+      <input type="email" class="auth-field" id="login-email" placeholder="E-mail" autocomplete="email">
+      <input type="password" class="auth-field" id="login-pass" placeholder="Senha" autocomplete="current-password">
+      <button class="auth-btn" id="login-btn">Entrar</button>
+    </div>
+
+    <!-- Cadastro -->
+    <div id="form-register" style="display:none;">
+      <input type="text" class="auth-field" id="reg-name" placeholder="Seu nome">
+      <input type="email" class="auth-field" id="reg-email" placeholder="E-mail">
+      <input type="password" class="auth-field" id="reg-pass" placeholder="Senha (mínimo 6 caracteres)">
+      <button class="auth-btn" id="register-btn">Criar conta</button>
+    </div>
+
+    <p class="auth-error" id="auth-error"></p>
+  </div>
+</div>
+
+<!-- ══ ADMIN OVERLAY ══ -->
+<div id="admin-overlay" role="dialog" aria-modal="true">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <h2>✦ Gerenciar Escritos</h2>
+      <button class="admin-close-btn" id="admin-close">Fechar Painel</button>
+    </div>
+
+    <div class="admin-form" id="post-form-container">
+      <h3 id="form-title-label">Novo Escrito</h3>
+
+      <div class="form-row">
+        <label for="f-titulo">Título</label>
+        <input type="text" id="f-titulo" placeholder="Título do escrito">
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-row" style="margin:0;">
+          <label for="f-tag">Categoria</label>
+          <select id="f-tag">
+            <option value="Chamas Gêmeas">Chamas Gêmeas</option>
+            <option value="Jornada da Alma">Jornada da Alma</option>
+            <option value="Governo Divino">Governo Divino</option>
+            <option value="Memória">Memória</option>
+            <option value="Reflexão">Reflexão</option>
+          </select>
+        </div>
+        <div class="form-row" style="margin:0;">
+          <label for="f-yt">Link YouTube (opcional)</label>
+          <input type="url" id="f-yt" placeholder="https://youtu.be/...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="f-thumb">URL da imagem de capa (opcional)</label>
+        <input type="url" id="f-thumb" placeholder="https://... (link direto da imagem)">
+        <p class="form-hint">Cole o link direto de uma imagem. Se tiver YouTube, a thumbnail é automática.</p>
+      </div>
+
+      <div class="form-row">
+        <label for="f-excerpt">Resumo (aparece no card)</label>
+        <input type="text" id="f-excerpt" placeholder="Uma frase que capture a essência do texto...">
+      </div>
+
+      <div class="form-row">
+        <label for="f-content">Texto completo</label>
+        <textarea id="f-content" rows="8" placeholder="Escreva o texto aqui. Parágrafos separados por linha em branco. Links: [texto](url)"></textarea>
+        <p class="form-hint">Parágrafos: separe com uma linha em branco. Links: [texto](url)</p>
+      </div>
+
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.4rem;">
+        <button class="btn-admin" id="form-save-btn">Publicar Escrito</button>
+        <button class="btn-admin btn-admin-ghost" id="form-cancel-btn" style="display:none;">Cancelar Edição</button>
+      </div>
+    </div>
+
+    <div>
+      <p class="label" style="margin-bottom:1.2rem;">Escritos Publicados</p>
+      <div class="admin-posts-list" id="admin-posts-list">
+        <p style="color:var(--cinza-escuro);font-style:italic;font-size:0.9rem;">Carregando...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════════════════════════════════════════════
+   FIREBASE + LÓGICA
+══════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signOut,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  updateProfile, GoogleAuthProvider, signInWithPopup
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import {
+  getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
+  onSnapshot, query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+/* ── CONFIG FIREBASE ── */
+const firebaseConfig = {
+  apiKey: "AIzaSyD_93E6wM05rj9WJGNE0rj8h-FtOowWV3g",
+  authDomain: "moryalucia.firebaseapp.com",
+  projectId: "moryalucia",
+  storageBucket: "moryalucia.firebasestorage.app",
+  messagingSenderId: "183103545768",
+  appId: "1:183103545768:web:122201f185d96ca6683d9d"
+};
+
+const ADMIN_EMAIL = "mariaakashahub@gmail.com";
+
+const app      = initializeApp(firebaseConfig);
+const auth     = getAuth(app);
+const db       = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+
+/* ── ESTADO ── */
+let currentUser   = null;
+let isAdmin       = false;
+let editingId     = null;
+let currentPostId = null;
+let unsubComments = null;
+
+/* ══════════════════════════════════════
+   AUTH STATE
+══════════════════════════════════════ */
+onAuthStateChanged(auth, user => {
+  currentUser = user;
+  isAdmin = user?.email === ADMIN_EMAIL;
+
+  const nameEl = document.getElementById('nav-user-name');
+  const btnEl  = document.getElementById('nav-auth-btn');
+  const adminTrigger = document.getElementById('admin-trigger');
+
+  if (user) {
+    nameEl.textContent = (user.displayName || user.email.split('@')[0]).split(' ')[0];
+    nameEl.style.display = '';
+    btnEl.textContent = 'Sair';
+    adminTrigger.style.display = isAdmin ? '' : 'none';
+  } else {
+    nameEl.style.display = 'none';
+    btnEl.textContent = 'Entrar';
+    adminTrigger.style.display = 'none';
+  }
+});
+
+/* ══════════════════════════════════════
+   POSTS — Firestore real-time
+══════════════════════════════════════ */
+const postsRef = collection(db, 'posts_marya');
+const qPosts   = query(postsRef, orderBy('criadoEm', 'desc'));
+
+onSnapshot(qPosts, snap => {
+  const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderBlog(posts);
+  if (document.getElementById('admin-overlay').classList.contains('open')) {
+    renderAdminList(posts);
+  }
+  window._posts = posts;
+}, err => {
+  console.error('Posts error:', err);
+  renderBlog([]);
+});
+
+/* ══════════════════════════════════════
+   HELPERS
+══════════════════════════════════════ */
+function ytIdFromUrl(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&\s]+)/);
+  return m ? m[1] : null;
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return `${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function timeAgo(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const diff = Math.floor((Date.now() - d)/1000);
+  if (diff < 60) return 'agora mesmo';
+  if (diff < 3600) return `há ${Math.floor(diff/60)} min`;
+  if (diff < 86400) return `há ${Math.floor(diff/3600)}h`;
+  return formatDate(ts);
+}
+
+function tagGrad(tag) {
+  const map = {
+    'Chamas Gêmeas':   'var(--violeta), #3a1f6a',
+    'Jornada da Alma': 'var(--azul-veu), #0d1b2a',
+    'Governo Divino':  '#1a3a3a, #0d1b2a',
+    'Memória':         '#3a2a1a, #1a0d0a',
+    'Reflexão':        '#2a1a3a, var(--violeta)',
+  };
+  return map[tag] || 'var(--azul-veu), var(--violeta)';
+}
+
+function markdownToHtml(text) {
+  if (!text) return '';
+  return text.split('\n\n').map(para => {
+    if (!para.trim()) return '';
+    let html = para.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    html = html.replace(/(^|\s)(https?:\/\/[^\s<]+)/g,
+      '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+    return `<p>${html}</p>`;
+  }).join('');
+}
+
+let toastTimer;
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = isError ? '#8B2020' : 'var(--dourado)';
+  el.style.color = isError ? '#fff' : 'var(--azul-profundo)';
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* ══════════════════════════════════════
+   RENDER BLOG
+══════════════════════════════════════ */
+function renderBlog(posts) {
+  const grid = document.getElementById('blog-grid');
+  if (!posts || !posts.length) {
+    grid.innerHTML = `<div class="blog-empty">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin:0 auto 0.6rem;opacity:0.3;">
+        <path d="M16 4L19 13H28L21 18.5L23.5 27.5L16 22L8.5 27.5L11 18.5L4 13H13L16 4Z" stroke="#DEB96A" stroke-width="1.4" fill="none"/>
+      </svg>
+      <p>Os primeiros escritos chegarão em breve.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = posts.map(p => {
+    const ytId = ytIdFromUrl(p.yt || '');
+    let thumbHtml = '';
+
+    if (ytId) {
+      thumbHtml = `
+        <div class="post-card-thumb" style="background:linear-gradient(135deg,${tagGrad(p.tag)});">
+          <img src="https://img.youtube.com/vi/${ytId}/mqdefault.jpg" alt="${escHtml(p.titulo)}" onerror="this.style.display='none'">
+          <div class="yt-overlay">
+            <div class="yt-play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          </div>
+        </div>`;
+    } else if (p.thumb) {
+      thumbHtml = `
+        <div class="post-card-thumb">
+          <img src="${escHtml(p.thumb)}" alt="${escHtml(p.titulo)}" onerror="this.style.display='none'">
+        </div>`;
+    } else {
+      thumbHtml = `
+        <div class="post-card-thumb" style="background:linear-gradient(135deg,${tagGrad(p.tag)});">
+          <svg viewBox="0 0 60 60" fill="none" style="width:44px;height:44px;opacity:0.25;position:relative;z-index:1;">
+            <ellipse cx="30" cy="30" rx="6" ry="16" fill="none" stroke="#DEB96A" stroke-width="1"/>
+            <ellipse cx="30" cy="30" rx="6" ry="16" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(60 30 30)"/>
+            <ellipse cx="30" cy="30" rx="6" ry="16" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(120 30 30)"/>
+            <circle cx="30" cy="30" r="4" fill="none" stroke="#DEB96A" stroke-width="1"/>
+          </svg>
+        </div>`;
+    }
+
+    return `
+    <article class="post-card reveal" data-id="${p.id}">
+      ${thumbHtml}
+      <div class="post-card-body">
+        <p class="post-card-tag">${escHtml(p.tag)}</p>
+        <h3 class="post-card-title">${escHtml(p.titulo)}</h3>
+        <p class="post-card-excerpt">${escHtml(p.excerpt || '')}</p>
+        <div class="post-card-footer">
+          <span class="post-card-date">${formatDate(p.criadoEm)}</span>
+          <button class="post-card-link" data-id="${p.id}">Ler →</button>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+
+  grid.querySelectorAll('.post-card').forEach(card => {
+    card.addEventListener('click', () => openPost(card.dataset.id));
+  });
+
+  setTimeout(() => observeReveal(), 50);
+}
+
+/* ══════════════════════════════════════
+   MODAL LEITURA + YOUTUBE + COMENTÁRIOS
+══════════════════════════════════════ */
+function openPost(id) {
+  const post = (window._posts || []).find(p => p.id === id);
+  if (!post) return;
+  currentPostId = id;
+
+  document.getElementById('modal-tag').textContent   = post.tag;
+  document.getElementById('modal-title').textContent = post.titulo;
+  document.getElementById('modal-meta').textContent  = formatDate(post.criadoEm);
+
+  const ytId   = ytIdFromUrl(post.yt || '');
+  const ytWrap = document.getElementById('modal-yt-wrap');
+  const ytFrame = document.getElementById('modal-yt-iframe');
+
+  if (ytId) {
+    ytFrame.src = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`;
+    ytWrap.style.display = '';
+  } else {
+    ytFrame.src = '';
+    ytWrap.style.display = 'none';
+  }
+
+  document.getElementById('modal-content').innerHTML = markdownToHtml(post.content || '');
+  document.getElementById('read-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  loadComments(id);
+}
+
+function closePost() {
+  document.getElementById('read-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('modal-yt-iframe').src = '';
+  if (unsubComments) { unsubComments(); unsubComments = null; }
+  currentPostId = null;
+}
+
+/* ══════════════════════════════════════
+   COMENTÁRIOS
+══════════════════════════════════════ */
+function loadComments(postId) {
+  if (unsubComments) unsubComments();
+  const sec = document.getElementById('comments-section');
+  const qC  = query(
+    collection(db, 'posts_marya', postId, 'comments'),
+    orderBy('criadoEm', 'asc')
+  );
+  unsubComments = onSnapshot(qC, snap => {
+    const comments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderComments(comments, postId, sec);
+  }, err => console.error('Comments error:', err));
+}
+
+function renderComments(comments, postId, sec) {
+  let html = `<div class="comments-title">Comentários (${comments.length})</div>`;
+
+  if (currentUser) {
+    html += `
+      <div class="comment-form">
+        <textarea class="comment-input" id="comment-input" placeholder="Deixe seu comentário..."></textarea>
+        <button class="comment-submit" id="comment-submit-btn">Enviar</button>
+      </div>`;
+  } else {
+    html += `<p class="comments-login-note"><button onclick="window.openAuth()">Entre</button> para deixar um comentário.</p>`;
+  }
+
+  if (!comments.length) {
+    html += `<p class="comments-empty">Seja a primeira a comentar.</p>`;
+  } else {
+    html += `<div class="comment-list">`;
+    comments.forEach(c => {
+      const canDelete = isAdmin || (currentUser && currentUser.uid === c.autorUid);
+      html += `
+        <div class="comment-item">
+          <div class="comment-item-header">
+            <span class="comment-author">${escHtml(c.autorNome || 'Anônimo')}</span>
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span class="comment-date">${timeAgo(c.criadoEm)}</span>
+              ${canDelete ? `<button class="comment-delete" data-cid="${c.id}">Excluir</button>` : ''}
+            </div>
+          </div>
+          <p class="comment-text">${escHtml(c.texto)}</p>
+        </div>`;
+    });
+    html += `</div>`;
+  }
+
+  sec.innerHTML = html;
+
+  const submitBtn = document.getElementById('comment-submit-btn');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', async () => {
+      const txt = document.getElementById('comment-input').value.trim();
+      if (!txt) return;
+      submitBtn.disabled = true;
+      try {
+        await addDoc(collection(db, 'posts_marya', postId, 'comments'), {
+          texto: txt,
+          autorNome: currentUser.displayName || currentUser.email.split('@')[0],
+          autorUid: currentUser.uid,
+          criadoEm: serverTimestamp()
+        });
+        document.getElementById('comment-input').value = '';
+      } catch(e) { showToast('Erro ao enviar comentário.', true); }
+      submitBtn.disabled = false;
+    });
+  }
+
+  sec.querySelectorAll('.comment-delete').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Excluir este comentário?')) return;
+      try {
+        await deleteDoc(doc(db, 'posts_marya', postId, 'comments', btn.dataset.cid));
+        showToast('Comentário removido.');
+      } catch(e) { showToast('Erro ao excluir.', true); }
+    });
+  });
+}
+
+/* ══════════════════════════════════════
+   AUTH — login / cadastro / google
+══════════════════════════════════════ */
+window.openAuth = function() {
+  document.getElementById('auth-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('auth-error').textContent = '';
+};
+window.switchTab = function(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('form-login').style.display    = tab === 'login'    ? '' : 'none';
+  document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('auth-error').textContent = '';
+};
+
+function closeAuth() {
+  document.getElementById('auth-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('auth-close').addEventListener('click', closeAuth);
+
+document.getElementById('nav-auth-btn').addEventListener('click', () => {
+  if (currentUser) {
+    signOut(auth).then(() => showToast('Até logo!'));
+  } else {
+    window.openAuth();
+  }
+});
+
+// Google Sign-In
+document.getElementById('btn-google').addEventListener('click', async () => {
+  try {
+    await signInWithPopup(auth, googleProvider);
+    closeAuth();
+    showToast('Bem-vinda!');
+  } catch(e) {
+    const errEl = document.getElementById('auth-error');
+    if (e.code === 'auth/popup-closed-by-user') return;
+    errEl.textContent = 'Erro ao entrar com Google. Tente novamente.';
+    console.error(e);
+  }
+});
+
+// Login e-mail
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('auth-error');
+  errEl.textContent = '';
+  if (!email || !pass) { errEl.textContent = 'Preencha todos os campos.'; return; }
+  document.getElementById('login-btn').disabled = true;
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    closeAuth();
+    showToast('Bem-vinda de volta!');
+  } catch(e) {
+    const msgs = {
+      'auth/user-not-found':     'E-mail não cadastrado.',
+      'auth/wrong-password':     'Senha incorreta.',
+      'auth/invalid-credential': 'E-mail ou senha incorretos.',
+      'auth/too-many-requests':  'Muitas tentativas. Aguarde.',
+    };
+    errEl.textContent = msgs[e.code] || 'Erro ao entrar. Tente novamente.';
+  }
+  document.getElementById('login-btn').disabled = false;
+});
+
+// Cadastro
+document.getElementById('register-btn').addEventListener('click', async () => {
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
+  const errEl = document.getElementById('auth-error');
+  errEl.textContent = '';
+  if (!name || !email || !pass) { errEl.textContent = 'Preencha todos os campos.'; return; }
+  if (pass.length < 6) { errEl.textContent = 'Senha deve ter mínimo 6 caracteres.'; return; }
+  document.getElementById('register-btn').disabled = true;
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+    closeAuth();
+    showToast('Conta criada! Bem-vinda.');
+  } catch(e) {
+    const msgs = {
+      'auth/email-already-in-use': 'E-mail já cadastrado.',
+      'auth/invalid-email':        'E-mail inválido.',
+      'auth/weak-password':        'Senha fraca. Use no mínimo 6 caracteres.',
+    };
+    errEl.textContent = msgs[e.code] || 'Erro ao criar conta.';
+  }
+  document.getElementById('register-btn').disabled = false;
+});
+
+// Enter no campo senha
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+
+/* ══════════════════════════════════════
+   ADMIN — CRUD POSTS
+══════════════════════════════════════ */
+document.getElementById('admin-trigger').addEventListener('click', () => {
+  if (!isAdmin) { window.openAuth(); return; }
+  document.getElementById('admin-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (window._posts) renderAdminList(window._posts);
+});
+
+document.getElementById('admin-close').addEventListener('click', () => {
+  document.getElementById('admin-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  cancelEdit();
+});
+
+function renderAdminList(posts) {
+  const list = document.getElementById('admin-posts-list');
+  if (!posts.length) {
+    list.innerHTML = '<p style="color:var(--cinza-escuro);font-style:italic;font-size:0.9rem;">Nenhum escrito ainda.</p>';
+    return;
+  }
+  list.innerHTML = posts.map(p => `
+    <div class="admin-post-item">
+      <div class="admin-post-info">
+        <h4>${escHtml(p.titulo)}</h4>
+        <span>${escHtml(p.tag)} · ${formatDate(p.criadoEm)}</span>
+      </div>
+      <div class="admin-post-actions">
+        <button class="btn-admin btn-admin-ghost" data-edit="${p.id}" style="font-size:0.58rem;padding:0.5rem 0.8rem;">Editar</button>
+        <button class="btn-admin btn-admin-danger" data-del="${p.id}">Excluir</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.addEventListener('click', () => startEdit(btn.dataset.edit));
+  });
+  list.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', () => deletePost(btn.dataset.del));
+  });
+}
+
+function startEdit(id) {
+  const p = (window._posts || []).find(x => x.id === id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('f-titulo').value  = p.titulo  || '';
+  document.getElementById('f-tag').value     = p.tag     || 'Chamas Gêmeas';
+  document.getElementById('f-yt').value      = p.yt      || '';
+  document.getElementById('f-thumb').value   = p.thumb   || '';
+  document.getElementById('f-excerpt').value = p.excerpt || '';
+  document.getElementById('f-content').value = p.content || '';
+  document.getElementById('form-title-label').textContent   = 'Editar Escrito';
+  document.getElementById('form-save-btn').textContent      = 'Salvar Alterações';
+  document.getElementById('form-cancel-btn').style.display  = 'inline-flex';
+  document.getElementById('post-form-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingId = null;
+  ['f-titulo','f-excerpt','f-content','f-yt','f-thumb'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const tagEl = document.getElementById('f-tag');
+  if (tagEl) tagEl.value = 'Chamas Gêmeas';
+  document.getElementById('form-title-label').textContent  = 'Novo Escrito';
+  document.getElementById('form-save-btn').textContent     = 'Publicar Escrito';
+  document.getElementById('form-cancel-btn').style.display = 'none';
+}
+
+document.getElementById('form-cancel-btn').addEventListener('click', cancelEdit);
+
+document.getElementById('form-save-btn').addEventListener('click', async () => {
+  if (!isAdmin) { showToast('Sem permissão.', true); return; }
+  const titulo  = document.getElementById('f-titulo').value.trim();
+  const tag     = document.getElementById('f-tag').value;
+  const yt      = document.getElementById('f-yt').value.trim();
+  const thumb   = document.getElementById('f-thumb').value.trim();
+  const excerpt = document.getElementById('f-excerpt').value.trim();
+  const content = document.getElementById('f-content').value.trim();
+
+  if (!titulo || !content) { showToast('Preencha título e texto.', true); return; }
+
+  const data = { titulo, tag, yt, thumb, excerpt, content };
+  const btn  = document.getElementById('form-save-btn');
+  btn.disabled = true;
+
+  try {
+    if (editingId) {
+      await updateDoc(doc(db, 'posts_marya', editingId), data);
+      showToast('Escrito atualizado ✦');
+    } else {
+      data.criadoEm = serverTimestamp();
+      await addDoc(postsRef, data);
+      showToast('Escrito publicado ✦');
+    }
+    cancelEdit();
+  } catch(e) {
+    console.error(e);
+    showToast('Erro ao salvar.', true);
+  }
+  btn.disabled = false;
+});
+
+async function deletePost(id) {
+  if (!isAdmin) return;
+  if (!confirm('Excluir este escrito permanentemente?')) return;
+  try {
+    await deleteDoc(doc(db, 'posts_marya', id));
+    showToast('Escrito removido.');
+  } catch(e) { showToast('Erro ao excluir.', true); }
+}
+
+/* ══════════════════════════════════════
+   EVENTOS GERAIS
+══════════════════════════════════════ */
+document.getElementById('read-close').addEventListener('click', closePost);
+document.getElementById('read-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closePost();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closePost(); closeAuth(); }
+});
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 40);
+}, { passive: true });
+
+// Mobile nav
+const burger    = document.getElementById('burger-btn');
+const mobileNav = document.getElementById('mobile-nav');
+burger.addEventListener('click', () => {
+  mobileNav.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('mobile-close').addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+});
+mobileNav.querySelectorAll('.mobile-link').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// Scroll reveal
+function observeReveal() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+observeReveal();
+</script>
+</body>
+</html>
 
