@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist de Entrega — Maria Lúcia Morya</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #2a2a3a;
+    --accent: #8b6fff;
+    --accent2: #c9a0ff;
+    --gold: #d4af6e;
+    --text: #e8e4f0;
+    --muted: #7a738a;
+    --done: #3d9e6d;
+    --radius: 10px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--accent2), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* ── PILLAR CARD ── */
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(139, 111, 255, 0.05);
+  }
+  .pillar-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .pillar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--accent2);
+  }
+  .pillar-badge {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ── SUB-SECTION ── */
+  .sub-section {
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+  }
+  .sub-section:last-child { border-bottom: none; }
+  .sub-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  /* ── ITEM ROW ── */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(42,42,58,0.35);
+  }
+  .item:last-child { border-bottom: none; }
+
+  .check-wrap {
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .check-wrap input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: transparent;
+    transition: all .2s;
+    position: relative;
+  }
+  .check-wrap input[type="checkbox"]:checked {
+    background: var(--done);
+    border-color: var(--done);
+  }
+  .check-wrap input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    color: #fff;
+    font-size: 11px;
+    top: 1px;
+    left: 3px;
+  }
+
+  .item-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .item-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .item.done .item-label {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  /* ── EDITABLE FIELD ── */
+  .edit-field {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 8px 11px;
+    resize: vertical;
+    width: 100%;
+    min-height: 54px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .edit-field:focus {
+    border-color: var(--accent);
+  }
+  .edit-field::placeholder { color: var(--muted); font-style: italic; }
+
+  /* ── SAVE INDICATOR ── */
+  #save-indicator {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--done);
+    opacity: 0;
+    transition: opacity .4s;
+    pointer-events: none;
+  }
+  #save-indicator.show { opacity: 1; }
+
+  /* ── COPY BUTTON ── */
+  .copy-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 24px;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  #btn-copy {
+    background: linear-gradient(135deg, var(--accent), #6a40e8);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 13px 36px;
+    transition: all .2s;
+    box-shadow: 0 4px 24px rgba(139,111,255,0.35);
+  }
+  #btn-copy:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 32px rgba(139,111,255,0.5);
+  }
+  #btn-copy:active { transform: translateY(0); }
+
+  .progress-text {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .progress-text span { color: var(--accent2); font-weight: 500; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .pillar-header { padding: 14px 16px; }
+    .sub-section { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="save-indicator">✦ Salvo</div>
+
+<header>
+  <div class="eyebrow">Relatório de Entrega</div>
+  <h1>Maria Lúcia Morya</h1>
+  <p class="subtitle">Blog · Site · Instagram — Marca Pessoal Digital</p>
+</header>
+
+<div class="container" id="checklist">
+
+  <!-- ══════════════ BLOG ══════════════ -->
+  <div class="pillar" id="pillar-blog">
+    <div class="pillar-header">
+      <span class="pillar-icon">✦</span>
+      <span class="pillar-title">Blog</span>
+      <span class="pillar-badge" id="badge-blog">0 / 0</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Pilares Narrativos</div>
+      <div class="item" data-key="blog-pilar-1">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-pilar-1"></div>
+        <div class="item-body">
+          <span class="item-label">Chamas Gêmeas</span>
+          <textarea class="edit-field" data-key="tf-blog-pilar-1" placeholder="Descreva a abordagem / temas definidos para este pilar…"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-pilar-2">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-pilar-2"></div>
+        <div class="item-body">
+          <span class="item-label">Governo Divino</span>
+          <textarea class="edit-field" data-key="tf-blog-pilar-2" placeholder="Descreva a abordagem / temas definidos para este pilar…"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-pilar-3">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-pilar-3"></div>
+        <div class="item-body">
+          <span class="item-label">Propósito da Alma</span>
+          <textarea class="edit-field" data-key="tf-blog-pilar-3" placeholder="Descreva a abordagem / temas definidos para este pilar…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Identidade Visual — Arquiteto Digital</div>
+      <div class="item" data-key="blog-paleta">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-paleta"></div>
+        <div class="item-body">
+          <span class="item-label">Paleta de Cores</span>
+          <textarea class="edit-field" data-key="tf-blog-paleta" placeholder="Ex: #1a0a2e (fundo), #d4af6e (ouro), #8b6fff (roxo)… liste os hexes definidos."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-simbolos">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-simbolos"></div>
+        <div class="item-body">
+          <span class="item-label">Símbolos</span>
+          <textarea class="edit-field" data-key="tf-blog-simbolos" placeholder="Quais símbolos foram definidos para a marca? (ex: chama, estrela, espiral…)"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-arquetipo">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-arquetipo"></div>
+        <div class="item-body">
+          <span class="item-label">Arquétipo</span>
+          <textarea class="edit-field" data-key="tf-blog-arquetipo" placeholder="Ex: A Sábia, A Maga, A Sacerdotisa… descreva o arquétipo definido."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-tom">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-tom"></div>
+        <div class="item-body">
+          <span class="item-label">Tom de Voz</span>
+          <textarea class="edit-field" data-key="tf-blog-tom" placeholder="Ex: Sereno, elevado, amoroso, profético, feminino-sagrado… descreva o tom."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-estrategia">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-estrategia"></div>
+        <div class="item-body">
+          <span class="item-label">Estratégia</span>
+          <textarea class="edit-field" data-key="tf-blog-estrategia" placeholder="Descreva a estratégia de conteúdo e publicação definida para o blog."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-prompts">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-prompts"></div>
+        <div class="item-body">
+          <span class="item-label">Biblioteca de Prompts</span>
+          <textarea class="edit-field" data-key="tf-blog-prompts" placeholder="Link ou descrição da biblioteca de prompts entregue. Ex: Google Drive / Notion…"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-manifesto">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-manifesto"></div>
+        <div class="item-body">
+          <span class="item-label">Manifesto</span>
+          <textarea class="edit-field" data-key="tf-blog-manifesto" placeholder="Cole aqui o manifesto da marca ou um resumo do que foi definido."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="blog-matriz">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-blog-matriz"></div>
+        <div class="item-body">
+          <span class="item-label">Documento Matriz</span>
+          <textarea class="edit-field" data-key="tf-blog-matriz" placeholder="Descreva o documento matriz entregue. Link de acesso, localização, instrução de uso…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SITE ══════════════ -->
+  <div class="pillar" id="pillar-site">
+    <div class="pillar-header">
+      <span class="pillar-icon">◈</span>
+      <span class="pillar-title">Site</span>
+      <span class="pillar-badge" id="badge-site">0 / 0</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Copy & Identidade</div>
+      <div class="item" data-key="site-copybranding">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-copybranding"></div>
+        <div class="item-body">
+          <span class="item-label">Copy Branding</span>
+          <textarea class="edit-field" data-key="tf-site-copybranding" placeholder="Cole ou descreva as copies principais definidas (headline, tagline, chamadas…)"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="site-mktpessoal">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-mktpessoal"></div>
+        <div class="item-body">
+          <span class="item-label">Marketing Pessoal</span>
+          <textarea class="edit-field" data-key="tf-site-mktpessoal" placeholder="Descreva a estratégia de marketing pessoal aplicada no site."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="site-imagem">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-imagem"></div>
+        <div class="item-body">
+          <span class="item-label">Imagem de Maria Morya</span>
+          <textarea class="edit-field" data-key="tf-site-imagem" placeholder="Link da imagem utilizada (Cloudinary, Google Drive, etc.) e instruções de uso."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Efeitos Visuais & Animações</div>
+      <div class="item" data-key="site-efeitos-texto">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-efeitos-texto"></div>
+        <div class="item-body"><span class="item-label">Efeitos nos textos e animações</span></div>
+      </div>
+      <div class="item" data-key="site-efeitos-img">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-efeitos-img"></div>
+        <div class="item-body"><span class="item-label">Efeitos na imagem</span></div>
+      </div>
+      <div class="item" data-key="site-mobile">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-mobile"></div>
+        <div class="item-body"><span class="item-label">Harmonização completa Mobile & Desktop</span></div>
+      </div>
+      <div class="item" data-key="site-scroll">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-scroll"></div>
+        <div class="item-body"><span class="item-label">Scroll com efeito zoom + glitch + sugestão harmônica</span></div>
+      </div>
+      <div class="item" data-key="site-fogo">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-fogo"></div>
+        <div class="item-body"><span class="item-label">Scroll com efeitos de fogo azul harmônico</span></div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Sessão de Pitch — Autobiografia</div>
+      <div class="item" data-key="site-pitch">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-pitch"></div>
+        <div class="item-body">
+          <span class="item-label">Sessão de pitch profissional — Natural, genuína e fluida</span>
+          <textarea class="edit-field" data-key="tf-site-pitch" placeholder="Descreva o pitch entregue ou anotações sobre o conteúdo definido."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="site-botao-acesso">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-botao-acesso"></div>
+        <div class="item-body">
+          <span class="item-label">Botão de acesso com efeitos de luz</span>
+          <textarea class="edit-field" data-key="tf-site-botao-acesso" placeholder="Link do Hotmart: hotmart.com/… (corrigir depois). WhatsApp: 51 9 96374908"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Blog Modal (dentro do site)</div>
+      <div class="item" data-key="site-blog-botao">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-blog-botao"></div>
+        <div class="item-body">
+          <span class="item-label">Botão do blog com logo — "Clique aqui para acessar meu blog"</span>
+          <textarea class="edit-field" data-key="tf-site-blog-botao" placeholder="Link da logo para o botão: (cole aqui o link de imagem da logo)"></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="site-modal-blog">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-modal-blog"></div>
+        <div class="item-body">
+          <span class="item-label">Modal mini-blog — livre para comentários e compartilhamentos</span>
+        </div>
+      </div>
+      <div class="item" data-key="site-firebase-login">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-firebase-login"></div>
+        <div class="item-body">
+          <span class="item-label">Login Firebase (mariaakashahub@gmail.com) — somente Maria Lúcia pode postar/editar</span>
+        </div>
+      </div>
+      <div class="item" data-key="site-posts-midia">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-posts-midia"></div>
+        <div class="item-body">
+          <span class="item-label">Posts com título, imagem (link), legenda e vídeos do YouTube em modal</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Captura de Lead</div>
+      <div class="item" data-key="site-lead">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-site-lead"></div>
+        <div class="item-body">
+          <span class="item-label">Captura de lead no final da página (próximo livro) → WhatsApp 51 9 96374908</span>
+          <textarea class="edit-field" data-key="tf-site-lead" placeholder="Descreva o texto de captura definido ou mensagem padrão enviada no WhatsApp."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ INSTAGRAM ══════════════ -->
+  <div class="pillar" id="pillar-instagram">
+    <div class="pillar-header">
+      <span class="pillar-icon">◇</span>
+      <span class="pillar-title">Instagram</span>
+      <span class="pillar-badge" id="badge-instagram">0 / 0</span>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Identidade do Perfil</div>
+      <div class="item" data-key="ig-bio">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-ig-bio"></div>
+        <div class="item-body">
+          <span class="item-label">Bio</span>
+          <textarea class="edit-field" data-key="tf-ig-bio" placeholder="Cole aqui a bio final definida para o Instagram."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="ig-logo">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-ig-logo"></div>
+        <div class="item-body">
+          <span class="item-label">Logo</span>
+          <textarea class="edit-field" data-key="tf-ig-logo" placeholder="Link do arquivo da logo entregue (Google Drive, Cloudinary…) + observações."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="ig-10imagens">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-ig-10imagens"></div>
+        <div class="item-body">
+          <span class="item-label">10 Imagens (feed base)</span>
+          <textarea class="edit-field" data-key="tf-ig-10imagens" placeholder="Link da pasta com as 10 imagens + orientações de uso e ordem sugerida."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Conteúdo</div>
+      <div class="item" data-key="ig-30posts">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-ig-30posts"></div>
+        <div class="item-body">
+          <span class="item-label">30 Posts</span>
+          <textarea class="edit-field" data-key="tf-ig-30posts" placeholder="Link da planilha/documento com os 30 posts (copy + referência visual)."></textarea>
+        </div>
+      </div>
+      <div class="item" data-key="ig-carrosseis">
+        <div class="check-wrap"><input type="checkbox" data-key="cb-ig-carrosseis"></div>
+        <div class="item-body">
+          <span class="item-label">3 Carrosséis — Mini Campanha</span>
+          <textarea class="edit-field" data-key="tf-ig-carrosseis" placeholder="Link dos 3 carrosséis + descrição de cada campanha (tema, objetivo, CTA)."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <div class="sub-title">Observações Gerais</div>
+      <div class="item" data-key="ig-obs">
+        <div class="check-wrap" style="visibility:hidden"><input type="checkbox"></div>
+        <div class="item-body">
+          <textarea class="edit-field" data-key="tf-ig-obs" style="min-height:80px" placeholder="Anotações livres sobre o Instagram — combinados, próximos passos, instruções de postagem…"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ── COPY BAR ── -->
+<div class="copy-bar">
+  <span class="progress-text">Concluído: <span id="progress-count">0 / 0</span></span>
+  <button id="btn-copy">⧉ Copiar Checklist</button>
+</div>
+
+<script>
+  const STORAGE_KEY = 'marialucia_checklist_v1';
+
+  // ── Load state ──
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  }
+
+  // ── Save state ──
+  let saveTimer;
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('[data-key]').forEach(el => {
+      if (el.type === 'checkbox') state[el.dataset.key] = el.checked;
+      else if (el.tagName === 'TEXTAREA') state[el.dataset.key] = el.value;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showSaveIndicator();
+  }
+
+  function showSaveIndicator() {
+    const ind = document.getElementById('save-indicator');
+    ind.classList.add('show');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => ind.classList.remove('show'), 1500);
+  }
+
+  // ── Restore state ──
+  function restoreState() {
+    const state = loadState();
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const val = state[el.dataset.key];
+      if (val === undefined) return;
+      if (el.type === 'checkbox') {
+        el.checked = val;
+        updateItemStyle(el);
+      } else if (el.tagName === 'TEXTAREA') {
+        el.value = val;
+      }
+    });
+    updateProgress();
+  }
+
+  // ── Item style on check ──
+  function updateItemStyle(cb) {
+    const row = cb.closest('.item');
+    if (!row) return;
+    row.classList.toggle('done', cb.checked);
+  }
+
+  // ── Progress counters ──
+  function updateProgress() {
+    const allCbs = [...document.querySelectorAll('input[type="checkbox"][data-key]')];
+    const total = allCbs.length;
+    const done = allCbs.filter(c => c.checked).length;
+    document.getElementById('progress-count').textContent = `${done} / ${total}`;
+
+    // per-pillar badges
+    ['blog','site','instagram'].forEach(id => {
+      const pillar = document.getElementById(`pillar-${id}`);
+      const cbs = [...pillar.querySelectorAll('input[type="checkbox"][data-key]')];
+      const d = cbs.filter(c => c.checked).length;
+      document.getElementById(`badge-${id}`).textContent = `${d} / ${cbs.length}`;
+    });
+  }
+
+  // ── Listeners ──
+  document.querySelectorAll('input[type="checkbox"][data-key]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      updateItemStyle(cb);
+      updateProgress();
+      saveState();
+    });
+  });
+
+  document.querySelectorAll('textarea[data-key]').forEach(ta => {
+    ta.addEventListener('input', () => saveState());
+  });
+
+  // ── Copy ──
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const lines = [];
+    lines.push('═══════════════════════════════════');
+    lines.push('  CHECKLIST DE ENTREGA — MARIA LÚCIA MORYA');
+    lines.push('  Blog · Site · Instagram');
+    lines.push(`  Gerado em: ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})}`);
+    lines.push('═══════════════════════════════════');
+    lines.push('');
+
+    const pillars = document.querySelectorAll('.pillar');
+    pillars.forEach(pillar => {
+      const title = pillar.querySelector('.pillar-title').textContent;
+      const badge = pillar.querySelector('[id^="badge-"]').textContent;
+      lines.push(`▌ ${title.toUpperCase()} [${badge}]`);
+      lines.push('─────────────────────────────');
+
+      pillar.querySelectorAll('.sub-section').forEach(sec => {
+        const subTitle = sec.querySelector('.sub-title');
+        if (subTitle) lines.push(`\n  › ${subTitle.textContent}`);
+
+        sec.querySelectorAll('.item').forEach(item => {
+          const cb = item.querySelector('input[type="checkbox"]');
+          const label = item.querySelector('.item-label');
+          if (!label) return;
+          const status = cb && cb.checked ? '[✓]' : '[ ]';
+          lines.push(`  ${status} ${label.textContent}`);
+
+          const ta = item.querySelector('textarea');
+          if (ta && ta.value.trim()) {
+            ta.value.trim().split('\n').forEach(l => lines.push(`        ${l}`));
+          }
+        });
+      });
+
+      lines.push('');
+    });
+
+    const allCbs = [...document.querySelectorAll('input[type="checkbox"][data-key]')];
+    const total = allCbs.length;
+    const done = allCbs.filter(c => c.checked).length;
+    lines.push('═══════════════════════════════════');
+    lines.push(`  TOTAL CONCLUÍDO: ${done} / ${total}`);
+    lines.push('═══════════════════════════════════');
+
+    const text = lines.join('\n');
+
+    if (navigator.share) {
+      navigator.share({ title: 'Checklist Maria Lúcia Morya', text }).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  });
+
+  function fallbackCopy(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btn-copy');
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copiado!';
+      btn.style.background = 'linear-gradient(135deg, #3d9e6d, #2d7a56)';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.style.background = '';
+      }, 2000);
+    });
+  }
+
+  // ── Init ──
+  restoreState();
+  updateProgress();
+</script>
+</body>
+</html>
