@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Lúcia: A Última Camada</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav {
+            margin-left: auto;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 6rem;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666666;
+            font-weight: 300;
+        }
+
+        /* Divider */
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: #000000;
+            margin: 2rem auto;
+        }
+
+        /* Chapters */
+        .chapters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+
+        .chapter-card {
+            padding: 2rem;
+            border: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .chapter-card:hover {
+            border-color: #000000;
+            background: #f9f9f9;
+        }
+
+        .chapter-number {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #999999;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-title {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #000000;
+        }
+
+        /* Content section */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .section-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333333;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Quote */
+        .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #666666;
+            padding: 2rem;
+            border-left: 2px solid #000000;
+            margin: 2rem 0;
+            font-weight: 300;
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #333333;
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999999;
+            font-size: 13px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 6rem;
+        }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #f9f9f9;
+            border-right: 1px solid #f0f0f0;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            display: none;
+        }
+
+        .toc-sidebar.active {
+            display: block;
+        }
+
+        .toc-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666666;
+            transition: all 0.3s;
+            border-left: 2px solid transparent;
+        }
+
+        .toc-item:hover {
+            color: #000000;
+            border-left-color: #000000;
+        }
+
+        .toc-item.active {
+            color: #000000;
+            border-left-color: #000000;
+            background: #ffffff;
+        }
+
+        /* Toggle button */
+        .toc-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .toc-toggle:hover {
+            background: #333333;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .toc-toggle {
+                display: flex;
+            }
+
+            .toc-sidebar {
+                width: 100%;
+                left: -100%;
+                transition: left 0.3s;
+                z-index: 998;
+            }
+
+            .toc-sidebar.active {
+                left: 0;
+            }
+
+            .chapters {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Maria Lúcia</div>
+        <nav>
+            <a onclick="scrollToSection('hero')">Início</a>
+            <a onclick="scrollToSection('chapters')">Capítulos</a>
+            <a onclick="toggleTOC()">Índice</a>
+        </nav>
+    </header>
+
+    <!-- TOC Sidebar -->
+    <aside class="toc-sidebar" id="tocSidebar">
+        <div class="toc-item active" onclick="showChapter(0)">Introdução</div>
+        <div class="toc-item" onclick="showChapter(1)">O Grito do Silêncio</div>
+        <div class="toc-item" onclick="showChapter(2)">A Ponte entre Mundos</div>
+        <div class="toc-item" onclick="showChapter(3)">O Preço da Honestidade</div>
+        <div class="toc-item" onclick="showChapter(4)">O Encontro na Porta</div>
+        <div class="toc-item" onclick="showChapter(5)">Darjeeling: A Ascensão</div>
+        <div class="toc-item" onclick="showChapter(6)">As Três Lições de Ouro</div>
+        <div class="toc-item" onclick="showChapter(7)">O Legado</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="hero">
+            <h1>Maria Lúcia</h1>
+            <div class="divider"></div>
+            <p>A Última Camada</p>
+        </section>
+
+        <!-- Chapters Grid -->
+        <section class="chapters" id="chapters">
+            <div class="chapter-card" onclick="showChapter(0)">
+                <div class="chapter-number">Introdução</div>
+                <div class="chapter-title">O Silêncio</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(1)">
+                <div class="chapter-number">Capítulo I</div>
+                <div class="chapter-title">O Grito do Silêncio</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(2)">
+                <div class="chapter-number">Capítulo II</div>
+                <div class="chapter-title">A Ponte entre Mundos</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(3)">
+                <div class="chapter-number">Capítulo III</div>
+                <div class="chapter-title">O Preço da Honestidade</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(4)">
+                <div class="chapter-number">Capítulo IV</div>
+                <div class="chapter-title">O Encontro na Porta</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(5)">
+                <div class="chapter-number">Capítulo V</div>
+                <div class="chapter-title">Darjeeling: A Ascensão</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(6)">
+                <div class="chapter-number">Capítulo VI</div>
+                <div class="chapter-title">As Três Lições de Ouro</div>
+            </div>
+            <div class="chapter-card" onclick="showChapter(7)">
+                <div class="chapter-number">Epílogo</div>
+                <div class="chapter-title">O Legado</div>
+            </div>
+        </section>
+
+        <!-- Content Sections -->
+        <section class="content-section active" id="content-0">
+            <h2 class="section-title">O Silêncio</h2>
+            <div class="section-content">
+                <p>Eu sou Maria Lúcia, por sete anos, eu fui o silêncio. Trancada em quatro paredes, o mundo lá fora era um eco distante. Não era prisão, mas um casulo. Um casulo onde a vida, que eu achava que conhecia, se desfez em pó para revelar a última camada de quem eu realmente sou. Eu esperava o outro plano, sim. Mas o plano era outro: contar a minha história, a história que só se revelou quando tudo o mais se calou.</p>
+                <p>Minha vida, longa e cheia de curvas, ganhou um novo significado nesses anos de reclusão. Não importa a idade que se tenha: sempre há uma camada mais profunda a ser desvendada. E foi ali, na quietude forçada, que as perguntas mudaram. Os julgamentos se dissolveram e a voz, a minha voz mais autêntica, finalmente encontrou seu caminho para fora.</p>
+            </div>
+            <div class="nav-buttons">
+                <button disabled>← Anterior</button>
+                <button onclick="showChapter(1)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-1">
+            <h2 class="section-title">O Grito do Silêncio</h2>
+            <div class="section-content">
+                <p>Eu sempre fui uma peça fora do encaixe, uma melodia que não seguia a partitura. Aceitar isso, essa verdade nua e crua, foi a minha maior libertação. Não é fraqueza, é a marca de uma alma que veio com um propósito que não cabia em caixas.</p>
+                <p>Aos doze anos, o mundo me mostrou sua face mais dura. Minha mãe, em um momento de descuido, disse uma mentira e eu, uma criança com a verdade pulsando nas veias, não pude me calar. "Mãe, isso que a senhora falou não é verdade." A resposta foi um turbilhão. Fui jogada no chão, espancada, o pé dela no meu pescoço, exigindo que eu retirasse o que disse, mas a verdade, para mim, era mais forte que a dor. "Pode me matar, mas não era a verdade." Naquele chão de Teresina, no Piauí, eu entendi. A vida era uma batalha entre o real e o irreal. Entre a verdade e a mentira e eu escolhi meu lado, para sempre, sem desvios, nem uma única vez.</p>
+                <p>Minha história não começa comigo, começa com as mãos calejadas do meu pai, um candango que veio no pau de arara para construir Brasília. Ele ergueu a capital, eu herdei sua força, sua resiliência, sua fé bruta.</p>
+                <p>Filha de Seu Evaristo, nascida em Teresina, criada em Taguatinga, no Distrito Federal. A pobreza era o ar que eu respirava, mas nunca me definiu, era o cenário, não a peça.</p>
+                <p>Aos dez anos, minha avó Sabina, a única que me acolheu quando minha mãe me rejeitou, me pediu para ler a Bíblia. Todas as noites, depois do jantar. Ela amava Habacuque e eu a Justiça Divina. A Bíblia se tornou a trilha sonora da minha infância e a busca pelo sagrado, uma sede insaciável.</p>
+                <p>Aos quinze anos, o caminho da escola me levava a uma Igreja, O Brasil para Cristo. Eu entrava, assistia aos cultos, sentia uma conexão que não precisava de palavras. Fui batizada e no dia seguinte, vieram os gritos e as cintadas do meu pai, mas a chama, a chama da fé, já estava acesa. A ligação com Nossa Senhora, que eu sentia desde cedo, e a verdade eram forças que nem a fúria dele podia apagar.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(0)">← Anterior</button>
+                <button onclick="showChapter(2)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-2">
+            <h2 class="section-title">A Ponte entre Mundos</h2>
+            <div class="section-content">
+                <p>Em 1972, entrei na Universidade de Brasília, Psicologia. Não por vocação, mas para entender a loucura que era a minha família, a razão mais honesta que eu podia ter.</p>
+                <p>Na universidade, a história se repetia: filhos de ministros, empresários, deputados. Um mundo de dinheiro que eu nunca tive. Eu fazia concursos para garantir um ou dois salários mínimos. O que me movia era outra coisa: a fome de conhecimento, a sede de verdade.</p>
+                <p>Meus colegas no segundo ano do ensino médio, os melhores da turma, me chamavam de Geninha. Eles me aceitaram. Amizade, lealdade, respeito. Ali, eu encontrei um refúgio. Um lugar onde minha essência era vista, não minha origem. Um vislumbre de um mundo onde a verdade e a autenticidade eram a moeda mais valiosa.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(1)">← Anterior</button>
+                <button onclick="showChapter(3)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-3">
+            <h2 class="section-title">O Preço da Honestidade</h2>
+            <div class="section-content">
+                <p>Trabalhei na Secretaria de Ação Social, com os meninos de rua na Granja das Oliveiras. Fui sempre uma funcionária exemplar. Mas no serviço público, isso pouco importa. Nunca me desviei da Verdade e paguei o preço: salário mínimo, dois filhos para criar sozinha, expulsa de sindicatos por não aceitar mentiras, corrupções. Para subir, era preciso conhecer os poderosos. Eu não entendia o que fazia de errado.</p>
+                <p>Hoje, entendo: eu fazia tudo de certo. E pessoas corretas não são valorizadas em sistemas que dependem da cumplicidade.</p>
+                <div class="quote">Eu só tinha permissão para prosperar se fosse absolutamente correta, mas pessoas honestas são consideradas chatas.</div>
+                <p>Hoje me orgulho de ter passado por tudo, de olhar para trás sem medo, de encarar qualquer um nos olhos.</p>
+                <p>Nunca preciso pensar antes de falar, o que meu coração diz, eu digo. Eu tenho a Liberdade de Ser e de Existir.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(2)">← Anterior</button>
+                <button onclick="showChapter(4)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-4">
+            <h2 class="section-title">O Encontro na Porta: A Chama Gêmea</h2>
+            <div class="section-content">
+                <p>Minha jornada espiritual começou antes de eu saber o que buscava. Já fui católica, evangélica, espírita, nada me preenchia, até a Summit Lighthouse, a Igreja Universal e Triunfante. Uma igreja gnóstica cristã. Ali, encontrei meu lar.</p>
+                <p>Sempre buscando a Verdade. Sempre buscando a Deus com o critério que aprendi aos doze: não abrir mão da Verdade, não importa o custo.</p>
+                <p>Aos sessenta e seis, escrevi ao Conselho do Carma, cansada de sofrer. Dois anos depois, em uma terça-feira, oito da manhã, eu me preparava para o Grupo Paulo Veneziano, para o serviço do Mestre El Morya. Ouvi um barulhinho na porta, abri e lá estava ele: o Mestre El Morya.</p>
+                <p>Ele se apresentou. Disse que me acompanharia ao Grupo, por um mês e meio, toda terça. Na porta de casa, perguntei: "Mestre El Morya, o senhor tem vindo à minha casa toda terça-feira só para me acompanhar ao Grupo?"</p>
+                <p>Ele deu um passo para dentro. "Eu Sou o Mestre El Morya, sou um guerreiro da Ordem do Cristo, eu sou a sua Chama Gêmea. Estou aqui com autorização dos Mestres Ascensos para conversar com você."</p>
+                <p>Em choque, mas com a mente clara. "Mestre, eu gostaria muito de conversar sobre diversos assuntos, mas a gente sabe, qualquer coisa que a gente fala, o Universo inteiro fica ouvindo."</p>
+                <p>Ele perguntou: "Então, você quer se tornar a minha esposa?"</p>
+                <div class="quote">Silêncio. Olhei para o infinito. Pensei. E disse: "Eu quero."</div>
+                <p>Dentro de três dias, nos casaremos.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(3)">← Anterior</button>
+                <button onclick="showChapter(5)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-5">
+            <h2 class="section-title">Darjeeling: A Ascensão e o Casamento Sagrado</h2>
+            <div class="section-content">
+                <p>Darjeeling. Um lugar sagrado. Onde a Ascensão é possível. Onde o Casamento Sagrado acontece, a união com a Chama Gêmea, a Divindade se manifesta, a Verdade se revela.</p>
+                <p>No Conselho do Carma, em Darjeeling, foi onde tive a confirmação: carma transmutado, ascensão iniciada, a história completa da minha família, por que nasci ali, por que minha mãe, ao me ver, disse: "Essa menina é Filha de Deus. O que eu vou fazer com uma Filha de Deus?" e me rejeitou. Minha avó Sabina me criou.</p>
+                <p>Em Darjeeling, ascendi. Casei-me com El Morya. Tornei-me Maria Lúcia Morya. Sete anos se passaram, nunca estivemos tão harmoniosos, a guerra virou jogo, o jogo virou dança, a dança da vida, do amor, da verdade.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(4)">← Anterior</button>
+                <button onclick="showChapter(6)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-6">
+            <h2 class="section-title">As Três Lições de Ouro: A Essência</h2>
+            <div class="section-content">
+                <p>Sete décadas. Três ensinamentos que não posso guardar. São os pilares de quem eu sou e do que ofereço.</p>
+                <h3>I — Pureza de Coração:</h3>
+                <p>Desenterrar medos, memórias, injustiças. Desde os vinte, todo dia, eu pedia: "Purificai o meu coração. Mantém o meu coração amoroso, sincero e limpo." Dia após dia, ano após ano, até hoje.</p>
+                <div class="quote">A pureza do coração nos mantém enxergando a jornada com olhos límpidos.</div>
+                <h3>II — Estudo Constante:</h3>
+                <p>Pesquisar, examinar. Todas as escrituras. Notícias, bula de remédio. Com o coração limpo, olhos claros, mente tranquila. Conhecimento e discernimento. A Espada Flamejante da Verdade.</p>
+                <h3>III — Serviço:</h3>
+                <p>Servir à Vida. Um pequeno pensamento de amor já serve. Começa pequeno, vira grande projeto. Servir ao próximo, à humanidade, ao planeta.</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(5)">← Anterior</button>
+                <button onclick="showChapter(7)">Próximo →</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="content-7">
+            <h2 class="section-title">O Legado: A Voz que Permanece</h2>
+            <div class="section-content">
+                <div class="quote">Eu vim ao mundo fazer tudo que está escrito na minha história. Sinto-me honrada pela minha própria história.</div>
+                <p style="text-align: center; margin-top: 2rem;">— Maria Lúcia, Lúcia Morya</p>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showChapter(6)">← Anterior</button>
+                <button disabled>Próximo →</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Documento organizado a partir dos materiais da Arquitetura de Essência e Império Digital · 2026</p>
+        <p style="margin-top: 1rem;">Documento organizado a partir dos materiais da Mentoria AkashaHub · 2026</p>
+    </footer>
+
+    <!-- TOC Toggle Button -->
+    <button class="toc-toggle" id="tocToggle" onclick="toggleTOC()">☰</button>
+
+    <script>
+        function showChapter(index) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(`content-${index}`).classList.add('active');
+
+            // Update TOC
+            document.querySelectorAll('.toc-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Close TOC on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('tocSidebar').classList.remove('active');
+            }
+        }
+
+        function toggleTOC() {
+            document.getElementById('tocSidebar').classList.toggle('active');
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Close TOC when clicking outside
+        document.addEventListener('click', (e) => {
+            const toc = document.getElementById('tocSidebar');
+            const toggle = document.getElementById('tocToggle');
+            if (!toc.contains(e.target) && !toggle.contains(e.target) && window.innerWidth <= 768) {
+                toc.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
