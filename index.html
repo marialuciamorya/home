@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Maria Lucia Morya — Chamas Gêmeas, Jornada da Alma e Governo Divino. Um espaço de verdade, amor e discernimento.">
+<meta name="description" content="Maria Lucia Morya. Chamas Gêmeas, Jornada da Alma e Governo Divino. Um espaço de verdade, amor e discernimento.">
 <title>Maria Lucia Morya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,10 +160,11 @@ h1,h2,h3,h4 { line-height: 1.2; }
   border-radius: 50%;
   border: 2px solid rgba(196,147,58,0.35);
   box-shadow: 0 0 40px rgba(91,63,138,0.3);
-  background: linear-gradient(135deg, var(--azul-veu), var(--violeta));
+  background: transparent;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 2rem;
   position: relative; z-index: 1;
+  overflow: hidden;
 }
 
 .hero-sigil {
@@ -209,11 +210,98 @@ h1,h2,h3,h4 { line-height: 1.2; }
   letter-spacing: 0.2em; text-transform: uppercase;
   padding: 0.9rem 2.2rem; transition: var(--trans);
   display: inline-flex; align-items: center; gap: 0.5rem;
+  position: relative; overflow: hidden;
 }
-.btn--primary { background: var(--dourado); color: var(--azul-profundo); }
-.btn--primary:hover { background: var(--dourado-fino); }
-.btn--ghost { border: 1px solid rgba(196,147,58,0.4); color: var(--dourado-claro); }
-.btn--ghost:hover { border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+
+/* ripple no clique */
+.btn::after, .btn--produto::after, .nav-auth-btn::after, .social-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.12);
+  transform: scale(0);
+  border-radius: inherit;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.btn:active::after, .btn--produto:active::after,
+.nav-auth-btn:active::after, .social-link:active::after {
+  transform: scale(2.5);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.btn--primary {
+  background: var(--dourado); color: var(--azul-profundo);
+  animation: pulse-gold 3s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(196,147,58,0.5);
+}
+.btn--primary:hover {
+  background: var(--dourado-fino);
+  animation: none;
+  box-shadow: 0 6px 24px rgba(196,147,58,0.45);
+  transform: translateY(-2px);
+}
+@keyframes pulse-gold {
+  0%   { box-shadow: 0 0 0 0   rgba(196,147,58,0.55); }
+  60%  { box-shadow: 0 0 0 10px rgba(196,147,58,0); }
+  100% { box-shadow: 0 0 0 0   rgba(196,147,58,0); }
+}
+
+.btn--ghost {
+  border: 1px solid rgba(196,147,58,0.4); color: var(--dourado-claro);
+  animation: pulse-ghost 3.5s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+.btn--ghost:hover {
+  border-color: var(--dourado); background: rgba(196,147,58,0.06);
+  animation: none;
+  transform: translateY(-2px);
+}
+@keyframes pulse-ghost {
+  0%   { box-shadow: 0 0 0 0   rgba(196,147,58,0.3); }
+  60%  { box-shadow: 0 0 0 8px rgba(196,147,58,0); }
+  100% { box-shadow: 0 0 0 0   rgba(196,147,58,0); }
+}
+
+/* nav auth btn */
+.nav-auth-btn {
+  position: relative; overflow: hidden;
+  animation: pulse-nav 4s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+.nav-auth-btn:hover { animation: none; }
+@keyframes pulse-nav {
+  0%   { box-shadow: 0 0 0 0   rgba(196,147,58,0.25); }
+  60%  { box-shadow: 0 0 0 6px rgba(196,147,58,0); }
+  100% { box-shadow: 0 0 0 0   rgba(196,147,58,0); }
+}
+
+/* btn produto */
+.btn--produto {
+  position: relative; overflow: hidden;
+}
+.btn--produto:not([style*="opacity:0.5"]) {
+  animation: pulse-produto 2.8s ease-in-out infinite;
+}
+@keyframes pulse-produto {
+  0%   { box-shadow: 0 8px 30px rgba(196,147,58,0.25), 0 0 0 0   rgba(196,147,58,0.5); }
+  60%  { box-shadow: 0 8px 30px rgba(196,147,58,0.25), 0 0 0 12px rgba(196,147,58,0); }
+  100% { box-shadow: 0 8px 30px rgba(196,147,58,0.25), 0 0 0 0   rgba(196,147,58,0); }
+}
+
+/* social links */
+.social-link {
+  position: relative; overflow: hidden;
+  transition: var(--trans);
+}
+.social-link:hover {
+  background: rgba(196,147,58,0.08);
+  border-color: var(--dourado);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,147,58,0.2);
+}
 
 /* ── SOBRE ── */
 #sobre { padding: 7rem 0; }
@@ -847,11 +935,190 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
   .produto-capa { max-width: 220px; margin: 0 auto; }
 }
 
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+/* ═══════════════════════════════════════════
+   REVEAL — variantes por direção
+═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+              transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+.reveal-left  { opacity: 0; transform: translateX(-40px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal-left.visible  { opacity: 1; transform: translateX(0); }
+
+.reveal-right { opacity: 0; transform: translateX(40px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale { opacity: 0; transform: scale(0.93);
+  transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* delays em cascata */
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.35s; }
+.reveal-d4 { transition-delay: 0.5s; }
+
+/* ═══════════════════════════════════════════
+   SCROLL PROGRESS LINE
+═══════════════════════════════════════════ */
+#scroll-line {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 1px;
+  background: linear-gradient(to right, var(--violeta), var(--dourado), var(--dourado-fino));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(196,147,58,0.5);
+}
+
+/* ═══════════════════════════════════════════
+   TÍTULO — LETRA A LETRA (split text)
+═══════════════════════════════════════════ */
+.split-title .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.split-title.visible .char { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════
+   IMAGEM — aura + parallax
+═══════════════════════════════════════════ */
+.img-reveal {
+  position: relative;
+  overflow: visible;
+}
+.img-reveal img {
+  transition: transform 0.1s linear, filter 1.2s ease;
+  filter: brightness(0.85) saturate(0.8);
+}
+.img-reveal.visible img {
+  filter: brightness(1) saturate(1);
+}
+.img-reveal::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: 0 0 0px rgba(196,147,58,0);
+  transition: box-shadow 1.4s ease;
+  pointer-events: none;
+}
+.img-reveal.visible::after {
+  box-shadow: 0 0 40px rgba(196,147,58,0.2), 0 0 80px rgba(91,63,138,0.15);
+}
+
+/* ═══════════════════════════════════════════
+   LINHA DOURADA UNDERSCORE nos títulos H2
+═══════════════════════════════════════════ */
+.underline-gold {
+  position: relative;
+  display: inline-block;
+}
+.underline-gold::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(to right, var(--dourado), transparent);
+  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+.underline-gold.visible::after { width: 100%; }
+
+/* ═══════════════════════════════════════════
+   HERO — PORTRAIT PULSE suave
+═══════════════════════════════════════════ */
+.hero-portrait-placeholder {
+  animation: portrait-breathe 5s ease-in-out infinite;
+}
+@keyframes portrait-breathe {
+  0%, 100% { box-shadow: 0 0 30px rgba(91,63,138,0.25), 0 0 0px rgba(196,147,58,0); }
+  50%       { box-shadow: 0 0 55px rgba(91,63,138,0.45), 0 0 20px rgba(196,147,58,0.18); }
+}
+
+/* ═══════════════════════════════════════════
+   TIMELINE — dot brilhante
+═══════════════════════════════════════════ */
+.tl-item::before {
+  transition: box-shadow 0.6s ease;
+}
+.tl-item.visible::before {
+  box-shadow: 0 0 0 3px rgba(196,147,58,0.15), 0 0 16px rgba(196,147,58,0.7);
+}
+
+/* ═══════════════════════════════════════════
+   CARD — hover lift refinado
+═══════════════════════════════════════════ */
+.post-card, .missao-card, .talento, .licao {
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.3s ease,
+              box-shadow 0.4s ease;
+}
+.post-card:hover, .missao-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 30px rgba(196,147,58,0.08);
+}
+.talento:hover {
+  transform: translateX(4px);
+}
+.licao:hover {
+  box-shadow: 0 0 0 1px rgba(196,147,58,0.3), 0 8px 30px rgba(0,0,0,0.2);
+}
+
+/* ═══════════════════════════════════════════
+   MANIFESTO — fade word a word
+═══════════════════════════════════════════ */
+.manifesto-word {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.manifesto-box.visible .manifesto-word { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   SMOOTH CURSOR TRAIL (dot)
+═══════════════════════════════════════════ */
+#cursor-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--dourado);
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+#cursor-ring {
+  position: fixed;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,147,58,0.5);
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+  opacity: 0;
+}
+body:hover #cursor-dot,
+body:hover #cursor-ring { opacity: 1; }
 </style>
 </head>
 <body>
+
+<div id="scroll-line"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 
 <!-- ══ NAVBAR ══ -->
 <nav id="navbar" aria-label="Navegação principal">
@@ -888,14 +1155,12 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
 
 <!-- ══ HERO ══ -->
 <section id="hero" aria-label="Introdução">
-  <div class="hero-portrait-placeholder" aria-hidden="true">
-    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.45;">
-      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1"/>
-      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(45 30 30)"/>
-      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(90 30 30)"/>
-      <ellipse cx="30" cy="30" rx="6" ry="14" fill="none" stroke="#DEB96A" stroke-width="1" transform="rotate(135 30 30)"/>
-      <circle cx="30" cy="30" r="4" fill="none" stroke="#DEB96A" stroke-width="1"/>
-    </svg>
+  <div class="hero-portrait-placeholder img-reveal" aria-hidden="true">
+    <img
+      src="https://res.cloudinary.com/dcbarseus/image/upload/v1782178771/e2bc5e01-6ca2-41dd-aad8-a736a7a22a9b_wpfzr1.png"
+      alt="Maria Lucia Morya"
+      style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+    >
   </div>
 
   <div class="hero-sigil">
@@ -913,26 +1178,11 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
   </p>
 
   <div class="hero-icons" aria-hidden="true">
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
-      <rect x="9" y="2" width="4" height="18" rx="1" fill="#DEB96A"/>
-      <rect x="2" y="7" width="18" height="4" rx="1" fill="#DEB96A"/>
-    </svg>
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
-      <circle cx="11" cy="11" r="4" fill="#B87498"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(60 11 11)"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(120 11 11)"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(180 11 11)"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(240 11 11)"/>
-      <ellipse cx="11" cy="5" rx="2.5" ry="3.5" fill="#B87498" opacity="0.7" transform="rotate(300 11 11)"/>
-    </svg>
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="opacity:0.55;">
-      <path d="M11 20C7.5 20 5 17.5 5 14C5 10 9 8 9 5C9 7.5 10.5 9 11 9C11 7 12 5.5 13 4C13 8 17 10 17 14C17 17.5 14.5 20 11 20Z" fill="#C4933A"/>
-      <path d="M11 18C9 18 8 16.5 8 15C8 13 10 12 10 11C10 12 11.5 13 12 14C12 12.5 12.5 11.5 13 11C13 13.5 15 14.5 15 16C15 17.5 13 18 11 18Z" fill="#F2D98C"/>
-    </svg>
-    <svg width="28" height="16" viewBox="0 0 28 16" fill="none" style="opacity:0.55;">
-      <path d="M14 8C14 8 11 3 7 3C3 3 1 5.5 1 8C1 10.5 3 13 7 13C11 13 14 8 14 8ZM14 8C14 8 17 3 21 3C25 3 27 5.5 27 8C27 10.5 25 13 21 13C17 13 14 8 14 8Z" stroke="#DEB96A" stroke-width="1.5" fill="none"/>
-    </svg>
+    <img
+      src="https://res.cloudinary.com/dcbarseus/image/upload/v1782179657/1dc4a02a-b813-4c71-9355-10f1499c2a9d_tsgych.png"
+      alt=""
+      style="max-height:80px;width:auto;opacity:0.9;"
+    >
   </div>
 
   <div class="hero-cta">
@@ -948,14 +1198,14 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
       <div class="sobre-texto reveal">
         <p class="label">I · Quem Sou</p>
         <h2 id="sobre-titulo">Sobre a Verdade</h2>
-        <p>Sou Maria Lucia. Nasci em <em>Teresina — PI</em>, cresci em <em>Taguatinga — DF</em>, vivo hoje em <em>Porto Alegre — RS</em>. Tenho 74 anos, sou mãe de dois filhos e avó de três netas.</p>
-        <p>Meu pai veio de pau-de-arara para construir Brasília — era pedreiro, mestre-de-obras, um candango que trouxe a família toda para o Distrito Federal em 1960. Éramos muito pobres. Entrei na UnB em 1972, me formei em Psicologia em 1979. Escolhi aquele curso porque queria compreender a mim mesma dentro da loucura da família.</p>
-        <p>Aprendi a ler com 5 anos de idade — antes de entrar na escola, sem que ninguém soubesse explicar como. Criei meus dois filhos sozinha, quase sempre com salário, sem jamais dobrar a verdade para tornar a vida mais fácil.</p>
+        <p>Sou Maria Lucia. Nasci em <em>Teresina, PI</em>, cresci em <em>Taguatinga, DF</em>, vivo hoje em <em>Porto Alegre, RS</em>. Tenho 74 anos, sou mãe de dois filhos e avó de três netas.</p>
+        <p>Meu pai veio de pau-de-arara para construir Brasília, era pedreiro, mestre-de-obras, um candango que trouxe a família toda para o Distrito Federal em 1960. Éramos muito pobres. Entrei na UnB em 1972, me formei em Psicologia em 1979. Escolhi aquele curso porque queria compreender a mim mesma dentro da loucura da família.</p>
+        <p>Aprendi a ler com 5 anos de idade, antes de entrar na escola, sem que ninguém soubesse explicar como. Criei meus dois filhos sozinha, quase sempre com salário, sem jamais dobrar a verdade para tornar a vida mais fácil.</p>
         <div class="sobre-blockquote">
           <p>"Pode me matar, mas não era a Verdade."</p>
           <cite>— Maria Lucia, 12 anos, ao resistir a uma surra por não retirar uma afirmação verdadeira</cite>
         </div>
-        <p>O dom que corre nas minhas veias é <em>ser cada vez mais verdadeira</em>. Nunca me desviei desse critério — mesmo perdendo empregos, sendo expulsa de sindicatos, criando filhos no limite. A Liberdade de Ser e de Existir foi muito cara. <em>Confesso que vivi. Confesso que valeu a pena.</em></p>
+        <p>O dom que corre nas minhas veias é <em>ser cada vez mais verdadeira</em>. Nunca me desviei desse critério, mesmo perdendo empregos, sendo expulsa de sindicatos, criando filhos no limite. A Liberdade de Ser e de Existir foi muito cara. <em>Confesso que vivi. Confesso que valeu a pena.</em></p>
       </div>
 
       <div class="sobre-talentos reveal">
@@ -982,7 +1232,7 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
           </svg>
           <div class="talento-body">
             <h4>Oração &amp; Conexão Divina</h4>
-            <p>Da frase "Deus todo-poderoso" repetida baixinho à ascensão a Darjeeling — uma linha ininterrupta de cinquenta anos.</p>
+            <p>Da frase "Deus todo-poderoso" repetida baixinho à ascensão a Darjeeling, uma linha ininterrupta de cinquenta anos.</p>
           </div>
         </div>
         <div class="talento">
@@ -1021,7 +1271,7 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
       </div>
       <div class="missao-card reveal">
         <h3>Visão</h3>
-        <p>A mulher adorando a Deusa-Mãe e Deus-Pai. O homem adorando o Deus-Pai e a Deusa-Mãe. O equilíbrio Feminino-Masculino instaurado — a Nova Consciência</p>
+        <p>A mulher adorando a Deusa-Mãe e Deus-Pai. O homem adorando o Deus-Pai e a Deusa-Mãe. O equilíbrio Feminino-Masculino instaurado, a Nova Consciência</p>
       </div>
       <div class="missao-card reveal">
         <h3>Propósito</h3>
@@ -1030,37 +1280,48 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
     </div>
     <div class="manifesto-box reveal">
       <p>Eu e o meu Pai Somos Um.<br>Eu e a minha Mãe Somos Um.<br>Eu e a minha Chama Gêmea Somos Um.</p>
-      <p>Nós Somos Um — Aqui-Agora no Coração de Alpha e Ômega.</p>
+      <p>Nós Somos Um, Aqui-Agora no Coração de Alpha e Ômega.</p>
     </div>
     <div style="margin-top:3rem; max-width:640px;" class="reveal">
       <p class="label">A Promessa</p>
-      <p style="font-size:1.05rem;color:rgba(245,242,237,0.78);">Se você é uma pessoa que não mente — que não altera nem um ponto e vírgula para se justificar — você encontrou um abrigo aqui. Este espaço é construído sobre a <em style="font-style:italic;color:var(--dourado-claro);">Espada Flamejante da Verdade e da Justiça</em>.</p>
-      <p style="font-size:1.15rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--branco);margin-top:1rem;">"Venha receber um abraço caloroso, sincero e limpo — para o início, o meio e o fim da sua primeira jornada."</p>
+      <p style="font-size:1.05rem;color:rgba(245,242,237,0.78);">Se você é uma pessoa que não mente, que não altera nem um ponto e vírgula para se justificar. Você encontrou um abrigo aqui. Este espaço é construído sobre a <em style="font-style:italic;color:var(--dourado-claro);">Espada Flamejante da Verdade e da Justiça</em>.</p>
+      <p style="font-size:1.15rem;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--branco);margin-top:1rem;">"Venha receber um abraço caloroso, sincero e limpo, para o início, o meio e o fim da sua primeira jornada."</p>
     </div>
   </div>
 </section>
 
-<!-- ══ PRODUTO — AUTOBIOGRAFIA ══ -->
+<!-- ══ PRODUTO - AUTOBIOGRAFIA ══ -->
 <section id="produto" aria-labelledby="produto-titulo">
   <div class="container">
     <p class="label reveal">III · Obra</p>
     <div class="produto-inner">
       <div class="reveal" style="display:flex;justify-content:center;">
-        <div class="produto-capa">
-          <div class="produto-capa-titulo">
-            <div style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.3em;color:rgba(196,147,58,0.6);text-transform:uppercase;margin-bottom:1.2rem;">Autobiografia</div>
-            <div class="produto-linha"></div>
-            <h3>Confesso que Vivi.<br>Confesso que Valeu a Pena.</h3>
-            <div class="produto-linha"></div>
-            <p>Maria Lucia Morya</p>
-          </div>
+        <div class="produto-capa" style="background:none;border:none;box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 60px rgba(91,63,138,0.2);overflow:hidden;padding:0;position:relative;">
+          <img
+            src="https://res.cloudinary.com/dcbarseus/image/upload/v1782180004/IMG-20260618-WA0000_juro4k.jpg"
+            alt="Capa do livro: Confesso que Vivi. Confesso que Valeu a Pena."
+            style="width:100%;height:100%;object-fit:cover;display:block;"
+          >
+          <!-- vinheta -->
+          <div style="
+            position:absolute;inset:0;pointer-events:none;
+            background:
+              radial-gradient(ellipse 90% 90% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%),
+              linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 30%, transparent 65%, rgba(0,0,0,0.5) 100%),
+              linear-gradient(to right,  rgba(0,0,0,0.2) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.2) 100%);
+          "></div>
+          <!-- borda luminosa interna -->
+          <div style="
+            position:absolute;inset:0;pointer-events:none;
+            box-shadow:inset 0 0 60px rgba(91,63,138,0.35), inset 0 0 20px rgba(196,147,58,0.12);
+          "></div>
         </div>
       </div>
 
       <div class="produto-texto reveal">
         <h2 id="produto-titulo">74 Anos de Verdade Escrita em Vida</h2>
-        <p>Uma autobiografia não é um relato de conquistas — é o mapa de uma alma que escolheu, repetidamente, a verdade sobre o conforto. Cada capítulo desta obra foi vivido antes de ser escrito.</p>
-        <p>De Teresina a Porto Alegre, da infância pobre ao encontro com o Mestre El Morya, da UnB ao Conselho do Carma — esta é a história de uma mulher que <em>nunca dobrou a verdade</em> para tornar a vida mais fácil.</p>
+        <p>Uma autobiografia não é um relato de conquistas: é o mapa de uma alma que escolheu, repetidamente, a verdade sobre o conforto. Cada capítulo desta obra foi vivido antes de ser escrito.</p>
+        <p>De Teresina a Porto Alegre, da infância pobre ao encontro com o Mestre El Morya, da UnB ao Conselho do Carma. Esta é a história de uma mulher que <em>nunca dobrou a verdade</em> para tornar a vida mais fácil.</p>
         <p>Para quem já sentiu que a realidade é mais larga do que nos ensinaram. Para quem escolheu a integridade mesmo quando ela custou caro.</p>
 
         <div class="produto-preco">
@@ -1109,7 +1370,7 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
     <h2 id="jornada-titulo" class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,3.5vw,2.8rem);margin-bottom:0;">A Jornada do Herói Invisível</h2>
     <div class="timeline">
       <div class="tl-item reveal">
-        <p class="tl-era">Teresina — PI · Infância</p>
+        <p class="tl-era">Teresina, PI · Infância</p>
         <h3>Antes de Todos os Inícios</h3>
         <p>Nasci numa família que travava uma guerra religiosa de quarenta anos. Minha mãe me rejeitou ao nascer e minha avó Sabina me acolheu. Aprendi a ler antes da escola. Já cantava para Nossa Senhora.</p>
       </div>
@@ -1125,13 +1386,13 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
       </div>
       <div class="tl-item reveal">
         <p class="tl-era">1972–1979</p>
-        <h3>UnB — Psicologia</h3>
+        <h3>UnB, Psicologia</h3>
         <p>Entrei na Universidade de Brasília para compreender a mim mesma dentro da loucura da família. Estudei ao lado de filhas de ministros e empresários, sem jamais ter dinheiro. Permaneci íntegra.</p>
       </div>
       <div class="tl-item reveal">
         <p class="tl-era">Vida adulta</p>
         <h3>A Igreja Universal e Triunfante</h3>
-        <p>Encontrei a Summit Lighthouse — Igreja Gnóstica Cristã que ensinava sobre Chamas Gêmeas, Mestres Ascensos e os Registros Akáshicos. Recebi o 2º Sacramento: a realização do sonho de ser iniciada nos Mistérios Sagrados.</p>
+        <p>Encontrei a Summit Lighthouse, Igreja Gnóstica Cristã que ensinava sobre Chamas Gêmeas, Mestres Ascensos e os Registros Akáshicos. Recebi o 2º Sacramento: a realização do sonho de ser iniciada nos Mistérios Sagrados.</p>
       </div>
       <div class="tl-item reveal">
         <p class="tl-era">66 anos</p>
@@ -1144,7 +1405,7 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
         <p>El Morya disse: "Eu Sou o Mestre El Morya. Sou a sua Chama Gêmea. Você quer se tornar a minha esposa?" E disse: "Eu quero." Três dias depois, nos casamos. Já se passaram sete anos.</p>
       </div>
       <div class="tl-item reveal">
-        <p class="tl-era">Darjeeling — Plano Espiritual</p>
+        <p class="tl-era">Darjeeling, Plano Espiritual</p>
         <h3>A Ascensão e o Nome Recebido</h3>
         <p>No Conselho do Carma, recebi a confirmação do início da minha Ascensão. Recebi o nome: <em style="font-style:italic;color:var(--dourado-claro);">Lúcia de El Morya</em>.</p>
       </div>
@@ -1166,12 +1427,12 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
       <div class="licao reveal">
         <div class="licao-num">II</div>
         <h3>Estudar Tudo</h3>
-        <p>Estudar, pesquisar, examinar todas as escrituras — sagradas ou profanas. Ler tudo, de notícias à bula de remédio. Com coração limpo, olhos claros e mente tranquila.</p>
+        <p>Estudar, pesquisar, examinar todas as escrituras, sagradas ou profanas. Ler tudo, de notícias à bula de remédio. Com coração limpo, olhos claros e mente tranquila.</p>
       </div>
       <div class="licao reveal">
         <div class="licao-num">III</div>
         <h3>Servir à Vida</h3>
-        <p>Até um pequeno pensamento de amor serve à Vida. Começa em pequenos pensamentos e se transforma em grandes projetos. A guerra deixa de ser luta, passa a ser jogo — e depois, dança.</p>
+        <p>Até um pequeno pensamento de amor serve à Vida. Começa em pequenos pensamentos e se transforma em grandes projetos. A guerra deixa de ser luta, passa a ser jogo e, depois,, dança.</p>
       </div>
     </div>
   </div>
@@ -1345,7 +1606,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import {
   getAuth, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  updateProfile, GoogleAuthProvider, signInWithPopup
+  updateProfile, GoogleAuthProvider, signInWithPopup,
+  signInWithRedirect, getRedirectResult
 } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import {
   getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
@@ -1699,15 +1961,35 @@ document.getElementById('nav-auth-btn').addEventListener('click', () => {
   }
 });
 
-// Google Sign-In
-document.getElementById('btn-google').addEventListener('click', async () => {
-  try {
-    await signInWithPopup(auth, googleProvider);
+// Captura resultado de redirect (volta do Google no mobile)
+getRedirectResult(auth).then(result => {
+  if (result?.user) {
     closeAuth();
     showToast('Bem-vinda!');
+  }
+}).catch(e => {
+  if (e.code !== 'auth/no-current-user') console.error('Redirect result error:', e);
+});
+
+// Google Sign-In — popup no desktop, redirect no mobile
+document.getElementById('btn-google').addEventListener('click', async () => {
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  try {
+    if (isMobile) {
+      await signInWithRedirect(auth, googleProvider);
+    } else {
+      await signInWithPopup(auth, googleProvider);
+      closeAuth();
+      showToast('Bem-vinda!');
+    }
   } catch(e) {
     const errEl = document.getElementById('auth-error');
     if (e.code === 'auth/popup-closed-by-user') return;
+    if (e.code === 'auth/popup-blocked') {
+      // fallback para redirect se popup bloqueado
+      await signInWithRedirect(auth, googleProvider);
+      return;
+    }
     errEl.textContent = 'Erro ao entrar com Google. Tente novamente.';
     console.error(e);
   }
@@ -1917,20 +2199,137 @@ mobileNav.querySelectorAll('.mobile-link').forEach(a => {
   });
 });
 
-// Scroll reveal
-function observeReveal() {
-  if (!('IntersectionObserver' in window)) {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-    return;
-  }
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+/* ═══════════════════════════════════════════
+   EFEITOS MINIMALISTAS
+═══════════════════════════════════════════ */
+
+// ── 1. SCROLL PROGRESS LINE ──
+const scrollLine = document.getElementById('scroll-line');
+function updateScrollLine() {
+  const pct = scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  scrollLine.style.width = Math.min(pct, 100) + '%';
 }
-observeReveal();
+window.addEventListener('scroll', updateScrollLine, { passive: true });
+
+// ── 2. CURSOR PERSONALIZADO ──
+const dot  = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let cx = 0, cy = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  cx = e.clientX; cy = e.clientY;
+  dot.style.left = cx + 'px';
+  dot.style.top  = cy + 'px';
+}, { passive: true });
+
+// ring segue com lag suave
+(function animRing() {
+  rx += (cx - rx) * 0.12;
+  ry += (cy - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
+
+// ring cresce em links/botões
+document.querySelectorAll('a, button, .post-card, .talento, .missao-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width  = '50px';
+    ring.style.height = '50px';
+    ring.style.borderColor = 'rgba(196,147,58,0.9)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width  = '28px';
+    ring.style.height = '28px';
+    ring.style.borderColor = 'rgba(196,147,58,0.5)';
+  });
+});
+
+// ── 3. SPLIT TEXT nos títulos H2 principais ──
+function splitTitleIntoChars(el) {
+  const text = el.textContent;
+  el.innerHTML = '';
+  el.classList.add('split-title');
+  [...text].forEach((ch, i) => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    span.style.transitionDelay = (i * 0.03) + 's';
+    el.appendChild(span);
+  });
+}
+
+// Aplicar só nos H2 de seções — não no H1 do hero
+document.querySelectorAll('#sobre h2, #missao h2, #produto h2, #jornada h2, #licoes h2, #contato h2').forEach(splitTitleIntoChars);
+
+// Aplicar underline dourado nos mesmos H2
+document.querySelectorAll('#sobre h2, #missao h2, #produto h2, #jornada h2, #licoes h2, #contato h2').forEach(h => {
+  h.classList.add('underline-gold');
+});
+
+// ── 4. MANIFESTO — palavras aparecem em sequência ──
+document.querySelectorAll('.manifesto-box p').forEach(p => {
+  const words = p.innerHTML.split(/([ \n]|<br>)/);
+  p.innerHTML = words.map(w => {
+    if (w === ' ' || w === '\n' || w === '<br>') return w;
+    if (!w.trim()) return w;
+    return `<span class="manifesto-word">${w}</span>`;
+  }).join('');
+});
+
+// ── 5. INTERSECTION OBSERVER — tudo junto ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+
+    // reveals normais
+    el.classList.add('visible');
+
+    // manifesto: animar palavras em sequência
+    if (el.classList.contains('manifesto-box')) {
+      el.querySelectorAll('.manifesto-word').forEach((w, i) => {
+        setTimeout(() => w.style.opacity = '1', i * 60);
+      });
+    }
+
+    io.unobserve(el);
+  });
+}, { threshold: 0.12 });
+
+// timeline dots
+const tlObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    e.target.classList.toggle('visible', e.isIntersecting);
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.tl-item').forEach(el => tlObs.observe(el));
+
+// observar todos os elementos
+document.querySelectorAll(
+  '.reveal, .reveal-left, .reveal-right, .reveal-scale, .split-title, .underline-gold, .img-reveal, .manifesto-box'
+).forEach(el => io.observe(el));
+
+// ── 6. PARALLAX SUAVE nos cards de imagem ──
+function parallaxScroll() {
+  const scrolled = window.scrollY;
+  document.querySelectorAll('.post-card-thumb img, .produto-capa img').forEach(img => {
+    const rect = img.closest('.post-card-thumb, .produto-capa').getBoundingClientRect();
+    const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+    img.style.transform = `translateY(${center * 0.07}px) scale(1.08)`;
+  });
+}
+window.addEventListener('scroll', parallaxScroll, { passive: true });
+parallaxScroll();
+
+// ── 7. REVEAL do hero-portrait ao carregar ──
+setTimeout(() => {
+  document.querySelector('.img-reveal')?.classList.add('visible');
+}, 300);
+
+// ── 8. SCROLL REVEAL normal para .reveal restantes ──
+// (já coberto pelo io acima)
+document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
 </script>
 </body>
-</html>
+   </html>
