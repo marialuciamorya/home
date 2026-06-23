@@ -1112,6 +1112,424 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
 }
 body:hover #cursor-dot,
 body:hover #cursor-ring { opacity: 1; }
+
+/* ══════════════════════════════════════
+   BLOG MODAL — nav button
+══════════════════════════════════════ */
+.nav-blog-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--dourado-claro);
+  border: 1px solid rgba(196,147,58,0.45);
+  padding: 0.35rem 0.9rem;
+  transition: var(--trans); cursor: pointer;
+  background: rgba(196,147,58,0.04);
+  position: relative; overflow: hidden;
+  animation: pulse-nav 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+.nav-blog-btn:hover {
+  background: rgba(196,147,58,0.1);
+  border-color: var(--dourado);
+  animation: none;
+  box-shadow: 0 0 16px rgba(196,147,58,0.25);
+}
+
+/* ══════════════════════════════════════
+   BLOG MODAL PRINCIPAL
+══════════════════════════════════════ */
+#blog-modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 985;
+  background: rgba(7,15,26,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+}
+#blog-modal-overlay.open { display: flex; flex-direction: column; }
+
+.blog-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid rgba(196,147,58,0.14);
+  background: rgba(13,27,42,0.8);
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.blog-modal-logo {
+  font-family: 'Cinzel', serif; font-size: 0.72rem;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--dourado);
+}
+.blog-modal-tabs {
+  display: flex; gap: 0;
+  border: 1px solid rgba(196,147,58,0.2);
+}
+.blog-modal-tab {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  color: var(--cinza-veu); cursor: pointer; border: none;
+  background: none; transition: var(--trans);
+}
+.blog-modal-tab.active {
+  background: var(--dourado); color: var(--azul-profundo);
+}
+.blog-modal-tab:hover:not(.active) {
+  color: var(--dourado-claro);
+  background: rgba(196,147,58,0.06);
+}
+.blog-modal-close {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(196,147,58,0.2);
+  color: var(--cinza-veu); font-size: 1rem;
+  transition: var(--trans); cursor: pointer;
+  background: none; flex-shrink: 0;
+}
+.blog-modal-close:hover { color: var(--dourado); border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+
+/* Corpo do blog modal */
+.blog-modal-body {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.blog-modal-body::-webkit-scrollbar { width: 4px; }
+.blog-modal-body::-webkit-scrollbar-track { background: var(--azul-profundo); }
+.blog-modal-body::-webkit-scrollbar-thumb { background: rgba(196,147,58,0.3); border-radius: 2px; }
+
+/* Painel posts (visitantes) */
+#bm-posts-panel { padding: 2.5rem 2rem; }
+.bm-section-label {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.bm-section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(196,147,58,0.35), transparent);
+}
+.bm-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--branco); margin-bottom: 2.4rem;
+}
+.bm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.6rem;
+}
+.bm-card {
+  background: rgba(21,34,54,0.6);
+  border: 1px solid rgba(196,147,58,0.1);
+  overflow: hidden; cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.3s ease,
+              box-shadow 0.35s ease;
+}
+.bm-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(196,147,58,0.38);
+  box-shadow: 0 16px 50px rgba(0,0,0,0.3), 0 0 24px rgba(196,147,58,0.07);
+}
+.bm-card-thumb {
+  aspect-ratio: 16/9; position: relative; overflow: hidden;
+}
+.bm-card-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.bm-card:hover .bm-card-thumb img { transform: scale(1.05); }
+.bm-card-yt-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.15);
+}
+.bm-yt-play {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(200,0,0,0.9);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.bm-card:hover .bm-yt-play { transform: scale(1.12); box-shadow: 0 6px 28px rgba(200,0,0,0.5); }
+.bm-yt-play svg { width: 20px; height: 20px; fill: #fff; margin-left: 3px; }
+.bm-card-body { padding: 1.2rem 1.1rem; }
+.bm-card-tag {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.45rem;
+}
+.bm-card-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 600;
+  font-size: 1.1rem; color: var(--branco); line-height: 1.3;
+  margin-bottom: 0.6rem;
+}
+.bm-card-excerpt {
+  font-size: 0.86rem; color: var(--cinza-veu); line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.bm-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(196,147,58,0.1);
+}
+.bm-card-date { font-family: 'Inter', sans-serif; font-size: 0.66rem; color: var(--cinza-escuro); }
+.bm-card-read {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dourado); background: none; border: none;
+  cursor: pointer; transition: color var(--trans);
+}
+.bm-card-read:hover { color: var(--dourado-fino); }
+.bm-empty {
+  grid-column: 1/-1; text-align: center; padding: 5rem 2rem;
+  border: 1px dashed rgba(196,147,58,0.18); color: var(--cinza-escuro);
+}
+.bm-empty p { font-style: italic; margin-top: 0.5rem; }
+
+/* ══ PAINEL ADMIN NO BLOG MODAL ══ */
+#bm-admin-panel { padding: 2.5rem 2rem; }
+.bm-admin-form {
+  background: rgba(21,34,54,0.65);
+  border: 1px solid rgba(196,147,58,0.16);
+  padding: 2rem; margin-bottom: 2rem;
+}
+.bm-admin-form h3 {
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dourado-claro); margin-bottom: 1.2rem;
+}
+.bm-form-row { margin-bottom: 1rem; }
+.bm-form-row label {
+  display: block; font-family: 'Inter', sans-serif;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cinza-veu); margin-bottom: 0.35rem;
+}
+.bm-form-row input,
+.bm-form-row textarea,
+.bm-form-row select {
+  width: 100%;
+  background: rgba(13,27,42,0.85);
+  border: 1px solid rgba(196,147,58,0.2); color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  padding: 0.65rem 0.85rem; outline: none;
+  transition: border-color var(--trans); resize: vertical;
+}
+.bm-form-row input:focus,
+.bm-form-row textarea:focus,
+.bm-form-row select:focus { border-color: var(--dourado); }
+.bm-form-row textarea { min-height: 120px; }
+.bm-form-row select option { background: var(--azul-profundo); }
+.bm-form-hint { font-family: 'Inter', sans-serif; font-size: 0.66rem; color: var(--cinza-escuro); margin-top: 0.25rem; }
+.bm-form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.bm-form-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.8rem; }
+.bm-btn-primary {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.75rem 1.8rem; background: var(--dourado);
+  color: var(--azul-profundo); border: none; cursor: pointer;
+  transition: var(--trans);
+}
+.bm-btn-primary:hover { background: var(--dourado-fino); }
+.bm-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.bm-btn-ghost {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.75rem 1.6rem;
+  background: transparent; border: 1px solid rgba(196,147,58,0.3);
+  color: var(--dourado-claro); cursor: pointer; transition: var(--trans);
+}
+.bm-btn-ghost:hover { border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+.bm-btn-danger {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.45rem 0.75rem;
+  background: rgba(160,60,60,0.8); color: #fff;
+  border: none; cursor: pointer; transition: var(--trans);
+}
+.bm-btn-danger:hover { background: #c04040; }
+.bm-post-list { display: flex; flex-direction: column; gap: 0.85rem; }
+.bm-post-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 1rem 1.1rem; gap: 1rem;
+  background: rgba(21,34,54,0.4);
+  border: 1px solid rgba(196,147,58,0.1);
+}
+.bm-post-item-info h4 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  font-weight: 600; color: var(--branco); margin-bottom: 0.2rem;
+}
+.bm-post-item-info span { font-family: 'Inter', sans-serif; font-size: 0.63rem; color: var(--cinza-escuro); }
+.bm-post-item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+/* ══ MODAL DE LEITURA DENTRO DO BLOG MODAL ══ */
+#bm-post-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 990;
+  background: rgba(7,15,26,0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow-y: auto;
+  padding: 2rem 1rem;
+  animation: bm-fade-in 0.3s ease;
+}
+#bm-post-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+@keyframes bm-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bm-post-box {
+  background: var(--azul-alma);
+  border: 1px solid rgba(196,147,58,0.22);
+  max-width: 760px; width: 100%;
+  margin: auto; padding: 2.8rem 2.4rem;
+  position: relative;
+}
+.bm-post-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(196,147,58,0.2);
+  color: var(--cinza-veu); font-size: 0.9rem;
+  cursor: pointer; transition: var(--trans); background: none;
+}
+.bm-post-close:hover { color: var(--dourado); border-color: var(--dourado); }
+.bm-post-tag {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.7rem;
+}
+.bm-post-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--branco); line-height: 1.2; margin-bottom: 1.2rem;
+}
+.bm-post-meta {
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-escuro); margin-bottom: 1.8rem;
+  padding-bottom: 1.2rem; border-bottom: 1px solid rgba(196,147,58,0.1);
+}
+.bm-post-content {
+  font-size: 1.05rem; color: rgba(245,242,237,0.82); line-height: 1.82;
+}
+.bm-post-content p { margin-bottom: 1.2rem; }
+.bm-post-content a { color: var(--dourado-claro); text-decoration: underline; word-break: break-all; }
+
+/* Player YouTube inline elegante */
+.bm-yt-player-wrap {
+  margin-bottom: 2rem;
+  border: 1px solid rgba(196,147,58,0.15);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.bm-yt-player-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: rgba(13,27,42,0.9);
+  border-bottom: 1px solid rgba(196,147,58,0.1);
+}
+.bm-yt-player-label {
+  font-family: 'Cinzel', serif; font-size: 0.55rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--dourado);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.bm-yt-player-label::before {
+  content: '▶';
+  color: #ff0000; font-size: 0.65rem;
+}
+.bm-yt-fullscreen-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.62rem;
+  color: var(--cinza-veu); border: 1px solid rgba(196,147,58,0.2);
+  padding: 0.25rem 0.6rem; cursor: pointer; background: none;
+  transition: var(--trans);
+}
+.bm-yt-fullscreen-btn:hover { color: var(--dourado); border-color: var(--dourado); }
+.bm-yt-responsive {
+  position: relative; width: 100%; padding-top: 56.25%;
+  background: #000;
+}
+.bm-yt-responsive iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+
+/* ══ VIDEO FULLSCREEN MODAL ══ */
+#bm-video-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9995;
+  background: rgba(0,0,0,0.97);
+  align-items: center; justify-content: center;
+  flex-direction: column;
+  animation: bm-fade-in 0.25s ease;
+}
+#bm-video-overlay.open { display: flex; }
+.bm-video-modal-inner {
+  width: 100%; max-width: 1100px; padding: 1rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.bm-video-modal-bar {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.bm-video-modal-label {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.2em; color: var(--dourado);
+  text-transform: uppercase;
+}
+.bm-video-modal-close {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: rgba(255,255,255,0.5); cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.3rem 0.8rem; background: none; transition: var(--trans);
+}
+.bm-video-modal-close:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+.bm-video-responsive {
+  position: relative; width: 100%; padding-top: 56.25%;
+  background: #000;
+  box-shadow: 0 0 80px rgba(196,147,58,0.12);
+}
+.bm-video-responsive iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+
+/* User badge na navbar quando logado */
+.nav-user-badge {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.nav-user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(196,147,58,0.5);
+  background: rgba(196,147,58,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  color: var(--dourado); flex-shrink: 0;
+}
+.nav-user-display {
+  font-family: 'Inter', sans-serif; font-size: 0.65rem;
+  color: var(--cinza-veu); letter-spacing: 0.04em;
+  max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+#nav-user-name { display: none; }
+
+/* Entrada suave do blog modal */
+@keyframes blog-modal-enter {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+#blog-modal-overlay.open {
+  animation: blog-modal-enter 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* Responsivo */
+@media (max-width: 640px) {
+  .blog-modal-header { padding: 0.9rem 1rem; gap: 0.6rem; }
+  .blog-modal-tabs { display: none; }
+  #bm-posts-panel, #bm-admin-panel { padding: 1.5rem 1rem; }
+  .bm-form-2col { grid-template-columns: 1fr; }
+  .bm-post-box { padding: 2rem 1.2rem; }
+}
+
 </style>
 </head>
 <body>
@@ -1129,6 +1547,7 @@ body:hover #cursor-ring { opacity: 1; }
       <li><a href="#missao">Missão</a></li>
       <li><a href="#produto">Autobiografia</a></li>
       <li><a href="#blog">Escritos</a></li>
+      <li><button class="nav-blog-btn" id="nav-blog-btn">Blog</button></li>
       <li><a href="#jornada">Jornada</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
@@ -1149,6 +1568,7 @@ body:hover #cursor-ring { opacity: 1; }
   <a href="#missao" class="mobile-link">Missão</a>
   <a href="#produto" class="mobile-link">Autobiografia</a>
   <a href="#blog" class="mobile-link">Escritos</a>
+  <button class="mobile-link" id="mobile-blog-btn" style="background:none;border:1px solid rgba(196,147,58,0.35);color:var(--dourado);font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 1rem;cursor:pointer;">Blog</button>
   <a href="#jornada" class="mobile-link">Jornada</a>
   <a href="#contato" class="mobile-link">Contato</a>
 </div>
@@ -1475,6 +1895,126 @@ body:hover #cursor-ring { opacity: 1; }
   </p>
 </footer>
 
+
+<!-- ══ BLOG MODAL ══ -->
+<div id="blog-modal-overlay" role="dialog" aria-modal="true" aria-label="Blog">
+  <div class="blog-modal-header">
+    <span class="blog-modal-logo">✦ Blog</span>
+    <div class="blog-modal-tabs">
+      <button class="blog-modal-tab active" id="bm-tab-posts" onclick="bmSwitchTab('posts')">Escritos</button>
+      <button class="blog-modal-tab" id="bm-tab-admin" style="display:none;" onclick="bmSwitchTab('admin')">Gerenciar</button>
+    </div>
+    <button class="blog-modal-close" id="blog-modal-close" aria-label="Fechar blog">✕</button>
+  </div>
+  <div class="blog-modal-body" id="blog-modal-body">
+    <!-- Painel Escritos -->
+    <div id="bm-posts-panel">
+      <p class="bm-section-label">IV · Escritos</p>
+      <h2 class="bm-title">Palavras da Jornada</h2>
+      <div class="bm-grid" id="bm-grid">
+        <div class="bm-empty">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="margin:0 auto 0.6rem;opacity:0.25;"><path d="M16 4L19 13H28L21 18.5L23.5 27.5L16 22L8.5 27.5L11 18.5L4 13H13L16 4Z" stroke="#DEB96A" stroke-width="1.4" fill="none"/></svg>
+          <p>Carregando escritos...</p>
+        </div>
+      </div>
+    </div>
+    <!-- Painel Admin -->
+    <div id="bm-admin-panel" style="display:none;">
+      <p class="bm-section-label">Administração</p>
+      <h2 class="bm-title">Gerenciar Escritos</h2>
+      <div class="bm-admin-form" id="bm-post-form">
+        <h3 id="bm-form-label">Novo Escrito</h3>
+        <div class="bm-form-row">
+          <label for="bm-titulo">Título</label>
+          <input type="text" id="bm-titulo" placeholder="Título do escrito">
+        </div>
+        <div class="bm-form-2col">
+          <div class="bm-form-row" style="margin:0;">
+            <label for="bm-tag">Categoria</label>
+            <select id="bm-tag">
+              <option value="Chamas Gêmeas">Chamas Gêmeas</option>
+              <option value="Jornada da Alma">Jornada da Alma</option>
+              <option value="Governo Divino">Governo Divino</option>
+              <option value="Memória">Memória</option>
+              <option value="Reflexão">Reflexão</option>
+            </select>
+          </div>
+          <div class="bm-form-row" style="margin:0;">
+            <label for="bm-yt">Link YouTube (opcional)</label>
+            <input type="url" id="bm-yt" placeholder="https://youtu.be/...">
+            <p class="bm-form-hint">O vídeo será incorporado diretamente no post.</p>
+          </div>
+        </div>
+        <div class="bm-form-row">
+          <label for="bm-thumb">URL da imagem de capa (opcional)</label>
+          <input type="url" id="bm-thumb" placeholder="https://... (link direto)">
+          <p class="bm-form-hint">Se houver YouTube, a thumbnail é extraída automaticamente.</p>
+        </div>
+        <div class="bm-form-row">
+          <label for="bm-excerpt">Resumo (aparece no card)</label>
+          <input type="text" id="bm-excerpt" placeholder="Uma frase que capture a essência...">
+        </div>
+        <div class="bm-form-row">
+          <label for="bm-content">Texto completo</label>
+          <textarea id="bm-content" rows="8" placeholder="Escreva o texto aqui. Parágrafos separados por linha em branco. Links: [texto](url)"></textarea>
+          <p class="bm-form-hint">Parágrafos: linha em branco entre eles. Links: [texto](url)</p>
+        </div>
+        <div class="bm-form-actions">
+          <button class="bm-btn-primary" id="bm-save-btn">Publicar Escrito</button>
+          <button class="bm-btn-ghost" id="bm-cancel-btn" style="display:none;">Cancelar</button>
+        </div>
+      </div>
+      <p class="bm-section-label">Publicados</p>
+      <div class="bm-post-list" id="bm-post-list">
+        <p style="color:var(--cinza-escuro);font-style:italic;font-size:0.9rem;">Carregando...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LEITURA DE POST (sobre o blog modal) ══ -->
+<div id="bm-post-overlay" role="dialog" aria-modal="true">
+  <div class="bm-post-box">
+    <button class="bm-post-close" id="bm-post-close" aria-label="Voltar ao blog">✕</button>
+    <p class="bm-post-tag" id="bm-post-tag"></p>
+    <h2 class="bm-post-title" id="bm-post-title"></h2>
+    <div class="bm-post-meta" id="bm-post-meta"></div>
+    <!-- Player YouTube inline -->
+    <div class="bm-yt-player-wrap" id="bm-yt-wrap" style="display:none;">
+      <div class="bm-yt-player-bar">
+        <span class="bm-yt-player-label">Vídeo incorporado</span>
+        <button class="bm-yt-fullscreen-btn" id="bm-yt-fullscreen">⛶ Tela cheia</button>
+      </div>
+      <div class="bm-yt-responsive">
+        <iframe id="bm-yt-iframe"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          src="">
+        </iframe>
+      </div>
+    </div>
+    <div class="bm-post-content" id="bm-post-content"></div>
+    <div class="comments-section" id="bm-comments-section"></div>
+  </div>
+</div>
+
+<!-- ══ VIDEO TELA CHEIA ══ -->
+<div id="bm-video-overlay" role="dialog" aria-modal="true" aria-label="Vídeo em tela cheia">
+  <div class="bm-video-modal-inner">
+    <div class="bm-video-modal-bar">
+      <span class="bm-video-modal-label" id="bm-video-label">▶ Reproduzindo</span>
+      <button class="bm-video-modal-close" id="bm-video-close">✕ Fechar</button>
+    </div>
+    <div class="bm-video-responsive">
+      <iframe id="bm-video-iframe"
+        allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        src="">
+      </iframe>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL LEITURA / YOUTUBE ══ -->
 <div class="modal-overlay" id="read-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-box">
@@ -1650,8 +2190,7 @@ onAuthStateChanged(auth, user => {
   const adminTrigger = document.getElementById('admin-trigger');
 
   if (user) {
-    nameEl.textContent = (user.displayName || user.email.split('@')[0]).split(' ')[0];
-    nameEl.style.display = '';
+    nameEl.style.display = 'none'; // handled by updateUserBadge
     btnEl.textContent = 'Sair';
     adminTrigger.style.display = isAdmin ? '' : 'none';
   } else {
@@ -1659,6 +2198,8 @@ onAuthStateChanged(auth, user => {
     btnEl.textContent = 'Entrar';
     adminTrigger.style.display = 'none';
   }
+  // sync blog modal admin tab
+  if (typeof syncBmAdminTab === 'function') syncBmAdminTab();
 });
 
 /* ══════════════════════════════════════
@@ -1674,6 +2215,10 @@ onSnapshot(qPosts, snap => {
     renderAdminList(posts);
   }
   window._posts = posts;
+  // Feed blog modal
+  if (typeof window._postsModalCallback === 'function') {
+    window._postsModalCallback(posts);
+  }
 }, err => {
   console.error('Posts error:', err);
   renderBlog([]);
@@ -2016,320 +2561,4 @@ document.getElementById('login-btn').addEventListener('click', async () => {
     };
     errEl.textContent = msgs[e.code] || 'Erro ao entrar. Tente novamente.';
   }
-  document.getElementById('login-btn').disabled = false;
-});
-
-// Cadastro
-document.getElementById('register-btn').addEventListener('click', async () => {
-  const name  = document.getElementById('reg-name').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const pass  = document.getElementById('reg-pass').value;
-  const errEl = document.getElementById('auth-error');
-  errEl.textContent = '';
-  if (!name || !email || !pass) { errEl.textContent = 'Preencha todos os campos.'; return; }
-  if (pass.length < 6) { errEl.textContent = 'Senha deve ter mínimo 6 caracteres.'; return; }
-  document.getElementById('register-btn').disabled = true;
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await updateProfile(cred.user, { displayName: name });
-    closeAuth();
-    showToast('Conta criada! Bem-vinda.');
-  } catch(e) {
-    const msgs = {
-      'auth/email-already-in-use': 'E-mail já cadastrado.',
-      'auth/invalid-email':        'E-mail inválido.',
-      'auth/weak-password':        'Senha fraca. Use no mínimo 6 caracteres.',
-    };
-    errEl.textContent = msgs[e.code] || 'Erro ao criar conta.';
-  }
-  document.getElementById('register-btn').disabled = false;
-});
-
-// Enter no campo senha
-document.getElementById('login-pass').addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('login-btn').click();
-});
-
-/* ══════════════════════════════════════
-   ADMIN — CRUD POSTS
-══════════════════════════════════════ */
-document.getElementById('admin-trigger').addEventListener('click', () => {
-  if (!isAdmin) { window.openAuth(); return; }
-  document.getElementById('admin-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  if (window._posts) renderAdminList(window._posts);
-});
-
-document.getElementById('admin-close').addEventListener('click', () => {
-  document.getElementById('admin-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-  cancelEdit();
-});
-
-function renderAdminList(posts) {
-  const list = document.getElementById('admin-posts-list');
-  if (!posts.length) {
-    list.innerHTML = '<p style="color:var(--cinza-escuro);font-style:italic;font-size:0.9rem;">Nenhum escrito ainda.</p>';
-    return;
-  }
-  list.innerHTML = posts.map(p => `
-    <div class="admin-post-item">
-      <div class="admin-post-info">
-        <h4>${escHtml(p.titulo)}</h4>
-        <span>${escHtml(p.tag)} · ${formatDate(p.criadoEm)}</span>
-      </div>
-      <div class="admin-post-actions">
-        <button class="btn-admin btn-admin-ghost" data-edit="${p.id}" style="font-size:0.58rem;padding:0.5rem 0.8rem;">Editar</button>
-        <button class="btn-admin btn-admin-danger" data-del="${p.id}">Excluir</button>
-      </div>
-    </div>
-  `).join('');
-
-  list.querySelectorAll('[data-edit]').forEach(btn => {
-    btn.addEventListener('click', () => startEdit(btn.dataset.edit));
-  });
-  list.querySelectorAll('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => deletePost(btn.dataset.del));
-  });
-}
-
-function startEdit(id) {
-  const p = (window._posts || []).find(x => x.id === id);
-  if (!p) return;
-  editingId = id;
-  document.getElementById('f-titulo').value  = p.titulo  || '';
-  document.getElementById('f-tag').value     = p.tag     || 'Chamas Gêmeas';
-  document.getElementById('f-yt').value      = p.yt      || '';
-  document.getElementById('f-thumb').value   = p.thumb   || '';
-  document.getElementById('f-excerpt').value = p.excerpt || '';
-  document.getElementById('f-content').value = p.content || '';
-  document.getElementById('form-title-label').textContent   = 'Editar Escrito';
-  document.getElementById('form-save-btn').textContent      = 'Salvar Alterações';
-  document.getElementById('form-cancel-btn').style.display  = 'inline-flex';
-  document.getElementById('post-form-container').scrollIntoView({ behavior: 'smooth' });
-}
-
-function cancelEdit() {
-  editingId = null;
-  ['f-titulo','f-excerpt','f-content','f-yt','f-thumb'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  const tagEl = document.getElementById('f-tag');
-  if (tagEl) tagEl.value = 'Chamas Gêmeas';
-  document.getElementById('form-title-label').textContent  = 'Novo Escrito';
-  document.getElementById('form-save-btn').textContent     = 'Publicar Escrito';
-  document.getElementById('form-cancel-btn').style.display = 'none';
-}
-
-document.getElementById('form-cancel-btn').addEventListener('click', cancelEdit);
-
-document.getElementById('form-save-btn').addEventListener('click', async () => {
-  if (!isAdmin) { showToast('Sem permissão.', true); return; }
-  const titulo  = document.getElementById('f-titulo').value.trim();
-  const tag     = document.getElementById('f-tag').value;
-  const yt      = document.getElementById('f-yt').value.trim();
-  const thumb   = document.getElementById('f-thumb').value.trim();
-  const excerpt = document.getElementById('f-excerpt').value.trim();
-  const content = document.getElementById('f-content').value.trim();
-
-  if (!titulo || !content) { showToast('Preencha título e texto.', true); return; }
-
-  const data = { titulo, tag, yt, thumb, excerpt, content };
-  const btn  = document.getElementById('form-save-btn');
-  btn.disabled = true;
-
-  try {
-    if (editingId) {
-      await updateDoc(doc(db, 'posts_marya', editingId), data);
-      showToast('Escrito atualizado ✦');
-    } else {
-      data.criadoEm = serverTimestamp();
-      await addDoc(postsRef, data);
-      showToast('Escrito publicado ✦');
-    }
-    cancelEdit();
-  } catch(e) {
-    console.error(e);
-    showToast('Erro ao salvar.', true);
-  }
-  btn.disabled = false;
-});
-
-async function deletePost(id) {
-  if (!isAdmin) return;
-  if (!confirm('Excluir este escrito permanentemente?')) return;
-  try {
-    await deleteDoc(doc(db, 'posts_marya', id));
-    showToast('Escrito removido.');
-  } catch(e) { showToast('Erro ao excluir.', true); }
-}
-
-/* ══════════════════════════════════════
-   EVENTOS GERAIS
-══════════════════════════════════════ */
-document.getElementById('read-close').addEventListener('click', closePost);
-document.getElementById('read-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closePost();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closePost(); closeAuth(); }
-});
-
-// Navbar scroll
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 40);
-}, { passive: true });
-
-// Mobile nav
-const burger    = document.getElementById('burger-btn');
-const mobileNav = document.getElementById('mobile-nav');
-burger.addEventListener('click', () => {
-  mobileNav.classList.add('open');
-  document.body.style.overflow = 'hidden';
-});
-document.getElementById('mobile-close').addEventListener('click', () => {
-  mobileNav.classList.remove('open');
-  document.body.style.overflow = '';
-});
-mobileNav.querySelectorAll('.mobile-link').forEach(a => {
-  a.addEventListener('click', () => {
-    mobileNav.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
-
-/* ═══════════════════════════════════════════
-   EFEITOS MINIMALISTAS
-═══════════════════════════════════════════ */
-
-// ── 1. SCROLL PROGRESS LINE ──
-const scrollLine = document.getElementById('scroll-line');
-function updateScrollLine() {
-  const pct = scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-  scrollLine.style.width = Math.min(pct, 100) + '%';
-}
-window.addEventListener('scroll', updateScrollLine, { passive: true });
-
-// ── 2. CURSOR PERSONALIZADO ──
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let cx = 0, cy = 0, rx = 0, ry = 0;
-
-document.addEventListener('mousemove', e => {
-  cx = e.clientX; cy = e.clientY;
-  dot.style.left = cx + 'px';
-  dot.style.top  = cy + 'px';
-}, { passive: true });
-
-// ring segue com lag suave
-(function animRing() {
-  rx += (cx - rx) * 0.12;
-  ry += (cy - ry) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
-  requestAnimationFrame(animRing);
-})();
-
-// ring cresce em links/botões
-document.querySelectorAll('a, button, .post-card, .talento, .missao-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    ring.style.width  = '50px';
-    ring.style.height = '50px';
-    ring.style.borderColor = 'rgba(196,147,58,0.9)';
-  });
-  el.addEventListener('mouseleave', () => {
-    ring.style.width  = '28px';
-    ring.style.height = '28px';
-    ring.style.borderColor = 'rgba(196,147,58,0.5)';
-  });
-});
-
-// ── 3. SPLIT TEXT nos títulos H2 principais ──
-function splitTitleIntoChars(el) {
-  const text = el.textContent;
-  el.innerHTML = '';
-  el.classList.add('split-title');
-  [...text].forEach((ch, i) => {
-    const span = document.createElement('span');
-    span.className = 'char';
-    span.textContent = ch === ' ' ? '\u00A0' : ch;
-    span.style.transitionDelay = (i * 0.03) + 's';
-    el.appendChild(span);
-  });
-}
-
-// Aplicar só nos H2 de seções — não no H1 do hero
-document.querySelectorAll('#sobre h2, #missao h2, #produto h2, #jornada h2, #licoes h2, #contato h2').forEach(splitTitleIntoChars);
-
-// Aplicar underline dourado nos mesmos H2
-document.querySelectorAll('#sobre h2, #missao h2, #produto h2, #jornada h2, #licoes h2, #contato h2').forEach(h => {
-  h.classList.add('underline-gold');
-});
-
-// ── 4. MANIFESTO — palavras aparecem em sequência ──
-document.querySelectorAll('.manifesto-box p').forEach(p => {
-  const words = p.innerHTML.split(/([ \n]|<br>)/);
-  p.innerHTML = words.map(w => {
-    if (w === ' ' || w === '\n' || w === '<br>') return w;
-    if (!w.trim()) return w;
-    return `<span class="manifesto-word">${w}</span>`;
-  }).join('');
-});
-
-// ── 5. INTERSECTION OBSERVER — tudo junto ──
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-
-    // reveals normais
-    el.classList.add('visible');
-
-    // manifesto: animar palavras em sequência
-    if (el.classList.contains('manifesto-box')) {
-      el.querySelectorAll('.manifesto-word').forEach((w, i) => {
-        setTimeout(() => w.style.opacity = '1', i * 60);
-      });
-    }
-
-    io.unobserve(el);
-  });
-}, { threshold: 0.12 });
-
-// timeline dots
-const tlObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    e.target.classList.toggle('visible', e.isIntersecting);
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll('.tl-item').forEach(el => tlObs.observe(el));
-
-// observar todos os elementos
-document.querySelectorAll(
-  '.reveal, .reveal-left, .reveal-right, .reveal-scale, .split-title, .underline-gold, .img-reveal, .manifesto-box'
-).forEach(el => io.observe(el));
-
-// ── 6. PARALLAX SUAVE nos cards de imagem ──
-function parallaxScroll() {
-  const scrolled = window.scrollY;
-  document.querySelectorAll('.post-card-thumb img, .produto-capa img').forEach(img => {
-    const rect = img.closest('.post-card-thumb, .produto-capa').getBoundingClientRect();
-    const center = rect.top + rect.height / 2 - window.innerHeight / 2;
-    img.style.transform = `translateY(${center * 0.07}px) scale(1.08)`;
-  });
-}
-window.addEventListener('scroll', parallaxScroll, { passive: true });
-parallaxScroll();
-
-// ── 7. REVEAL do hero-portrait ao carregar ──
-setTimeout(() => {
-  document.querySelector('.img-reveal')?.classList.add('visible');
-}, 300);
-
-// ── 8. SCROLL REVEAL normal para .reveal restantes ──
-// (já coberto pelo io acima)
-document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
-</script>
-</body>
-   </html>
+  document.getElementById('log
