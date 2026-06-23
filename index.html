@@ -1557,7 +1557,7 @@ body:hover #cursor-ring { opacity: 1; }
     </ul>
     <div class="nav-right-group">
       <span class="nav-user-name" id="nav-user-name" style="display:none;"></span>
-      <button class="nav-auth-btn" id="nav-auth-btn" onclick="if(window.openAuth && !window._loggedIn) window.openAuth()">Entrar</button>
+      <button class="nav-auth-btn" id="nav-auth-btn">Entrar</button>
       <button class="nav-burger" id="burger-btn" aria-label="Abrir menu">
         <span></span><span></span><span></span>
       </button>
@@ -2145,6 +2145,52 @@ body:hover #cursor-ring { opacity: 1; }
 <!-- ══════════════════════════════════════════════════════
    FIREBASE + LÓGICA
 ══════════════════════════════════════════════════════ -->
+
+<!-- Script síncrono: garante openAuth disponível antes do módulo Firebase carregar -->
+<script>
+window.openAuth = function() {
+  var overlay = document.getElementById('auth-overlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var errEl = document.getElementById('auth-error');
+    if (errEl) errEl.textContent = '';
+  }
+};
+window.closeAuth = function() {
+  var overlay = document.getElementById('auth-overlay');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+};
+window.switchTab = function(tab) {
+  var tl = document.getElementById('tab-login');
+  var tr = document.getElementById('tab-register');
+  var fl = document.getElementById('form-login');
+  var fr = document.getElementById('form-register');
+  var err = document.getElementById('auth-error');
+  if (tl) tl.classList.toggle('active', tab === 'login');
+  if (tr) tr.classList.toggle('active', tab === 'register');
+  if (fl) fl.style.display = tab === 'login' ? '' : 'none';
+  if (fr) fr.style.display = tab === 'register' ? '' : 'none';
+  if (err) err.textContent = '';
+};
+
+// Botão Entrar — funciona imediatamente, antes do Firebase
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('nav-auth-btn');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      if (window._firebaseSignOut && window._currentUser) {
+        window._firebaseSignOut();
+      } else {
+        window.openAuth();
+      }
+    });
+  }
+  var closeBtn = document.getElementById('auth-close');
+  if (closeBtn) closeBtn.addEventListener('click', window.closeAuth);
+});
+</script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import {
@@ -2187,6 +2233,7 @@ let unsubComments = null;
 ══════════════════════════════════════ */
 onAuthStateChanged(auth, user => {
   currentUser = user;
+  window._currentUser = user;
   isAdmin = user?.email === ADMIN_EMAIL;
 
   const nameEl       = document.getElementById('nav-user-name');
@@ -2506,55 +2553,4 @@ window.switchTab = function(tab) {
 };
 
 function closeAuth() {
-  document.getElementById('auth-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('auth-close').addEventListener('click', closeAuth);
-
-document.getElementById('nav-auth-btn').addEventListener('click', () => {
-  if (currentUser) {
-    signOut(auth).then(() => showToast('Até logo!'));
-  } else {
-    window.openAuth();
-  }
-});
-
-// Captura resultado de redirect (volta do Google no mobile)
-getRedirectResult(auth).then(result => {
-  if (result?.user) {
-    closeAuth();
-    showToast('Bem-vinda!');
-  }
-}).catch(e => {
-  if (e.code !== 'auth/no-current-user') console.error('Redirect result error:', e);
-});
-
-// Google Sign-In — popup no desktop, redirect no mobile
-document.getElementById('btn-google').addEventListener('click', async () => {
-  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-  try {
-    if (isMobile) {
-      await signInWithRedirect(auth, googleProvider);
-    } else {
-      await signInWithPopup(auth, googleProvider);
-      closeAuth();
-      showToast('Bem-vinda!');
-    }
-  } catch(e) {
-    const errEl = document.getElementById('auth-error');
-    if (e.code === 'auth/popup-closed-by-user') return;
-    if (e.code === 'auth/popup-blocked') {
-      // fallback para redirect se popup bloqueado
-      await signInWithRedirect(auth, googleProvider);
-      return;
-    }
-    errEl.textContent = 'Erro ao entrar com Google. Tente novamente.';
-    console.error(e);
-  }
-});
-
-// Login e-mail
-document.getElementById('login-btn').addEventListener('click', async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pa
+  document.getElementById('auth-overlay').classList.remo
