@@ -2196,8 +2196,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import {
   getAuth, onAuthStateChanged, signOut,
   createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  updateProfile, GoogleAuthProvider, signInWithPopup,
-  signInWithRedirect, getRedirectResult
+  updateProfile, GoogleAuthProvider, signInWithPopup
 } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import {
   getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
@@ -2553,4 +2552,5 @@ window.switchTab = function(tab) {
 };
 
 function closeAuth() {
-  document.getElementById('auth-overlay').classList.remo
+  document.getElementById('auth-overlay').classList.remove('open');
+  document.body.style.overflo
