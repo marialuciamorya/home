@@ -946,6 +946,10 @@ footer p { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: var(--ci
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* Fallback: se JS não carregar ou demorar, garantir conteúdo visível após 2s */
+@keyframes reveal-fallback { to { opacity: 1; transform: none; } }
+.reveal { animation: reveal-fallback 0s 2s forwards; }
+
 .reveal-left  { opacity: 0; transform: translateX(-40px);
   transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
 .reveal-left.visible  { opacity: 1; transform: translateX(0); }
@@ -2185,12 +2189,19 @@ onAuthStateChanged(auth, user => {
   currentUser = user;
   isAdmin = user?.email === ADMIN_EMAIL;
 
-  const nameEl = document.getElementById('nav-user-name');
-  const btnEl  = document.getElementById('nav-auth-btn');
+  const nameEl       = document.getElementById('nav-user-name');
+  const btnEl        = document.getElementById('nav-auth-btn');
   const adminTrigger = document.getElementById('admin-trigger');
 
   if (user) {
-    nameEl.style.display = 'none'; // handled by updateUserBadge
+    // Mostrar badge com inicial do nome
+    const initials = (user.displayName || user.email).charAt(0).toUpperCase();
+    const firstName = (user.displayName || user.email.split('@')[0]).split(' ')[0];
+    nameEl.innerHTML = `<span class="nav-user-badge">
+      <span class="nav-user-avatar">${initials}</span>
+      <span class="nav-user-display">${escHtml(firstName)}</span>
+    </span>`;
+    nameEl.style.display = '';
     btnEl.textContent = 'Sair';
     adminTrigger.style.display = isAdmin ? '' : 'none';
   } else {
@@ -2198,7 +2209,8 @@ onAuthStateChanged(auth, user => {
     btnEl.textContent = 'Entrar';
     adminTrigger.style.display = 'none';
   }
-  // sync blog modal admin tab
+
+  // sync blog modal admin tab (definido mais adiante no mesmo módulo)
   if (typeof syncBmAdminTab === 'function') syncBmAdminTab();
 });
 
@@ -2546,19 +2558,4 @@ document.getElementById('login-btn').addEventListener('click', async () => {
   const pass  = document.getElementById('login-pass').value;
   const errEl = document.getElementById('auth-error');
   errEl.textContent = '';
-  if (!email || !pass) { errEl.textContent = 'Preencha todos os campos.'; return; }
-  document.getElementById('login-btn').disabled = true;
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-    closeAuth();
-    showToast('Bem-vinda de volta!');
-  } catch(e) {
-    const msgs = {
-      'auth/user-not-found':     'E-mail não cadastrado.',
-      'auth/wrong-password':     'Senha incorreta.',
-      'auth/invalid-credential': 'E-mail ou senha incorretos.',
-      'auth/too-many-requests':  'Muitas tentativas. Aguarde.',
-    };
-    errEl.textContent = msgs[e.code] || 'Erro ao entrar. Tente novamente.';
-  }
-  document.getElementById('log
+  if (!email || !pass) { errEl.text
