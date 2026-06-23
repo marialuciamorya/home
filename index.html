@@ -2238,19 +2238,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import {
-  getAuth, onAuthStateChanged, signOut,
-  createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  updateProfile, GoogleAuthProvider, signInWithPopup
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import {
-  getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
-  onSnapshot, query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
-
-/* ── CONFIG FIREBASE ── */
+<!-- Firebase compat v9 via CDN (sem módulo — funciona no GitHub Pages) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyD_93E6wM05rj9WJGNE0rj8h-FtOowWV3g",
   authDomain: "moryalucia.firebaseapp.com",
@@ -2262,15 +2254,15 @@ const firebaseConfig = {
 
 const ADMIN_EMAIL = "mariaakashahub@gmail.com";
 
-const app      = initializeApp(firebaseConfig);
-const auth     = getAuth(app);
-const db       = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // Expor para scripts não-módulo
 window._auth           = auth;
 window._googleProvider = googleProvider;
-window._signInWithPopup = signInWithPopup;
+window._signInWithPopup = (auth, provider) => auth.signInWithPopup(provider);
 
 /* ── ESTADO ── */
 let currentUser   = null;
@@ -2282,7 +2274,7 @@ let unsubComments = null;
 /* ══════════════════════════════════════
    AUTH STATE
 ══════════════════════════════════════ */
-onAuthStateChanged(auth, user => {
+auth.onAuthStateChanged( user => {
   currentUser = user;
   window._currentUser = user;
   isAdmin = user?.email === ADMIN_EMAIL;
@@ -2317,10 +2309,10 @@ onAuthStateChanged(auth, user => {
 /* ══════════════════════════════════════
    POSTS — Firestore real-time
 ══════════════════════════════════════ */
-const postsRef = collection(db, 'posts_marya');
-const qPosts   = query(postsRef, orderBy('criadoEm', 'desc'));
+const postsRef = db.collection('posts_marya');
+const qPosts = postsRef.orderBy('criadoEm', 'desc');
 
-onSnapshot(qPosts, snap => {
+qPosts.onSnapshot( snap => {
   const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   renderBlog(posts);
   if (document.getElementById('admin-overlay').classList.contains('open')) {
@@ -2511,11 +2503,8 @@ function closePost() {
 function loadComments(postId) {
   if (unsubComments) unsubComments();
   const sec = document.getElementById('comments-section');
-  const qC  = query(
-    collection(db, 'posts_marya', postId, 'comments'),
-    orderBy('criadoEm', 'asc')
-  );
-  unsubComments = onSnapshot(qC, snap => {
+  const qC = db.collection('posts_marya').doc(postId).collection('comments').orderBy('criadoEm', 'asc');
+  unsubComments = qC.onSnapshot( snap => {
     const comments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderComments(comments, postId, sec);
   }, err => console.error('Comments error:', err));
@@ -2539,4 +2528,8 @@ function renderComments(comments, postId, sec) {
   } else {
     html += `<div class="comment-list">`;
     comments.forEach(c => {
-      const canDelete = isAdmin || (currentUser && curr
+      const canDelete = isAdmin || (currentUser && currentUser.uid === c.autorUid);
+      html += `
+        <div class="comment-item">
+          <div class="comment-item-header">
+            <span class="comment-author">${escHtml(c.autorNome || 
