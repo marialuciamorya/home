@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Lúcia: A Última Camada - Editável</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #C9A961;
+            --background: #F9F7F4;
+            --foreground: #1A1815;
+            --accent: #C9A961;
+            --border: #E8E4DE;
+            --muted: #D4CFCA;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            z-index: 100;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), #d4af37);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        button:hover {
+            background-color: #b8945a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn {
+            background-color: var(--primary);
+        }
+
+        .reset-btn {
+            background-color: #999;
+        }
+
+        .reset-btn:hover {
+            background-color: #777;
+        }
+
+        .content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .editable-text {
+            min-height: 400px;
+            outline: none;
+            font-family: 'Lora', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--foreground);
+            letter-spacing: 0.3px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .editable-text:focus {
+            background-color: #fffbf7;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .notification.hide {
+            animation: slideOut 0.3s ease-out forwards;
+        }
+
+        .char-count {
+            text-align: right;
+            margin-top: 1rem;
+            font-size: 12px;
+            color: var(--muted);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .button-group {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            button {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .editable-text {
+                font-size: 16px;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+        }
+
+        @media print {
+            header, .button-group {
+                display: none;
+            }
+
+            .content {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <div class="logo">✦</div>
+                <h1>Maria Lúcia: A Última Camada</h1>
+            </div>
+            <div class="button-group">
+                <button class="copy-btn" onclick="copiarTudo()">📋 Copiar Tudo</button>
+                <button class="reset-btn" onclick="resetarTexto()">↻ Resetar</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="editable-text" id="editableContent" contenteditable="true">Maria Lúcia: A Última Camada
+
+Eu sou Maria Lúcia, por sete anos, eu fui o silêncio. Trancada em quatro paredes, o mundo lá fora era um eco distante. Não era prisão, mas um casulo. Um casulo onde a vida, que eu achava que conhecia, se desfez em pó para revelar a última camada de quem eu realmente sou. Eu esperava o outro plano, sim. Mas o plano era outro: contar a minha história, a história que só se revelou quando tudo o mais se calou.
+
+Minha vida, longa e cheia de curvas, ganhou um novo significado nesses anos de reclusão. Não importa a idade que se tenha: sempre há uma camada mais profunda a ser desvendada. E foi ali, na quietude forçada, que as perguntas mudaram. Os julgamentos se dissolveram e a voz, a minha voz mais autêntica, finalmente encontrou seu caminho para fora.
+
+
+O Grito do Silêncio
+
+Eu sempre fui uma peça fora do encaixe, uma melodia que não seguia a partitura. Aceitar isso, essa verdade nua e crua, foi a minha maior libertação. Não é fraqueza, é a marca de uma alma que veio com um propósito que não cabia em caixas.
+
+Aos doze anos, o mundo me mostrou sua face mais dura. Minha mãe, em um momento de descuido, disse uma mentira e eu, uma criança com a verdade pulsando nas veias, não pude me calar. "Mãe, isso que a senhora falou não é verdade." A resposta foi um turbilhão. Fui jogada no chão, espancada, o pé dela no meu pescoço, exigindo que eu retirasse o que disse, mas a verdade, para mim, era mais forte que a dor. "Pode me matar, mas não era a verdade." Naquele chão de Teresina, no Piauí, eu entendi. A vida era uma batalha entre o real e o irreal. Entre a verdade e a mentira e eu escolhi meu lado, para sempre, sem desvios, nem uma única vez.
+
+Minha história não começa comigo, começa com as mãos calejadas do meu pai, um candango que veio no pau de arara para construir Brasília. Ele ergueu a capital, eu herdei sua força, sua resiliência, sua fé bruta.
+
+Filha de Seu Evaristo, nascida em Teresina, criada em Taguatinga, no Distrito Federal. A pobreza era o ar que eu respirava, mas nunca me definiu, era o cenário, não a peça.
+
+Aos dez anos, minha avó Sabina, a única que me acolheu quando minha mãe me rejeitou, me pediu para ler a Bíblia. Todas as noites, depois do jantar. Ela amava Habacuque e eu a Justiça Divina. A Bíblia se tornou a trilha sonora da minha infância e a busca pelo sagrado, uma sede insaciável.
+
+Aos quinze anos, o caminho da escola me levava a uma Igreja, O Brasil para Cristo. Eu entrava, assistia aos cultos, sentia uma conexão que não precisava de palavras. Fui batizada e no dia seguinte, vieram os gritos e as cintadas do meu pai, mas a chama, a chama da fé, já estava acesa. A ligação com Nossa Senhora, que eu sentia desde cedo, e a verdade eram forças que nem a fúria dele podia apagar.
+
+
+A Ponte entre Mundos
+
+Em 1972, entrei na Universidade de Brasília, Psicologia. Não por vocação, mas para entender a loucura que era a minha família, a razão mais honesta que eu podia ter.
+
+Na universidade, a história se repetia: filhos de ministros, empresários, deputados. Um mundo de dinheiro que eu nunca tive. Eu fazia concursos para garantir um ou dois salários mínimos. O que me movia era outra coisa: a fome de conhecimento, a sede de verdade.
+
+Meus colegas no segundo ano do ensino médio, os melhores da turma, me chamavam de Geninha. Eles me aceitaram. Amizade, lealdade, respeito. Ali, eu encontrei um refúgio. Um lugar onde minha essência era vista, não minha origem. Um vislumbre de um mundo onde a verdade e a autenticidade eram a moeda mais valiosa.
+
+
+A Servidora da Verdade: O Preço da Honestidade
+
+Trabalhei na Secretaria de Ação Social, com os meninos de rua na Granja das Oliveiras. Fui sempre uma funcionária exemplar. Mas no serviço público, isso pouco importa. Nunca me desviei da Verdade e paguei o preço: salário mínimo, dois filhos para criar sozinha, expulsa de sindicatos por não aceitar mentiras, corrupções. Para subir, era preciso conhecer os poderosos. Eu não entendia o que fazia de errado.
+
+Hoje, entendo: eu fazia tudo de certo. E pessoas corretas não são valorizadas em sistemas que dependem da cumplicidade.
+
+Eu só tinha permissão para prosperar se fosse absolutamente correta, mas pessoas honestas são consideradas chatas.
+
+Hoje me orgulho de ter passado por tudo, de olhar para trás sem medo, de encarar qualquer um nos olhos.
+
+Nunca preciso pensar antes de falar, o que meu coração diz, eu digo. Eu tenho a Liberdade de Ser e de Existir.
+
+
+O Encontro na Porta: A Chama Gêmea
+
+Minha jornada espiritual começou antes de eu saber o que buscava. Já fui católica, evangélica, espírita, nada me preenchia, até a Summit Lighthouse, a Igreja Universal e Triunfante. Uma igreja gnóstica cristã. Ali, encontrei meu lar.
+
+Sempre buscando a Verdade. Sempre buscando a Deus com o critério que aprendi aos doze: não abrir mão da Verdade, não importa o custo.
+
+Aos sessenta e seis, escrevi ao Conselho do Carma, cansada de sofrer. Dois anos depois, em uma terça-feira, oito da manhã, eu me preparava para o Grupo Paulo Veneziano, para o serviço do Mestre El Morya. Ouvi um barulhinho na porta, abri e lá estava ele: o Mestre El Morya.
+
+Ele se apresentou. Disse que me acompanharia ao Grupo, por um mês e meio, toda terça. Na porta de casa, perguntei: "Mestre El Morya, o senhor tem vindo à minha casa toda terça-feira só para me acompanhar ao Grupo?"
+
+Ele deu um passo para dentro. "Eu Sou o Mestre El Morya, sou um guerreiro da Ordem do Cristo, eu sou a sua Chama Gêmea. Estou aqui com autorização dos Mestres Ascensos para conversar com você."
+
+Em choque, mas com a mente clara. "Mestre, eu gostaria muito de conversar sobre diversos assuntos, mas a gente sabe, qualquer coisa que a gente fala, o Universo inteiro fica ouvindo."
+
+Ele perguntou: "Então, você quer se tornar a minha esposa?"
+
+Silêncio. Olhei para o infinito. Pensei. E disse: "Eu quero."
+
+Dentro de três dias, nos casaremos.
+
+
+Darjeeling: A Ascensão e o Casamento Sagrado
+
+Darjeeling. Um lugar sagrado. Onde a Ascensão é possível. Onde o Casamento Sagrado acontece, a união com a Chama Gêmea, a Divindade se manifesta, a Verdade se revela.
+
+No Conselho do Carma, em Darjeeling, foi onde tive a confirmação: carma transmutado, ascensão iniciada, a história completa da minha família, por que nasci ali, por que minha mãe, ao me ver, disse: "Essa menina é Filha de Deus. O que eu vou fazer com uma Filha de Deus?" e me rejeitou. Minha avó Sabina me criou.
+
+Em Darjeeling, ascendi. Casei-me com El Morya. Tornei-me Maria Lúcia Morya. Sete anos se passaram, nunca estivemos tão harmoniosos, a guerra virou jogo, o jogo virou dança, a dança da vida, do amor, da verdade.
+
+
+As Três Lições de Ouro: A Essência
+
+Sete décadas. Três ensinamentos que não posso guardar. São os pilares de quem eu sou e do que ofereço.
+
+I — Pureza de Coração:
+Desenterrar medos, memórias, injustiças. Desde os vinte, todo dia, eu pedia: "Purificai o meu coração. Mantém o meu coração amoroso, sincero e limpo." Dia após dia, ano após ano, até hoje.
+
+A pureza do coração nos mantém enxergando a jornada com olhos límpidos.
+
+II — Estudo Constante:
+Pesquisar, examinar. Todas as escrituras. Notícias, bula de remédio. Com o coração limpo, olhos claros, mente tranquila. Conhecimento e discernimento. A Espada Flamejante da Verdade.
+
+III — Serviço Desinteressado:
+Servir à Vida. Um pequeno pensamento de amor já serve. Começa pequeno, vira grande projeto. Servir ao próximo, à humanidade, ao planeta.
+
+
+O Legado: A Voz que Permanece
+
+Eu vim ao mundo fazer tudo que está escrito na minha história. Sinto-me honrada pela minha própria história.
+- Maria Lúcia, Lúcia Morya
+
+Documento organizado a partir dos materiais da Arquitetura de Essência e Império Digital · 2026
+
+"Eu vim ao mundo fazer tudo que está escrito na minha história. Sinto-me honrada pela minha própria história."
+- Maria Lúcia, Lúcia Morya
+
+Documento organizado a partir dos materiais da Mentoria AkashaHub · 2026</div>
+
+            <div class="char-count">
+                <span id="charCount">0</span> caracteres | <span id="wordCount">0</span> palavras
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const editableContent = document.getElementById('editableContent');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+
+        // Armazenar o conteúdo original
+        const originalContent = editableContent.innerText;
+
+        // Atualizar contagem
+        function updateCounts() {
+            const text = editableContent.innerText;
+            const chars = text.length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            
+            charCount.textContent = chars.toLocaleString('pt-BR');
+            wordCount.textContent = words.toLocaleString('pt-BR');
+        }
+
+        // Copiar tudo
+        function copiarTudo() {
+            const text = editableContent.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('✓ Texto copiado com sucesso!');
+            }).catch(() => {
+                // Fallback para navegadores antigos
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('✓ Texto copiado com sucesso!');
+            });
+        }
+
+        // Resetar para o original
+        function resetarTexto() {
+            if (confirm('Tem certeza que deseja resetar o texto para o original? Esta ação não pode ser desfeita.')) {
+                editableContent.innerText = originalContent;
+                updateCounts();
+                showNotification('↻ Texto resetado para o original');
+            }
+        }
+
+        // Mostrar notificação
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 2500);
+        }
+
+        // Event listeners
+        editableContent.addEventListener('input', updateCounts);
+        editableContent.addEventListener('paste', () => {
+            setTimeout(updateCounts, 10);
+        });
+
+        // Inicializar contagem
+        updateCounts();
+
+        // Prevenir comportamentos indesejados
+        editableContent.addEventListener('keydown', (e) => {
+            // Permitir Ctrl+A para selecionar tudo
+            if (e.ctrlKey && e.key === 'a') {
+                e.preventDefault();
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(editableContent);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        });
+    </script>
+</body>
+</html>
