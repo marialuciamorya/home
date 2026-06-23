@@ -1557,7 +1557,7 @@ body:hover #cursor-ring { opacity: 1; }
     </ul>
     <div class="nav-right-group">
       <span class="nav-user-name" id="nav-user-name" style="display:none;"></span>
-      <button class="nav-auth-btn" id="nav-auth-btn">Entrar</button>
+      <button class="nav-auth-btn" id="nav-auth-btn" onclick="if(window.openAuth && !window._loggedIn) window.openAuth()">Entrar</button>
       <button class="nav-burger" id="burger-btn" aria-label="Abrir menu">
         <span></span><span></span><span></span>
       </button>
@@ -2194,6 +2194,7 @@ onAuthStateChanged(auth, user => {
   const adminTrigger = document.getElementById('admin-trigger');
 
   if (user) {
+    window._loggedIn = true;
     // Mostrar badge com inicial do nome
     const initials = (user.displayName || user.email).charAt(0).toUpperCase();
     const firstName = (user.displayName || user.email.split('@')[0]).split(' ')[0];
@@ -2205,6 +2206,7 @@ onAuthStateChanged(auth, user => {
     btnEl.textContent = 'Sair';
     adminTrigger.style.display = isAdmin ? '' : 'none';
   } else {
+    window._loggedIn = false;
     nameEl.style.display = 'none';
     btnEl.textContent = 'Entrar';
     adminTrigger.style.display = 'none';
@@ -2555,7 +2557,4 @@ document.getElementById('btn-google').addEventListener('click', async () => {
 // Login e-mail
 document.getElementById('login-btn').addEventListener('click', async () => {
   const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pass').value;
-  const errEl = document.getElementById('auth-error');
-  errEl.textContent = '';
-  if (!email || !pass) { errEl.text
+  const pass  = document.getElementById('login-pa
