@@ -1,1 +1,956 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog · Maria Lucia Morya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul-profundo: #0D1B2A;
+  --azul-alma:     #152236;
+  --azul-veu:      #1E3050;
+  --violeta:       #5B3F8A;
+  --violeta-suave: #7B5AAE;
+  --dourado:       #C4933A;
+  --dourado-claro: #DEB96A;
+  --dourado-fino:  #F2D98C;
+  --branco:        #F5F2ED;
+  --cinza-veu:     #B8B2AE;
+  --cinza-escuro:  #6A6460;
+  --vermelho:      #c04040;
+  --trans: 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--azul-profundo);
+  color: var(--branco);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(91,63,138,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 10% 60%, rgba(196,147,58,0.05) 0%, transparent 50%);
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+img { max-width: 100%; display: block; }
+
+/* ═══════════════════════════
+   HEADER
+═══════════════════════════ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,27,42,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(196,147,58,0.12);
+}
+.header-inner {
+  max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.5rem; gap: 1rem;
+}
+.header-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--dourado);
+}
+.header-links {
+  display: flex; align-items: center; gap: 1rem;
+}
+.header-back {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cinza-veu); transition: color var(--trans);
+}
+.header-back:hover { color: var(--dourado-claro); }
+.header-back svg { width: 13px; height: 13px; }
+
+.header-user {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.user-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(196,147,58,0.14);
+  border: 1px solid rgba(196,147,58,0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  color: var(--dourado); flex-shrink: 0;
+}
+.user-name {
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-veu); max-width: 90px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.btn-small {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.38rem 0.8rem;
+  border: 1px solid rgba(196,147,58,0.3);
+  color: var(--dourado-claro); transition: var(--trans);
+}
+.btn-small:hover { border-color: var(--dourado); background: rgba(196,147,58,0.06); }
+.btn-small.danger { border-color: rgba(192,64,64,0.3); color: var(--cinza-veu); }
+.btn-small.danger:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+/* Admin pill */
+.admin-badge {
+  display: none;
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  background: rgba(196,147,58,0.12);
+  border: 1px solid rgba(196,147,58,0.35);
+  color: var(--dourado);
+}
+
+/* ═══════════════════════════
+   LAYOUT TUMBLR
+═══════════════════════════ */
+.blog-layout {
+  max-width: 860px; margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 2.5rem;
+  position: relative; z-index: 1;
+}
+
+/* ── FEED ── */
+.feed { min-width: 0; }
+
+.feed-header {
+  margin-bottom: 2rem; display: flex; align-items: baseline; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.8rem;
+}
+.feed-title {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--dourado); display: flex; align-items: center; gap: 0.7rem;
+}
+.feed-title::after {
+  content: ''; display: block; height: 1px; width: 48px;
+  background: linear-gradient(to right, rgba(196,147,58,0.5), transparent);
+}
+.feed-count {
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-escuro);
+}
+
+/* ── POST CARD ── */
+.post {
+  margin-bottom: 2rem;
+  background: rgba(21,34,54,0.55);
+  border: 1px solid rgba(196,147,58,0.1);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.4s ease;
+}
+.post:hover { border-color: rgba(196,147,58,0.28); }
+
+/* Tag strip */
+.post-tag-strip {
+  padding: 0.5rem 1.2rem;
+  background: rgba(91,63,138,0.12);
+  border-bottom: 1px solid rgba(196,147,58,0.08);
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--dourado);
+}
+
+/* Thumb */
+.post-thumb {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/7; cursor: pointer;
+}
+.post-thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.post:hover .post-thumb img { transform: scale(1.03); }
+.post-thumb-placeholder {
+  aspect-ratio: 16/7;
+  background: linear-gradient(135deg, rgba(91,63,138,0.35), rgba(30,48,80,0.8));
+  display: flex; align-items: center; justify-content: center;
+}
+.post-thumb-placeholder svg { width: 40px; height: 40px; opacity: 0.2; }
+
+/* YouTube */
+.yt-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.18);
+}
+.yt-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(200,0,0,0.88);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.post:hover .yt-btn { transform: scale(1.1); box-shadow: 0 6px 28px rgba(200,0,0,0.5); }
+.yt-btn svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+
+/* Body */
+.post-body { padding: 1.5rem 1.4rem; }
+.post-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 600;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  color: var(--branco); margin-bottom: 0.7rem;
+  line-height: 1.25; cursor: pointer;
+  transition: color var(--trans);
+}
+.post-title:hover { color: var(--dourado-claro); }
+.post-excerpt {
+  font-size: 1rem; color: rgba(245,242,237,0.72);
+  line-height: 1.7; margin-bottom: 1.2rem;
+}
+.post-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(196,147,58,0.1);
+  flex-wrap: wrap; gap: 0.6rem;
+}
+.post-date {
+  font-family: 'Inter', sans-serif; font-size: 0.67rem;
+  color: var(--cinza-escuro); letter-spacing: 0.04em;
+}
+.post-actions { display: flex; align-items: center; gap: 0.6rem; }
+.btn-read {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--dourado); transition: color var(--trans);
+  padding: 0.3rem 0;
+}
+.btn-read:hover { color: var(--dourado-fino); }
+.btn-edit {
+  font-family: 'Inter', sans-serif; font-size: 0.6rem;
+  letter-spacing: 0.06em; color: var(--cinza-escuro);
+  border: 1px solid rgba(196,147,58,0.18);
+  padding: 0.28rem 0.65rem; transition: var(--trans);
+  display: none;
+}
+.btn-edit:hover { color: var(--dourado-claro); border-color: var(--dourado); }
+.btn-del {
+  font-family: 'Inter', sans-serif; font-size: 0.6rem;
+  letter-spacing: 0.06em; color: rgba(192,64,64,0.7);
+  border: 1px solid rgba(192,64,64,0.2);
+  padding: 0.28rem 0.65rem; transition: var(--trans);
+  display: none;
+}
+.btn-del:hover { color: var(--vermelho); border-color: var(--vermelho); background: rgba(192,64,64,0.06); }
+
+/* Estado vazio */
+.feed-empty {
+  padding: 4rem 2rem; text-align: center;
+  border: 1px dashed rgba(196,147,58,0.18);
+}
+.feed-empty p { font-style: italic; color: var(--cinza-escuro); margin-top: 0.5rem; }
+
+/* ═══════════════════════════
+   SIDEBAR
+═══════════════════════════ */
+.sidebar { display: flex; flex-direction: column; gap: 1.4rem; }
+
+.sidebar-widget {
+  padding: 1.4rem 1.2rem;
+  background: rgba(21,34,54,0.5);
+  border: 1px solid rgba(196,147,58,0.1);
+}
+.widget-label {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.widget-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(196,147,58,0.3), transparent);
+}
+
+/* Sobre (sidebar) */
+.about-photo {
+  width: 80px; height: 80px; border-radius: 50%;
+  overflow: hidden; border: 1px solid rgba(196,147,58,0.3);
+  margin: 0 auto 0.9rem;
+  box-shadow: 0 0 30px rgba(91,63,138,0.25);
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; }
+.about-name {
+  font-family: 'Cinzel', serif; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--branco); text-align: center; margin-bottom: 0.3rem;
+}
+.about-bio {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.92rem; color: var(--cinza-veu); text-align: center;
+  line-height: 1.55;
+}
+.about-link {
+  display: block; margin-top: 1rem; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0.5rem; border: 1px solid rgba(196,147,58,0.28);
+  color: var(--dourado-claro); transition: var(--trans);
+}
+.about-link:hover { background: rgba(196,147,58,0.06); border-color: var(--dourado); }
+
+/* Categorias */
+.cat-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.cat-list li {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cat-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.75rem;
+  color: var(--cinza-veu); transition: color var(--trans);
+  text-align: left; padding: 0.2rem 0;
+}
+.cat-btn:hover, .cat-btn.active { color: var(--dourado-claro); }
+.cat-count {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  color: var(--cinza-escuro); letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════
+   ADMIN FORM (sidebar admin)
+═══════════════════════════ */
+#admin-form-widget { display: none; }
+.admin-form-inner {
+  background: rgba(21,34,54,0.65);
+  border: 1px solid rgba(196,147,58,0.18);
+  padding: 1.4rem 1.3rem;
+}
+.admin-form-title {
+  font-family: 'Cinzel', serif; font-size: 0.66rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dourado-claro); margin-bottom: 1.2rem;
+}
+.f-row { margin-bottom: 0.9rem; }
+.f-label {
+  display: block; font-family: 'Inter', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cinza-veu); margin-bottom: 0.35rem;
+}
+.f-input, .f-textarea, .f-select {
+  width: 100%;
+  background: rgba(13,27,42,0.85);
+  border: 1px solid rgba(196,147,58,0.2);
+  color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 0.98rem;
+  padding: 0.6rem 0.8rem; outline: none;
+  transition: border-color var(--trans); resize: vertical;
+}
+.f-input:focus, .f-textarea:focus, .f-select:focus { border-color: var(--dourado); }
+.f-textarea { min-height: 110px; }
+.f-select option { background: var(--azul-profundo); }
+.f-hint { font-family: 'Inter', sans-serif; font-size: 0.64rem; color: var(--cinza-escuro); margin-top: 0.25rem; }
+.f-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.6rem; }
+.f-btn {
+  font-family: 'Cinzel', serif; font-size: 0.6rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0.7rem 1.4rem;
+  background: var(--dourado); color: var(--azul-profundo);
+  border: none; cursor: pointer; transition: var(--trans); font-weight: 600;
+}
+.f-btn:hover { background: var(--dourado-fino); }
+.f-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.f-btn-ghost {
+  background: transparent; border: 1px solid rgba(196,147,58,0.28);
+  color: var(--dourado-claro);
+}
+.f-btn-ghost:hover { border-color: var(--dourado); background: rgba(196,147,58,0.05); }
+
+/* ═══════════════════════════
+   POST MODAL (leitura completa)
+═══════════════════════════ */
+#post-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 980;
+  background: rgba(7,15,26,0.96);
+  backdrop-filter: blur(18px);
+  overflow-y: auto; padding: 2rem 1rem;
+}
+#post-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+#post-overlay.open { animation: modal-in 0.3s cubic-bezier(0.16,1,0.3,1); }
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.post-modal-box {
+  background: var(--azul-alma);
+  border: 1px solid rgba(196,147,58,0.22);
+  max-width: 720px; width: 100%;
+  margin: auto; padding: 2.8rem 2.4rem;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(196,147,58,0.2);
+  color: var(--cinza-veu); font-size: 0.85rem;
+  cursor: pointer; transition: var(--trans);
+}
+.modal-close:hover { color: var(--dourado); border-color: var(--dourado); }
+.modal-tag {
+  font-family: 'Cinzel', serif; font-size: 0.56rem;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--dourado); margin-bottom: 0.7rem;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  color: var(--branco); line-height: 1.2; margin-bottom: 1rem;
+}
+.modal-meta {
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-escuro); margin-bottom: 1.8rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(196,147,58,0.1);
+}
+/* YouTube modal */
+.yt-player-wrap {
+  margin-bottom: 2rem;
+  border: 1px solid rgba(196,147,58,0.15);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.yt-player-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.55rem 0.9rem;
+  background: rgba(13,27,42,0.9);
+  border-bottom: 1px solid rgba(196,147,58,0.1);
+}
+.yt-label {
+  font-family: 'Cinzel', serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dourado); display: flex; align-items: center; gap: 0.4rem;
+}
+.yt-label::before { content: '▶'; color: #ff0000; font-size: 0.6rem; }
+.yt-responsive {
+  position: relative; width: 100%; padding-top: 56.25%; background: #000;
+}
+.yt-responsive iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+.modal-content {
+  font-size: 1.05rem; color: rgba(245,242,237,0.82);
+  line-height: 1.82;
+}
+.modal-content p { margin-bottom: 1.2rem; }
+.modal-content a { color: var(--dourado-claro); text-decoration: underline; word-break: break-all; }
+
+/* ═══════════════════════════
+   TOAST
+═══════════════════════════ */
+#toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+  font-family: 'Cinzel', serif; font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.75rem 1.3rem;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s; pointer-events: none;
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════
+   RESPONSIVE
+═══════════════════════════ */
+@media (max-width: 680px) {
+  .blog-layout { grid-template-columns: 1fr; }
+  .sidebar { order: -1; }
+  #admin-form-widget { max-width: 100%; }
+  .post-modal-box { padding: 2rem 1.2rem; }
+}
+@media (max-width: 480px) {
+  .header-inner { padding: 0.8rem 1rem; }
+  .user-name { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="header-logo">Maria Lucia Morya</a>
+    <div class="header-links">
+      <a href="index.html" class="header-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Site
+      </a>
+      <!-- User info (preenchido pelo JS) -->
+      <div class="header-user" id="header-user" style="display:none;">
+        <div class="user-avatar" id="user-avatar">✦</div>
+        <span class="user-name" id="user-name"></span>
+        <span class="admin-badge" id="admin-badge">Admin</span>
+        <button class="btn-small danger" id="btn-signout">Sair</button>
+      </div>
+      <a href="login.html" class="btn-small" id="btn-login">Entrar</a>
+    </div>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="blog-layout">
+
+  <!-- FEED -->
+  <main class="feed">
+    <div class="feed-header">
+      <span class="feed-title">Escritos</span>
+      <span class="feed-count" id="feed-count"></span>
+    </div>
+    <div id="feed-container">
+      <div class="feed-empty">
+        <p>Carregando escritos...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Sobre -->
+    <div class="sidebar-widget">
+      <p class="widget-label">Sobre</p>
+      <div class="about-photo">
+        <img
+          src="https://res.cloudinary.com/dcbarseus/image/upload/v1782178771/e2bc5e01-6ca2-41dd-aad8-a736a7a22a9b_wpfzr1.png"
+          alt="Maria Lucia Morya"
+          onerror="this.style.display='none'"
+        >
+      </div>
+      <p class="about-name">Maria Lucia Morya</p>
+      <p class="about-bio">Chamas Gêmeas · Jornada da Alma · Governo Divino</p>
+      <a href="index.html" class="about-link">← Voltar ao site</a>
+    </div>
+
+    <!-- Categorias -->
+    <div class="sidebar-widget">
+      <p class="widget-label">Categorias</p>
+      <ul class="cat-list" id="cat-list">
+        <li><button class="cat-btn active" onclick="filterCat('')">Todos</button><span class="cat-count" id="count-all">—</span></li>
+        <li><button class="cat-btn" onclick="filterCat('Chamas Gêmeas')">Chamas Gêmeas</button><span class="cat-count" id="count-0">0</span></li>
+        <li><button class="cat-btn" onclick="filterCat('Jornada da Alma')">Jornada da Alma</button><span class="cat-count" id="count-1">0</span></li>
+        <li><button class="cat-btn" onclick="filterCat('Governo Divino')">Governo Divino</button><span class="cat-count" id="count-2">0</span></li>
+        <li><button class="cat-btn" onclick="filterCat('Memória')">Memória</button><span class="cat-count" id="count-3">0</span></li>
+        <li><button class="cat-btn" onclick="filterCat('Reflexão')">Reflexão</button><span class="cat-count" id="count-4">0</span></li>
+      </ul>
+    </div>
+
+    <!-- Painel Admin (só aparece para admin logada) -->
+    <div id="admin-form-widget">
+      <div class="admin-form-inner">
+        <h2 class="admin-form-title" id="form-heading">✦ Novo Escrito</h2>
+
+        <div class="f-row">
+          <label class="f-label" for="f-titulo">Título</label>
+          <input type="text" class="f-input" id="f-titulo" placeholder="Título do escrito">
+        </div>
+
+        <div class="f-row">
+          <label class="f-label" for="f-tag">Categoria</label>
+          <select class="f-select" id="f-tag">
+            <option value="Chamas Gêmeas">Chamas Gêmeas</option>
+            <option value="Jornada da Alma">Jornada da Alma</option>
+            <option value="Governo Divino">Governo Divino</option>
+            <option value="Memória">Memória</option>
+            <option value="Reflexão">Reflexão</option>
+          </select>
+        </div>
+
+        <div class="f-row">
+          <label class="f-label" for="f-yt">Link YouTube (opcional)</label>
+          <input type="url" class="f-input" id="f-yt" placeholder="https://youtu.be/...">
+          <p class="f-hint">Vídeo aparece incorporado no post.</p>
+        </div>
+
+        <div class="f-row">
+          <label class="f-label" for="f-thumb">URL da imagem de capa (opcional)</label>
+          <input type="url" class="f-input" id="f-thumb" placeholder="https://...">
+          <p class="f-hint">Se tiver YouTube, thumbnail é automática.</p>
+        </div>
+
+        <div class="f-row">
+          <label class="f-label" for="f-excerpt">Resumo (aparece no feed)</label>
+          <input type="text" class="f-input" id="f-excerpt" placeholder="Uma frase que capture a essência...">
+        </div>
+
+        <div class="f-row">
+          <label class="f-label" for="f-content">Texto completo</label>
+          <textarea class="f-textarea" id="f-content" placeholder="Escreva aqui. Parágrafos: linha em branco entre eles. Links: [texto](url)"></textarea>
+        </div>
+
+        <div class="f-actions">
+          <button class="f-btn" id="f-save">Publicar</button>
+          <button class="f-btn f-btn-ghost" id="f-cancel" style="display:none;">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- POST MODAL (leitura completa) -->
+<div id="post-overlay" role="dialog" aria-modal="true">
+  <div class="post-modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+    <p class="modal-tag" id="modal-tag"></p>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="yt-player-wrap" id="yt-wrap" style="display:none;">
+      <div class="yt-player-bar">
+        <span class="yt-label">Vídeo incorporado</span>
+      </div>
+      <div class="yt-responsive">
+        <iframe id="yt-iframe" allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          src=""></iframe>
+      </div>
+    </div>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+/* ══════════════════════════════
+   CONFIG FIREBASE
+══════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyD_93E6wM05rj9WJGNE0rj8h-FtOowWV3g",
+  authDomain: "moryalucia.firebaseapp.com",
+  projectId: "moryalucia",
+  storageBucket: "moryalucia.firebasestorage.app",
+  messagingSenderId: "183103545768",
+  appId: "1:183103545768:web:122201f185d96ca6683d9d"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
+
+const ADMIN_EMAIL = "mariaakashahub@gmail.com";
+
+/* ══════════════════════════════
+   ESTADO
+══════════════════════════════ */
+let currentUser = null;
+let isAdmin     = false;
+let allPosts    = [];
+let activeFilter = '';
+let editingId    = null;
+
+/* ══════════════════════════════
+   AUTH
+══════════════════════════════ */
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+  isAdmin = user?.email === ADMIN_EMAIL;
+
+  const headerUser = document.getElementById('header-user');
+  const btnLogin   = document.getElementById('btn-login');
+  const adminWidget = document.getElementById('admin-form-widget');
+  const adminBadge  = document.getElementById('admin-badge');
+
+  if (user) {
+    headerUser.style.display = '';
+    btnLogin.style.display   = 'none';
+    const name = user.displayName || user.email.split('@')[0];
+    document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
+    document.getElementById('user-name').textContent   = name.split(' ')[0];
+    if (isAdmin) {
+      adminBadge.style.display  = '';
+      adminWidget.style.display = '';
+      // Mostrar botões edit/delete nos posts
+      document.querySelectorAll('.btn-edit, .btn-del').forEach(b => b.style.display = '');
+    }
+  } else {
+    headerUser.style.display  = 'none';
+    btnLogin.style.display    = '';
+    adminWidget.style.display = 'none';
+    adminBadge.style.display  = 'none';
+    document.querySelectorAll('.btn-edit, .btn-del').forEach(b => b.style.display = 'none');
+  }
+});
+
+document.getElementById('btn-signout').addEventListener('click', () => auth.signOut());
+
+/* ══════════════════════════════
+   HELPERS
+══════════════════════════════ */
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  return `${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+}
+function ytId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&\s]+)/);
+  return m ? m[1] : null;
+}
+function md2html(text) {
+  if (!text) return '';
+  return text.split('\n\n').map(p => {
+    if (!p.trim()) return '';
+    let h = p.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    h = h.replace(/(^|\s)(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+    return `<p>${h}</p>`;
+  }).join('');
+}
+let toastT;
+function toast(msg, err) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.background = err ? '#8B2020' : 'var(--dourado)';
+  el.style.color = err ? '#fff' : 'var(--azul-profundo)';
+  el.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+/* ══════════════════════════════
+   POSTS — Firestore realtime
+══════════════════════════════ */
+const postsRef = db.collection('posts_marya').orderBy('criadoEm', 'desc');
+postsRef.onSnapshot(snap => {
+  allPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderFeed(allPosts);
+  updateCatCounts(allPosts);
+}, err => {
+  console.error(err);
+  renderFeed([]);
+});
+
+/* ══════════════════════════════
+   RENDER FEED
+══════════════════════════════ */
+function renderFeed(posts) {
+  const filtered = activeFilter ? posts.filter(p => p.tag === activeFilter) : posts;
+  const container = document.getElementById('feed-container');
+  document.getElementById('feed-count').textContent = filtered.length
+    ? `${filtered.length} ${filtered.length === 1 ? 'escrito' : 'escritos'}`
+    : '';
+
+  if (!filtered.length) {
+    container.innerHTML = `<div class="feed-empty">
+      <svg width="40" height="40" viewBox="0 0 60 60" fill="none" style="margin:0 auto 0.8rem;opacity:0.2;">
+        <path d="M30 6L34 20H49L37 29L41.5 43.5L30 35L18.5 43.5L23 29L11 20H26L30 6Z" stroke="#DEB96A" stroke-width="1.4" fill="none"/>
+      </svg>
+      <p>${activeFilter ? `Nenhum escrito em "${activeFilter}" ainda.` : 'Os primeiros escritos chegarão em breve.'}</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(p => {
+    const vid = ytId(p.yt || '');
+    let thumbHtml = '';
+
+    if (vid) {
+      thumbHtml = `<div class="post-thumb" onclick="openPost('${p.id}')">
+        <img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" alt="${esc(p.titulo)}" onerror="this.parentElement.style.display='none'">
+        <div class="yt-overlay"><div class="yt-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>`;
+    } else if (p.thumb) {
+      thumbHtml = `<div class="post-thumb" onclick="openPost('${p.id}')">
+        <img src="${esc(p.thumb)}" alt="${esc(p.titulo)}" onerror="this.parentElement.style.display='none'">
+      </div>`;
+    } else {
+      thumbHtml = `<div class="post-thumb-placeholder" onclick="openPost('${p.id}')" style="cursor:pointer;">
+        <svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#DEB96A" stroke-width="1.2"/><ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#DEB96A" stroke-width="1.2" transform="rotate(60 30 30)"/><ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#DEB96A" stroke-width="1.2" transform="rotate(120 30 30)"/><circle cx="30" cy="30" r="4.5" fill="none" stroke="#DEB96A" stroke-width="1"/></svg>
+      </div>`;
+    }
+
+    return `<article class="post" data-id="${p.id}">
+      <div class="post-tag-strip">${esc(p.tag)}</div>
+      ${thumbHtml}
+      <div class="post-body">
+        <h2 class="post-title" onclick="openPost('${p.id}')">${esc(p.titulo)}</h2>
+        ${p.excerpt ? `<p class="post-excerpt">${esc(p.excerpt)}</p>` : ''}
+        <div class="post-footer">
+          <span class="post-date">${fmtDate(p.criadoEm)}</span>
+          <div class="post-actions">
+            <button class="btn-edit" onclick="startEdit('${p.id}')" style="display:${isAdmin?'':'none'}">Editar</button>
+            <button class="btn-del" onclick="deletePost('${p.id}')" style="display:${isAdmin?'':'none'}">Excluir</button>
+            <button class="btn-read" onclick="openPost('${p.id}')">Ler →</button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function updateCatCounts(posts) {
+  document.getElementById('count-all').textContent = posts.length;
+  const cats = ['Chamas Gêmeas','Jornada da Alma','Governo Divino','Memória','Reflexão'];
+  cats.forEach((c,i) => {
+    const el = document.getElementById(`count-${i}`);
+    if (el) el.textContent = posts.filter(p => p.tag === c).length;
+  });
+}
+
+/* ══════════════════════════════
+   FILTRO CATEGORIAS
+══════════════════════════════ */
+function filterCat(cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderFeed(allPosts);
+}
+
+/* ══════════════════════════════
+   MODAL LEITURA
+══════════════════════════════ */
+function openPost(id) {
+  const p = allPosts.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-tag').textContent   = p.tag;
+  document.getElementById('modal-title').textContent = p.titulo;
+  document.getElementById('modal-meta').textContent  = fmtDate(p.criadoEm);
+
+  const vid   = ytId(p.yt || '');
+  const wrap  = document.getElementById('yt-wrap');
+  const frame = document.getElementById('yt-iframe');
+  if (vid) {
+    frame.src = `https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1`;
+    wrap.style.display = '';
+  } else {
+    frame.src = '';
+    wrap.style.display = 'none';
+  }
+
+  document.getElementById('modal-content').innerHTML = md2html(p.content || '');
+  document.getElementById('post-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePost() {
+  document.getElementById('post-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('yt-iframe').src = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closePost);
+document.getElementById('post-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('post-overlay')) closePost();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePost(); });
+
+/* ══════════════════════════════
+   ADMIN — SALVAR POST
+══════════════════════════════ */
+document.getElementById('f-save').addEventListener('click', async () => {
+  if (!isAdmin) return;
+  const btn     = document.getElementById('f-save');
+  const titulo  = document.getElementById('f-titulo').value.trim();
+  const tag     = document.getElementById('f-tag').value;
+  const yt      = document.getElementById('f-yt').value.trim();
+  const thumb   = document.getElementById('f-thumb').value.trim();
+  const excerpt = document.getElementById('f-excerpt').value.trim();
+  const content = document.getElementById('f-content').value.trim();
+
+  if (!titulo) { toast('O título é obrigatório.', true); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Publicando...';
+
+  const data = {
+    titulo, tag, yt, thumb, excerpt, content,
+    criadoEm: editingId ? firebase.firestore.FieldValue.serverTimestamp() : firebase.firestore.FieldValue.serverTimestamp(),
+    autor: currentUser.displayName || currentUser.email,
+    autorEmail: currentUser.email
+  };
+
+  try {
+    if (editingId) {
+      await db.collection('posts_marya').doc(editingId).update({
+        titulo, tag, yt, thumb, excerpt, content,
+        editadoEm: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('Escrito atualizado!');
+    } else {
+      await db.collection('posts_marya').add({ ...data, criadoEm: firebase.firestore.FieldValue.serverTimestamp() });
+      toast('Escrito publicado!');
+    }
+    resetForm();
+  } catch(e) {
+    console.error(e);
+    toast('Erro ao salvar: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = editingId ? 'Atualizar' : 'Publicar';
+  }
+});
+
+function resetForm() {
+  editingId = null;
+  ['f-titulo','f-yt','f-thumb','f-excerpt','f-content'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-tag').value = 'Chamas Gêmeas';
+  document.getElementById('f-save').textContent = 'Publicar';
+  document.getElementById('f-cancel').style.display = 'none';
+  document.getElementById('form-heading').textContent = '✦ Novo Escrito';
+}
+
+document.getElementById('f-cancel').addEventListener('click', resetForm);
+
+/* ══════════════════════════════
+   ADMIN — EDITAR / DELETAR
+══════════════════════════════ */
+function startEdit(id) {
+  const p = allPosts.find(x => x.id === id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('f-titulo').value  = p.titulo  || '';
+  document.getElementById('f-tag').value     = p.tag     || 'Chamas Gêmeas';
+  document.getElementById('f-yt').value      = p.yt      || '';
+  document.getElementById('f-thumb').value   = p.thumb   || '';
+  document.getElementById('f-excerpt').value = p.excerpt || '';
+  document.getElementById('f-content').value = p.content || '';
+  document.getElementById('f-save').textContent = 'Atualizar';
+  document.getElementById('f-cancel').style.display = '';
+  document.getElementById('form-heading').textContent = '✦ Editar Escrito';
+  // Scroll ao formulário
+  document.getElementById('admin-form-widget').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function deletePost(id) {
+  if (!isAdmin) return;
+  if (!confirm('Excluir este escrito permanentemente?')) return;
+  try {
+    await db.collection('posts_marya').doc(id).delete();
+    toast('Escrito excluído.');
+    if (editingId === id) resetForm();
+  } catch(e) {
+    toast('Erro ao excluir.', true);
+  }
+}
+</script>
+</body>
+</html>
