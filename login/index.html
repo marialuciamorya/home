@@ -1,1 +1,527 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar · Maria Lucia Morya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul-profundo: #0D1B2A;
+  --azul-alma:     #152236;
+  --azul-veu:      #1E3050;
+  --violeta:       #5B3F8A;
+  --violeta-suave: #7B5AAE;
+  --rosa-divino:   #B87498;
+  --dourado:       #C4933A;
+  --dourado-claro: #DEB96A;
+  --dourado-fino:  #F2D98C;
+  --branco:        #F5F2ED;
+  --cinza-veu:     #B8B2AE;
+  --cinza-escuro:  #6A6460;
+  --trans: 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; height: 100%; }
+
+body {
+  background: var(--azul-profundo);
+  color: var(--branco);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Fundo atmosférico */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(91,63,138,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(196,147,58,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(184,116,152,0.06) 0%, transparent 55%);
+}
+
+/* ── HEADER ── */
+.site-header {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 2rem;
+  border-bottom: 1px solid rgba(196,147,58,0.1);
+}
+.header-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--dourado);
+  text-decoration: none;
+}
+.back-home {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'Inter', sans-serif; font-size: 0.7rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cinza-veu); text-decoration: none;
+  transition: color var(--trans);
+}
+.back-home:hover { color: var(--dourado-claro); }
+.back-home svg { width: 14px; height: 14px; }
+
+/* ── MAIN ── */
+main {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1.5rem;
+  position: relative; z-index: 1;
+}
+
+/* ── CARD ── */
+.login-card {
+  width: 100%; max-width: 440px;
+  background: rgba(21,34,54,0.6);
+  border: 1px solid rgba(196,147,58,0.18);
+  backdrop-filter: blur(20px);
+  padding: 3rem 2.6rem;
+  animation: card-enter 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Símbolo decorativo */
+.login-sigil {
+  text-align: center; margin-bottom: 2rem;
+}
+.login-sigil svg {
+  width: 44px; height: 44px; opacity: 0.5;
+  animation: sigil-breathe 5s ease-in-out infinite;
+}
+@keyframes sigil-breathe {
+  0%,100% { opacity: 0.5; filter: drop-shadow(0 0 0px rgba(196,147,58,0)); }
+  50%      { opacity: 0.75; filter: drop-shadow(0 0 10px rgba(196,147,58,0.35)); }
+}
+
+.login-eyebrow {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--dourado); text-align: center; margin-bottom: 0.6rem;
+}
+.login-title {
+  font-family: 'Cinzel', serif; font-size: 1.05rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--branco); text-align: center; margin-bottom: 0.4rem;
+}
+.login-sub {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.95rem; color: var(--cinza-veu);
+  text-align: center; margin-bottom: 2.2rem; line-height: 1.5;
+}
+
+/* ── TABS ── */
+.auth-tabs {
+  display: flex; margin-bottom: 1.8rem;
+  border-bottom: 1px solid rgba(196,147,58,0.15);
+}
+.auth-tab {
+  flex: 1; padding: 0.65rem; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cinza-escuro); cursor: pointer;
+  background: none; border: none;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color var(--trans), border-color var(--trans);
+}
+.auth-tab.active { color: var(--dourado); border-bottom-color: var(--dourado); }
+.auth-tab:hover:not(.active) { color: var(--cinza-veu); }
+
+/* ── GOOGLE ── */
+.btn-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+  padding: 0.85rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: var(--branco); font-family: 'Inter', sans-serif;
+  font-size: 0.78rem; letter-spacing: 0.04em;
+  cursor: pointer; transition: var(--trans); margin-bottom: 1.4rem;
+}
+.btn-google:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
+.btn-google:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-google svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* Divisor */
+.divider {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 1.4rem;
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-escuro); letter-spacing: 0.06em;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(196,147,58,0.14);
+}
+
+/* ── CAMPOS ── */
+.field-group { margin-bottom: 1rem; }
+.field-label {
+  display: block; font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cinza-veu); margin-bottom: 0.4rem;
+}
+.field-input {
+  width: 100%;
+  background: rgba(13,27,42,0.75);
+  border: 1px solid rgba(196,147,58,0.2);
+  color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+  padding: 0.75rem 0.95rem; outline: none;
+  transition: border-color var(--trans);
+}
+.field-input:focus { border-color: var(--dourado); }
+.field-input::placeholder { color: rgba(184,178,174,0.35); font-style: italic; }
+
+/* ── BOTÃO PRINCIPAL ── */
+.btn-primary {
+  width: 100%; margin-top: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.9rem;
+  background: var(--dourado); color: var(--azul-profundo);
+  border: none; cursor: pointer; transition: var(--trans);
+  font-weight: 600;
+}
+.btn-primary:hover { background: var(--dourado-fino); }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── ERRO ── */
+.auth-error {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: #c06060; text-align: center; margin-top: 1rem; min-height: 1rem;
+}
+
+/* Bloqueio (só admin posta) */
+.access-note {
+  margin-top: 1.6rem; padding: 1rem 1.2rem;
+  border: 1px solid rgba(196,147,58,0.12);
+  background: rgba(196,147,58,0.04);
+}
+.access-note p {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: var(--cinza-escuro); line-height: 1.6; text-align: center;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  position: relative; z-index: 1;
+  padding: 1.8rem; text-align: center;
+  border-top: 1px solid rgba(196,147,58,0.08);
+}
+.site-footer p {
+  font-family: 'Inter', sans-serif; font-size: 0.68rem;
+  color: var(--cinza-escuro);
+}
+.site-footer a {
+  color: var(--dourado); text-decoration: none;
+  transition: color var(--trans);
+}
+.site-footer a:hover { color: var(--dourado-fino); }
+
+/* ── ESTADO LOGADO ── */
+.logged-card {
+  text-align: center;
+}
+.logged-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(196,147,58,0.12);
+  border: 1px solid rgba(196,147,58,0.4);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-family: 'Cinzel', serif; font-size: 1.4rem;
+  color: var(--dourado);
+  box-shadow: 0 0 30px rgba(196,147,58,0.15);
+}
+.logged-name {
+  font-family: 'Cinzel', serif; font-size: 0.8rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--branco); margin-bottom: 0.3rem;
+}
+.logged-email {
+  font-family: 'Inter', sans-serif; font-size: 0.72rem;
+  color: var(--cinza-escuro); margin-bottom: 2rem;
+}
+.btn-blog-link {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  background: var(--dourado); color: var(--azul-profundo);
+  text-decoration: none; margin-bottom: 0.8rem;
+  transition: var(--trans); font-weight: 600;
+  display: block; text-align: center;
+}
+.btn-blog-link:hover { background: var(--dourado-fino); }
+.btn-signout {
+  width: 100%; margin-top: 0.6rem;
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(196,147,58,0.25);
+  color: var(--cinza-veu); cursor: pointer; transition: var(--trans);
+}
+.btn-signout:hover { border-color: var(--dourado); color: var(--dourado); }
+
+@media (max-width: 480px) {
+  .login-card { padding: 2.2rem 1.6rem; }
+  .site-header { padding: 1rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="header-logo">Maria Lucia Morya</a>
+  <a href="index.html" class="back-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Voltar ao site
+  </a>
+</header>
+
+<!-- MAIN -->
+<main>
+  <div class="login-card" id="login-card">
+
+    <!-- Símbolo -->
+    <div class="login-sigil">
+      <svg viewBox="0 0 60 60" fill="none">
+        <ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#C4933A" stroke-width="1.2"/>
+        <ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#C4933A" stroke-width="1.2" transform="rotate(60 30 30)"/>
+        <ellipse cx="30" cy="30" rx="7" ry="18" fill="none" stroke="#C4933A" stroke-width="1.2" transform="rotate(120 30 30)"/>
+        <circle cx="30" cy="30" r="4.5" fill="none" stroke="#C4933A" stroke-width="1"/>
+        <circle cx="30" cy="30" r="1.5" fill="#C4933A"/>
+      </svg>
+    </div>
+
+    <!-- Estado: LOGADO (oculto por padrão) -->
+    <div class="logged-card" id="logged-view" style="display:none;">
+      <div class="logged-avatar" id="logged-avatar">✦</div>
+      <p class="logged-name" id="logged-name">—</p>
+      <p class="logged-email" id="logged-email">—</p>
+      <a href="blog.html" class="btn-blog-link">
+        ✦ Ir para o Blog
+      </a>
+      <button class="btn-signout" id="btn-signout">Sair da conta</button>
+    </div>
+
+    <!-- Estado: NÃO LOGADO -->
+    <div id="auth-view">
+      <p class="login-eyebrow">Área Privada</p>
+      <h1 class="login-title">Entrar</h1>
+      <p class="login-sub">Espaço de verdade, amor e discernimento.</p>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Entrar</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Criar conta</button>
+      </div>
+
+      <!-- Google -->
+      <button class="btn-google" id="btn-google">
+        <svg viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Continuar com Google
+      </button>
+
+      <div class="divider">ou use seu e-mail</div>
+
+      <!-- Form Login -->
+      <div id="form-login">
+        <div class="field-group">
+          <label class="field-label" for="login-email">E-mail</label>
+          <input type="email" class="field-input" id="login-email" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="login-pass">Senha</label>
+          <input type="password" class="field-input" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="btn-primary" id="login-btn">Entrar</button>
+      </div>
+
+      <!-- Form Cadastro -->
+      <div id="form-register" style="display:none;">
+        <div class="field-group">
+          <label class="field-label" for="reg-name">Nome</label>
+          <input type="text" class="field-input" id="reg-name" placeholder="Seu nome" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-email">E-mail</label>
+          <input type="email" class="field-input" id="reg-email" placeholder="seu@email.com" autocomplete="email">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-pass">Senha</label>
+          <input type="password" class="field-input" id="reg-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+        </div>
+        <button class="btn-primary" id="register-btn">Criar conta</button>
+      </div>
+
+      <p class="auth-error" id="auth-error"></p>
+
+      <div class="access-note">
+        <p>O blog é aberto para leitura.<br>Faça login para comentar nos escritos.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p>
+    <a href="index.html">Maria Lucia Morya</a>
+    &ensp;·&ensp; Chamas Gêmeas · Jornada da Alma · Governo Divino
+  </p>
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD_93E6wM05rj9WJGNE0rj8h-FtOowWV3g",
+  authDomain: "moryalucia.firebaseapp.com",
+  projectId: "moryalucia",
+  storageBucket: "moryalucia.firebasestorage.app",
+  messagingSenderId: "183103545768",
+  appId: "1:183103545768:web:122201f185d96ca6683d9d"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+const ADMIN_EMAIL = "mariaakashahub@gmail.com";
+
+/* ── HELPERS ── */
+function setError(msg) {
+  document.getElementById('auth-error').textContent = msg || '';
+}
+function setLoading(btn, loading) {
+  btn.disabled = loading;
+  if (loading) { btn._text = btn.textContent; btn.textContent = 'Aguarde...'; }
+  else if (btn._text) btn.textContent = btn._text;
+}
+
+/* ── TABS ── */
+function switchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('form-login').style.display    = tab === 'login'    ? '' : 'none';
+  document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
+  setError('');
+}
+
+/* ── AUTH STATE ── */
+auth.onAuthStateChanged(user => {
+  if (user) {
+    // Mostrar estado logado
+    document.getElementById('auth-view').style.display = 'none';
+    document.getElementById('logged-view').style.display = '';
+    const name = user.displayName || user.email.split('@')[0];
+    const initial = name.charAt(0).toUpperCase();
+    document.getElementById('logged-avatar').textContent = initial;
+    document.getElementById('logged-name').textContent = name;
+    document.getElementById('logged-email').textContent = user.email;
+  } else {
+    document.getElementById('auth-view').style.display = '';
+    document.getElementById('logged-view').style.display = 'none';
+  }
+});
+
+/* ── GOOGLE ── */
+document.getElementById('btn-google').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-google');
+  setError('');
+  setLoading(btn, true);
+  try {
+    await auth.signInWithPopup(googleProvider);
+    // onAuthStateChanged vai redirecionar
+  } catch(e) {
+    setLoading(btn, false);
+    if (e.code === 'auth/popup-closed-by-user') return;
+    if (e.code === 'auth/popup-blocked') setError('Popup bloqueado. Permita popups para este site.');
+    else setError('Erro ao entrar com Google: ' + (e.code || e.message));
+  }
+});
+
+/* ── LOGIN E-MAIL ── */
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const btn   = document.getElementById('login-btn');
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  setError('');
+  if (!email || !pass) { setError('Preencha e-mail e senha.'); return; }
+  setLoading(btn, true);
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+  } catch(e) {
+    setLoading(btn, false);
+    const msgs = {
+      'auth/user-not-found':  'Conta não encontrada.',
+      'auth/wrong-password':  'Senha incorreta.',
+      'auth/invalid-email':   'E-mail inválido.',
+      'auth/too-many-requests': 'Muitas tentativas. Tente mais tarde.',
+    };
+    setError(msgs[e.code] || 'Erro: ' + (e.code || e.message));
+  }
+});
+
+/* ── CADASTRO ── */
+document.getElementById('register-btn').addEventListener('click', async () => {
+  const btn   = document.getElementById('register-btn');
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
+  setError('');
+  if (!name || !email || !pass) { setError('Preencha todos os campos.'); return; }
+  if (pass.length < 6) { setError('Senha deve ter mínimo 6 caracteres.'); return; }
+  setLoading(btn, true);
+  try {
+    const result = await auth.createUserWithEmailAndPassword(email, pass);
+    await result.user.updateProfile({ displayName: name });
+  } catch(e) {
+    setLoading(btn, false);
+    const msgs = {
+      'auth/email-already-in-use': 'Este e-mail já está cadastrado.',
+      'auth/invalid-email':        'E-mail inválido.',
+      'auth/weak-password':        'Senha muito fraca.',
+    };
+    setError(msgs[e.code] || 'Erro: ' + (e.code || e.message));
+  }
+});
+
+/* ── ENTER key ── */
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+document.getElementById('reg-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('register-btn').click();
+});
+
+/* ── SAIR ── */
+document.getElementById('btn-signout').addEventListener('click', async () => {
+  await auth.signOut();
+});
+</script>
+</body>
+</html>
