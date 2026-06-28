@@ -342,7 +342,7 @@ body:hover #cursor-dot, body:hover #cursor-ring { opacity: 1; }
     </ul>
     <div class="nav-right-group">
       <span id="nav-user-name" style="display:none;"></span>
-      <!-- ✦ MUDANÇA 2: Entrar vai para login.html; Sair faz signOut -->
+      <!-- ✦ MUDANÇA 2: Entrar vai para loginl; Sair faz signOut -->
       <button class="nav-auth-btn" id="nav-auth-btn">Entrar</button>
       <button class="nav-burger" id="burger-btn" aria-label="Abrir menu">
         <span></span><span></span><span></span>
@@ -619,12 +619,12 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-/* ✦ MUDANÇA PRINCIPAL — Entrar vai para login.html; Sair desconecta */
+/* ✦ MUDANÇA PRINCIPAL — Entrar vai para login; Sair desconecta */
 document.getElementById('nav-auth-btn').addEventListener('click', function() {
   if (currentUser) {
     auth.signOut();
   } else {
-    window.location.href = 'login.html';
+    window.location.href = 'login';
   }
 });
 
@@ -817,7 +817,7 @@ function renderComments(comments, postId, sec) {
   if (currentUser) {
     html += `<div class="comment-form"><textarea class="comment-input" id="comment-input" placeholder="Deixe seu comentário..."></textarea><button class="comment-submit" id="comment-submit-btn">Enviar</button></div>`;
   } else {
-    html += `<p class="comments-login-note"><a href="login.html">Entre</a> para deixar um comentário.</p>`;
+    html += `<p class="comments-login-note"><a href="login">Entre</a> para deixar um comentário.</p>`;
   }
   html += comments.length
     ? `<div class="comment-list">${comments.map(c => {
@@ -850,7 +850,7 @@ function renderComments(comments, postId, sec) {
       try { await db.collection('posts_marya').doc(postId).collection('comments').doc(btn.dataset.cid).delete(); }
       catch(e) { showToast('Erro ao excluir.', true); }
     });
-  });
+  });y
 }
 </script>
 </body>
