@@ -528,6 +528,111 @@ img { max-width: 100%; display: block; }
 #fab:hover { transform: scale(1.08) rotate(90deg); }
 #fab.show { display: flex; }
 
+/* MODAL CRIAR/EDITAR POST (sobreposto, igual ao Akasha) */
+#overlay-post {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(7,4,18,0.88); backdrop-filter: blur(16px);
+  display: none; align-items: flex-end; justify-content: center;
+}
+#overlay-post.open { display: flex; }
+.modal-post-wrap {
+  width: 100%; max-width: 640px; max-height: 92vh;
+  background: linear-gradient(170deg, #101828, #0a1020);
+  border: 1px solid rgba(196,147,58,0.22); border-bottom: none;
+  border-radius: 14px 14px 0 0; overflow: hidden;
+  display: flex; flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+#overlay-post.open .modal-post-wrap { transform: translateY(0); }
+
+.modal-handle { padding: 14px 22px 0; flex-shrink: 0; }
+.modal-pill {
+  width: 36px; height: 3px; border-radius: 2px;
+  background: rgba(196,147,58,0.22); margin: 0 auto 14px;
+}
+.modal-toprow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.modal-lbl {
+  font-family: 'Cinzel', serif; font-size: 0.58rem;
+  letter-spacing: 0.28em; text-transform: uppercase; color: rgba(196,147,58,0.6);
+}
+.modal-x {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--cinza-veu); font-size: 0.8rem; transition: var(--trans);
+}
+.modal-x:hover { background: rgba(196,147,58,0.1); border-color: rgba(196,147,58,0.3); color: var(--dourado); }
+
+.modal-body {
+  overflow-y: auto; flex: 1; padding: 20px 22px 32px;
+  scrollbar-width: thin; scrollbar-color: rgba(196,147,58,0.15) transparent;
+}
+.modal-body::-webkit-scrollbar { width: 3px; }
+.modal-body::-webkit-scrollbar-thumb { background: rgba(196,147,58,0.15); }
+
+.mf-row { margin-bottom: 1rem; }
+.mf-lbl {
+  display: block; font-family: 'Inter', sans-serif; font-size: 0.62rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(196,147,58,0.75); margin-bottom: 0.4rem;
+}
+.mf-inp, .mf-ta, .mf-sel {
+  width: 100%; background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07); color: var(--branco);
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  padding: 0.65rem 0.9rem; outline: none;
+  transition: border-color var(--trans); resize: vertical;
+}
+.mf-inp:focus, .mf-ta:focus, .mf-sel:focus {
+  border-color: rgba(196,147,58,0.45); background: rgba(196,147,58,0.03);
+}
+.mf-ta { min-height: 130px; line-height: 1.8; }
+.mf-sel { cursor: pointer; appearance: none; }
+.mf-sel option { background: #101828; color: var(--branco); }
+.mf-hint {
+  font-family: 'Inter', sans-serif; font-size: 0.62rem;
+  color: rgba(245,242,237,0.28); margin-top: 0.35rem; line-height: 1.6;
+}
+
+/* Preview mídia dentro do modal */
+.mf-prev { display: none; margin-top: 0.7rem; border: 1px solid rgba(196,147,58,0.12); overflow: hidden; }
+.mf-prev img { width: 100%; max-height: 180px; object-fit: cover; display: block; }
+.mf-prev-lbl {
+  padding: 5px 10px; font-family: 'Inter', sans-serif; font-size: 0.52rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--cinza-escuro);
+  background: rgba(0,0,0,0.4);
+}
+.mf-prev-yt { position: relative; }
+.mf-prev-yt img { filter: brightness(0.6); }
+.mf-prev-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.mf-prev-play span {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(200,0,0,0.9); display: flex; align-items: center; justify-content: center;
+}
+.mf-prev-play svg { width: 14px; height: 14px; fill: #fff; margin-left: 2px; }
+
+.modal-actions { display: flex; gap: 0.7rem; margin-top: 1.2rem; }
+.mf-btn-pub {
+  flex: 1; padding: 0.8rem;
+  background: linear-gradient(135deg, rgba(196,147,58,0.22), rgba(196,147,58,0.1));
+  border: 1px solid rgba(196,147,58,0.45); cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--dourado-claro); transition: var(--trans);
+}
+.mf-btn-pub:hover { background: rgba(196,147,58,0.3); border-color: var(--dourado); }
+.mf-btn-pub:disabled { opacity: 0.4; cursor: not-allowed; }
+.mf-btn-cancel {
+  padding: 0.8rem 1.2rem; background: none;
+  border: 1px solid rgba(255,255,255,0.07); cursor: pointer;
+  font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cinza-veu); transition: var(--trans);
+}
+.mf-btn-cancel:hover { border-color: rgba(255,255,255,0.2); color: var(--branco); }
+
 /* TOAST */
 #toast {
   position: fixed; bottom: 1.8rem; left: 50%;
@@ -581,8 +686,68 @@ img { max-width: 100%; display: block; }
   </div>
 </header>
 
-<!-- FAB: botão flutuante para admin criar post no mobile -->
+<!-- FAB: botão flutuante para admin criar post -->
 <button id="fab" title="Novo Post" aria-label="Novo Post">+</button>
+
+<!-- ═══════════════════════════════
+     MODAL: CRIAR / EDITAR ESCRITO
+     (abre de baixo, igual ao Akasha)
+═══════════════════════════════ -->
+<div id="overlay-post" aria-modal="true" role="dialog" aria-label="Criar escrito">
+  <div class="modal-post-wrap" id="modal-post-wrap">
+    <div class="modal-handle">
+      <div class="modal-pill"></div>
+      <div class="modal-toprow">
+        <span class="modal-lbl" id="modal-post-lbl">Novo Escrito</span>
+        <button class="modal-x" id="modal-post-close" aria-label="Fechar">✕</button>
+      </div>
+    </div>
+    <div class="modal-body">
+
+      <div class="mf-row">
+        <label class="mf-lbl" for="mf-titulo">Título</label>
+        <input type="text" class="mf-inp" id="mf-titulo" placeholder="Título do escrito…">
+      </div>
+
+      <div class="mf-row">
+        <label class="mf-lbl" for="mf-tag">Categoria</label>
+        <select class="mf-sel" id="mf-tag">
+          <option value="Chamas Gêmeas">Chamas Gêmeas</option>
+          <option value="Jornada da Alma">Jornada da Alma</option>
+          <option value="Governo Divino">Governo Divino</option>
+          <option value="Memória">Memória</option>
+          <option value="Reflexão">Reflexão</option>
+        </select>
+      </div>
+
+      <div class="mf-row">
+        <label class="mf-lbl" for="mf-midia">Mídia — YouTube ou imagem (opcional)</label>
+        <input type="url" class="mf-inp" id="mf-midia"
+          placeholder="https://youtu.be/... ou https://site.com/foto.jpg"
+          oninput="onMidiaInputModal(this.value)">
+        <p class="mf-hint">Cole um link do YouTube ou URL direta de imagem. O sistema detecta automaticamente.</p>
+        <div class="mf-prev" id="mf-prev"></div>
+      </div>
+
+      <div class="mf-row">
+        <label class="mf-lbl" for="mf-excerpt">Resumo (aparece no card)</label>
+        <input type="text" class="mf-inp" id="mf-excerpt" placeholder="Uma frase que capture a essência…">
+      </div>
+
+      <div class="mf-row">
+        <label class="mf-lbl" for="mf-content">Texto completo</label>
+        <textarea class="mf-ta" id="mf-content"
+          placeholder="Escreva aqui. Separe parágrafos com uma linha em branco."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="mf-btn-pub" id="mf-save">Publicar</button>
+        <button class="mf-btn-cancel" id="mf-cancel">Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- LAYOUT PRINCIPAL -->
 <div class="blog-layout">
@@ -645,50 +810,12 @@ img { max-width: 100%; display: block; }
     </div>
 
     <!-- PAINEL ADMIN — visível apenas para mariaakashahub@gmail.com -->
-    <div id="admin-widget">
-      <div class="af-box">
-        <h2 class="af-title" id="af-heading">✦ Novo Escrito</h2>
-
-        <div class="f-row">
-          <label class="f-lbl" for="f-titulo">Título</label>
-          <input type="text" class="f-inp" id="f-titulo" placeholder="Título do escrito…">
-        </div>
-
-        <div class="f-row">
-          <label class="f-lbl" for="f-tag">Categoria</label>
-          <select class="f-sel" id="f-tag">
-            <option value="Chamas Gêmeas">Chamas Gêmeas</option>
-            <option value="Jornada da Alma">Jornada da Alma</option>
-            <option value="Governo Divino">Governo Divino</option>
-            <option value="Memória">Memória</option>
-            <option value="Reflexão">Reflexão</option>
-          </select>
-        </div>
-
-        <div class="f-row">
-          <label class="f-lbl" for="f-midia">Mídia — YouTube ou imagem (opcional)</label>
-          <input type="url" class="f-inp" id="f-midia"
-            placeholder="https://youtu.be/... ou https://site.com/foto.jpg"
-            oninput="onMidiaInput(this.value)">
-          <p class="f-hint">Cole um link do YouTube ou URL direta de imagem. O sistema detecta automaticamente.</p>
-          <div class="media-prev" id="media-prev"></div>
-        </div>
-
-        <div class="f-row">
-          <label class="f-lbl" for="f-excerpt">Resumo (aparece no card)</label>
-          <input type="text" class="f-inp" id="f-excerpt" placeholder="Uma frase que capture a essência…">
-        </div>
-
-        <div class="f-row">
-          <label class="f-lbl" for="f-content">Texto completo</label>
-          <textarea class="f-ta" id="f-content"
-            placeholder="Escreva aqui. Separe parágrafos com uma linha em branco."></textarea>
-        </div>
-
-        <div class="f-actions">
-          <button class="f-btn" id="f-save">Publicar</button>
-          <button class="f-btn f-btn-g" id="f-cancel" style="display:none;">Cancelar</button>
-        </div>
+    <!-- O formulário agora abre via modal (botão + flutuante) -->
+    <div id="admin-widget" style="display:none;">
+      <div class="af-box" style="padding:1rem 1.2rem;">
+        <p style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dourado);opacity:0.7;text-align:center;">
+          Use o botão + para criar escritos
+        </p>
       </div>
     </div>
 
@@ -920,12 +1047,47 @@ document.getElementById('btn-out').addEventListener('click', () => {
   auth.signOut().then(() => toast('Até logo!'));
 });
 
-/* FAB: rola até o formulário admin */
-document.getElementById('fab').addEventListener('click', () => {
-  resetForm();
-  const aw = document.getElementById('admin-widget');
-  aw.style.display = 'block'; // garante visível antes do scroll
-  setTimeout(() => aw.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+/* ── FAB: abre modal de criar post ── */
+document.getElementById('fab').addEventListener('click', () => openPostModal());
+
+/* ══════════════════════════
+   MODAL CRIAR / EDITAR
+══════════════════════════ */
+function openPostModal(postData) {
+  const isEdit = !!postData;
+  editingId = isEdit ? postData.id : null;
+
+  /* Preenche campos */
+  document.getElementById('mf-titulo').value  = isEdit ? (postData.titulo  || '') : '';
+  document.getElementById('mf-tag').value     = isEdit ? (postData.tag     || 'Chamas Gêmeas') : 'Chamas Gêmeas';
+  document.getElementById('mf-midia').value   = isEdit ? (postData.midia?.url || '') : '';
+  document.getElementById('mf-excerpt').value = isEdit ? (postData.excerpt || '') : '';
+  document.getElementById('mf-content').value = isEdit ? (postData.content || '') : '';
+
+  document.getElementById('modal-post-lbl').textContent = isEdit ? '✦ Editar Escrito' : '✦ Novo Escrito';
+  document.getElementById('mf-save').textContent        = isEdit ? 'Atualizar' : 'Publicar';
+
+  /* Preview de mídia */
+  onMidiaInputModal(isEdit ? (postData.midia?.url || '') : '');
+
+  document.getElementById('overlay-post').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('mf-titulo').focus();
+}
+
+function closePostModal() {
+  document.getElementById('overlay-post').classList.remove('open');
+  document.body.style.overflow = '';
+  editingId = null;
+  /* Limpa preview */
+  const pr = document.getElementById('mf-prev');
+  pr.style.display = 'none'; pr.innerHTML = '';
+}
+
+document.getElementById('modal-post-close').addEventListener('click', closePostModal);
+document.getElementById('mf-cancel').addEventListener('click', closePostModal);
+document.getElementById('overlay-post').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay-post')) closePostModal();
 });
 
 /* ══════════════════════════
@@ -1229,58 +1391,51 @@ document.getElementById('video-overlay').addEventListener('click', e => {
 });
 
 /* ══════════════════════════
-   PREVIEW DE MÍDIA NO FORMULÁRIO
+   PREVIEW DE MÍDIA NO MODAL
 ══════════════════════════ */
-function onMidiaInput(val) {
-  const wrap  = document.getElementById('media-prev');
+function onMidiaInputModal(val) {
+  const wrap  = document.getElementById('mf-prev');
   const midia = detectMidia(val);
   if (!midia) { wrap.style.display = 'none'; wrap.innerHTML = ''; return; }
 
   if (midia.tipo === 'youtube' && midia.ytId) {
     wrap.innerHTML = `
-      <div class="media-prev-yt">
-        <img
-          src="${esc(ytThumb(midia.ytId))}"
-          alt="Thumbnail"
-          onerror="this.closest('.media-prev').style.display='none'">
-        <div class="media-prev-play">
-          <span>
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </span>
+      <div class="mf-prev-yt">
+        <img src="${esc(ytThumb(midia.ytId))}" alt="Thumbnail"
+          onerror="this.closest('.mf-prev').style.display='none'">
+        <div class="mf-prev-play">
+          <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         </div>
       </div>
-      <div class="media-prev-lbl">YouTube · ${esc(midia.ytId)}</div>`;
+      <div class="mf-prev-lbl">YouTube · ${esc(midia.ytId)}</div>`;
   } else {
     wrap.innerHTML = `
-      <img
-        src="${esc(midia.url)}"
-        alt="Preview"
-        onerror="this.parentElement.innerHTML='<div class=media-prev-lbl>Não foi possível carregar a imagem</div>'">
-      <div class="media-prev-lbl">Imagem</div>`;
+      <img src="${esc(midia.url)}" alt="Preview"
+        onerror="this.parentElement.innerHTML='<div class=mf-prev-lbl>Não foi possível carregar</div>'">
+      <div class="mf-prev-lbl">Imagem</div>`;
   }
   wrap.style.display = 'block';
 }
 
 /* ══════════════════════════
-   ADMIN — SALVAR / ATUALIZAR POST
-   Firestore write: 20k/dia grátis no Spark
+   ADMIN — SALVAR / ATUALIZAR
 ══════════════════════════ */
-document.getElementById('f-save').addEventListener('click', async () => {
+document.getElementById('mf-save').addEventListener('click', async () => {
   if (!isAdmin) { toast('Acesso negado.', true); return; }
 
-  const btn      = document.getElementById('f-save');
-  const titulo   = document.getElementById('f-titulo').value.trim();
-  const tag      = document.getElementById('f-tag').value;
-  const midiaUrl = document.getElementById('f-midia').value.trim();
-  const excerpt  = document.getElementById('f-excerpt').value.trim();
-  const content  = document.getElementById('f-content').value.trim();
+  const btn      = document.getElementById('mf-save');
+  const titulo   = document.getElementById('mf-titulo').value.trim();
+  const tag      = document.getElementById('mf-tag').value;
+  const midiaUrl = document.getElementById('mf-midia').value.trim();
+  const excerpt  = document.getElementById('mf-excerpt').value.trim();
+  const content  = document.getElementById('mf-content').value.trim();
 
   if (!titulo) { toast('O título é obrigatório.', true); return; }
 
   btn.disabled    = true;
   btn.textContent = editingId ? 'Salvando…' : 'Publicando…';
 
-  const midia = detectMidia(midiaUrl); // null se vazio
+  const midia = detectMidia(midiaUrl);
   const data  = { titulo, tag, midia: midia || null, excerpt, content };
 
   try {
@@ -1299,7 +1454,7 @@ document.getElementById('f-save').addEventListener('click', async () => {
       });
       toast('Escrito publicado!');
     }
-    resetForm();
+    closePostModal();
   } catch (e) {
     console.error(e);
     toast('Erro: ' + (e.message || e.code || 'tente novamente'), true);
@@ -1309,45 +1464,11 @@ document.getElementById('f-save').addEventListener('click', async () => {
   }
 });
 
-/* ── Reset do formulário ── */
-function resetForm() {
-  editingId = null;
-  document.getElementById('f-titulo').value  = '';
-  document.getElementById('f-midia').value   = '';
-  document.getElementById('f-excerpt').value = '';
-  document.getElementById('f-content').value = '';
-  document.getElementById('f-tag').value     = 'Chamas Gêmeas';
-  document.getElementById('f-save').textContent     = 'Publicar';
-  document.getElementById('f-cancel').style.display = 'none';
-  document.getElementById('af-heading').textContent = '✦ Novo Escrito';
-  const pr = document.getElementById('media-prev');
-  pr.style.display = 'none';
-  pr.innerHTML     = '';
-}
-document.getElementById('f-cancel').addEventListener('click', resetForm);
-
-/* ── Carregar post no formulário para edição ── */
+/* ── Editar: abre modal com dados do post ── */
 function startEdit(id) {
   const p = allPosts.find(x => x.id === id);
   if (!p) return;
-
-  editingId = id;
-  document.getElementById('f-titulo').value  = p.titulo  || '';
-  document.getElementById('f-tag').value     = p.tag     || 'Chamas Gêmeas';
-  document.getElementById('f-midia').value   = p.midia?.url || '';
-  document.getElementById('f-excerpt').value = p.excerpt || '';
-  document.getElementById('f-content').value = p.content || '';
-
-  document.getElementById('f-save').textContent     = 'Atualizar';
-  document.getElementById('f-cancel').style.display = '';
-  document.getElementById('af-heading').textContent = '✦ Editar Escrito';
-
-  onMidiaInput(p.midia?.url || '');
-
-  /* Garante visibilidade e rola */
-  const aw = document.getElementById('admin-widget');
-  aw.style.display = 'block';
-  setTimeout(() => aw.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  openPostModal(p);
 }
 
 /* ══════════════════════════
@@ -1387,6 +1508,7 @@ document.addEventListener('keydown', e => {
   closeVideo();
   closeRead();
   closeConfirm();
+  closePostModal();
 });
 </script>
 </body>
